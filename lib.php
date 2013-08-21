@@ -32,12 +32,11 @@ function book_supports($feature) {
  * @param stdClass $mform
  * @return int new book instance id
  */
-function gallery_add_instance(stdClass $data, mod_assign_mod_form $form = null) {
+function gallery_add_instance(stdClass $data, mod_gallery_mod_form $form = null) {
     global $DB;
 
     $data->timecreated = time();
     $data->timemodified = $data->timecreated;
-    $data->wattermark = 0;
 
     return $DB->insert_record('gallery', $data);
 }
@@ -49,7 +48,7 @@ function gallery_add_instance(stdClass $data, mod_assign_mod_form $form = null) 
  * @param stdClass $mform
  * @return bool true
  */
-function gallery_update_instance(stdClass $data, mod_assign_mod_form $form = null) {
+function gallery_update_instance(stdClass $data, mod_gallery_mod_form $form = null) {
     global $DB;
 
     $data->timemodified = time();

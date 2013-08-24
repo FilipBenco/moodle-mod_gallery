@@ -13,16 +13,20 @@ class mod_gallery_image_edit_form extends moodleform {
         
         $data = array();
         foreach($this->_customdata['images'] as $image) {
-            if($action == 'addimagedesc')
+            if($action == 'addimagedesc') {
                 $elementname = 'desc-'.  clean_param($image->stored_file()->get_filename(), PARAM_ALPHA);
-            else 
-                $elementname = 'desc-'.$image->id();
-            
-            $mform->addElement('editor', $elementname,'<img src="'.
+                $mform->addElement('editor', $elementname,'<img src="'.
                 moodle_url::make_pluginfile_url($image->stored_file()->get_contextid(), $image->stored_file()->get_component(), 
                         $image->stored_file()->get_filearea(), $image->stored_file()->get_itemid(), 
-                        $image->stored_file()->get_filepath(), $image->stored_file()->get_filename()).'" />',
+                        $image->stored_file()->get_filepath(), $image->stored_file()->get_filename()).'" style="max-width:150px; max-height:150px;" />',
                     array('rows' => 3), array('collapsed' => true));
+            } else {
+                $elementname = 'desc-'.$image->id();
+                $mform->addElement('editor', $elementname,'<img src="'.$image->thumb().'" />',
+                    array('rows' => 3), array('collapsed' => true));
+            }
+            
+           
             $mform->setType($elementname, PARAM_RAW);
             $data[$elementname]['text'] = $image->description();
         }

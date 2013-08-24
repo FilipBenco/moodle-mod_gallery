@@ -236,9 +236,9 @@ class gallery_image {
             return $image;
         
         if ($ratiow < $ratioh)
-            $height =floor($height*$ratioh);
+            $height =floor($this->height*$ratiow);
         else
-            $width =floor($width*$ratiow);
+            $width =floor($this->height*$ratiow);
         
         $resized = imagecreatetruecolor($width, $height);
         imagecopyresampled($resized, $image, 0, 0, 0, 0, $width, $height, $this->width, $this->height);

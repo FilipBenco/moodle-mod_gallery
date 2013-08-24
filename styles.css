@@ -95,7 +95,7 @@
     max-width: 100%;
 }
 
-#mod-gallery-edit-buttons .singlebutton, #mod-gallery-edit-buttons .singlebutton form  {
+#mod-gallery-edit-buttons .singlebutton, #mod-gallery-edit-buttons .singlebutton form, #mod-gallery-edit-buttons .singlebutton form div  {
     display: inline;
 }
 

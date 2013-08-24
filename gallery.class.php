@@ -1,0 +1,30 @@
+<?php
+
+defined('MOODLE_INTERNAL') || die();
+
+class gallery {
+    
+    protected $data;
+    
+    public function __construct($id) {
+        global $DB;
+        $this->data = $DB->get_record('gallery',array('id'=>$id),'*', MUST_EXIST);
+    }
+    
+    public function id() {
+        return $this->data->id;
+    }
+    
+    public function name() {
+        return $this->data->name;
+    }
+    
+    public function intro() {
+        return $this->data->intro;
+    }
+    
+    public function introformat() {
+        return $this->data->introformat;
+    }
+    
+}

@@ -1,0 +1,47 @@
+M.mod_gallery = M.mod_gallery || {};
+
+M.mod_gallery.init = function(Y, cfg) {
+    this.Y = Y;
+    this.context = cfg.context;
+    this.currentImage = cfg.currentImage;
+};
+
+M.mod_gallery.showImage = function(imageId) {
+    M.mod_gallery.Y.one('#mod-gallery-image-perview-a-'+M.mod_gallery.currentImage).hide();
+    M.mod_gallery.Y.one('#mod-gallery-image-perview-a-'+imageId).show();
+    if(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML') != '') 
+        M.mod_gallery.Y.one('#mod-gallery-image-desc').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML'));
+    else 
+        M.mod_gallery.send_request(imageId, 'description');
+
+    M.mod_gallery.Y.one('#mod-gallery-image-comments-'+M.mod_gallery.currentImage).hide();
+    M.mod_gallery.Y.one('#mod-gallery-image-comments-'+imageId).show();
+    
+    M.mod_gallery.currentImage = imageId;
+
+    M.mod_gallery.Y.all('#mod-gallery-edit-buttons input[name="image"]').set('value',imageId);
+    return false;
+};
+
+function showImage(imageId) {
+    M.mod_gallery.showImage(imageId);
+    return false;
+};
+
+M.mod_gallery.send_request = function(imageId) {
+        this.api = M.cfg.wwwroot+'/mod/gallery/ajax.php?sesskey='+M.cfg.sesskey,
+        M.mod_gallery.Y.io(this.api,{
+        method : 'POST',
+        data :  build_querystring({
+            image : imageId,
+            ctx : M.mod_gallery.context
+        }),
+        on : {
+            success : function(tid, outcome) {
+                M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).setHTML(outcome.responseText);
+                M.mod_gallery.Y.one('#mod-gallery-image-desc').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML'));
+            }
+        },
+        context : this
+    });
+};

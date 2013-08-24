@@ -12,7 +12,7 @@ defined('MOODLE_INTERNAL') || die();
  * @param string $feature FEATURE_xx constant for requested feature
  * @return mixed True if module supports feature, false if not, null if doesn't know
  */
-function book_supports($feature) {
+function gallery_supports($feature) {
     switch($feature) {
         case FEATURE_MOD_ARCHETYPE:           
             return MOD_ARCHETYPE_RESOURCE;
@@ -76,3 +76,188 @@ function gallery_delete_instance($id) {
     return true;
 }
 
+/**
+ * Adds module specific settings to the settings block
+ *
+ * @param settings_navigation $settingsnav The settings navigation object
+ * @param navigation_node $booknode The node to add module settings to
+ * @return void
+ */
+function gallery_extend_settings_navigation(settings_navigation $settings, navigation_node $navref) {
+    global $USER, $PAGE, $OUTPUT;
+
+    $params = $PAGE->url->params();
+
+    if (!empty($params['id']) && has_capability('mod/gallery:edit', $PAGE->cm->context)) {
+        if (!empty($USER->editing)) {
+            $string = get_string("turneditingoff","gallery");
+            $edit = '0';
+        } else {
+            $string = get_string("turneditingon","gallery"); 
+            $edit = '1';
+        }
+        $url = new moodle_url('/mod/gallery/view.php', array('id'=>$params['id'], 'edit'=>$edit, 'sesskey'=>sesskey()));
+        $navref->add($string, $url, navigation_node::TYPE_SETTING);
+        $PAGE->set_button($OUTPUT->single_button($url, $string, 'get')); 
+    }
+}
+
+function gallery_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+    global $CFG;
+
+    if ($context->contextlevel != CONTEXT_MODULE) {
+        return false; 
+    }
+
+    require_once($CFG->dirroot.'/mod/gallery/locallib.php');
+    // Make sure the filearea is one of those used by the plugin.
+    if ($filearea !== GALLERY_IMAGES_FILEAREA 
+            && $filearea !== GALLERY_IMAGE_THUMBS_FILEAREA
+            && $filearea !== GALLERY_IMAGE_DRAFTS_FILEAREA
+            && $filearea !== GALLERY_IMAGE_PREVIEWS_FILEAREA) {
+        return false;
+    }
+
+    // Make sure the user is logged in and has access to the module (plugins that are not course modules should leave out the 'cm' part).
+    require_login($course, true, $cm);
+ 
+    // Check the relevant capabilities - these may vary depending on the filearea being accessed.
+    if (!has_capability('mod/gallery:view', $context)) {
+        return false;
+    }
+ 
+    // Leave this line out if you set the itemid to null in make_pluginfile_url (set $itemid to 0 instead).
+    $itemid = array_shift($args); // The first item in the $args array.
+ 
+    // Use the itemid to retrieve any relevant data records and perform any security checks to see if the
+    // user really does have access to the file in question.
+ 
+    // Extract the filename / filepath from the $args array.
+    $filename = array_pop($args); // The last item in the $args array.
+    if (!$args) {
+        $filepath = '/'; // $args is empty => the path is '/'
+    } else {
+        $filepath = '/'.implode('/', $args).'/'; // $args contains elements of the filepath
+    }
+    
+    // Retrieve the file from the Files API.
+    $fs = get_file_storage();
+    $file = $fs->get_file($context->id, 'mod_gallery', $filearea, $itemid, $filepath, $filename);
+    if (!$file) {
+        return false; // The file does not exist.
+    }
+    
+    // We can now send the file back to the browser - in this case with a cache lifetime of 1 day and no filtering.
+    send_stored_file($file, 0, 0, true);
+}
+
+/**
+* Lists all browsable file areas
+* @param object $course
+* @param object $cm
+* @param object $context
+* @return array
+*/
+function gallery_get_file_areas($course, $cm, $context) {
+    global $CFG;
+    require_once($CFG->dirroot.'/mod/gallery/locallib.php');
+    $areas = array();
+    $areas[GALLERY_IMAGES_FILEAREA] = get_string('images', 'gallery');
+    $areas[GALLERY_IMAGE_THUMBS_FILEAREA] = get_string('thumbnails', 'gallery');
+    $areas[GALLERY_IMAGE_DRAFTS_FILEAREA] = get_string('drafts', 'gallery');
+    $areas[GALLERY_IMAGE_PREVIEWS_FILEAREA] = get_string('previews', 'gallery');
+    return $areas;
+}
+
+/**
+* File browsing support for lightboxgallery module content area.
+* @param object $browser
+* @param object $areas
+* @param object $course
+* @param object $cm
+* @param object $context
+* @param string $filearea
+* @param int $itemid
+* @param string $filepath
+* @param string $filename
+* @return object file_info instance or null if not found
+*/
+function gallery_get_file_info($browser, $areas, $course, $cm, $context, $filearea, $itemid, $filepath, $filename) {
+    global $CFG;
+    require_once($CFG->dirroot.'/mod/gallery/locallib.php');
+    
+    if ($filearea === GALLERY_IMAGES_FILEAREA) {
+        $fs = get_file_storage();
+
+        $filepath = is_null($filepath) ? '/' : $filepath;
+        $filename = is_null($filename) ? '.' : $filename;
+        if (!$storedfile = $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, 0, $filepath, $filename)) {
+            if ($filepath === '/' and $filename === '.') {
+                $storedfile = new virtual_root_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, 0);
+            } else {
+                // Not found.
+                return null;
+            }
+        }
+        require_once("$CFG->dirroot/mod/gallery/locallib.php");
+        $urlbase = $CFG->wwwroot.'/pluginfile.php';
+
+        return new gallery_content_file_info($browser, $context, $storedfile, $urlbase, $areas[$filearea],
+                                                        true, true, false, false);
+    }
+
+    // Note: folder_intro handled in file_browser automatically.
+
+    return null;
+}
+
+defined('MOODLE_INTERNAL') || die();
+
+/**
+ *
+ * Callback method for data validation---- required method for AJAXmoodle based comment API
+ *
+ * @param stdClass $options
+ * @return bool
+ */
+function gallery_comment_validate(stdClass $options) {
+    global $DB;
+
+    if ($options->commentarea != 'gallery_image_comments') {
+        throw new comment_exception('invalidcommentarea');
+    }
+    if (!$image = $DB->get_record('gallery_images', array('id'=>$options->itemid))) {
+        throw new comment_exception('invalidcommentitemid');
+    }
+    $context = $options->context;
+    
+    if (!has_capability('mod/gallery:view', $context)) {
+        throw new comment_exception('nopermissiontocomment');
+    }
+
+    return true;
+}
+
+/**
+ * Permission control method for submission plugin ---- required method for AJAXmoodle based comment API
+ *
+ * @param stdClass $options
+ * @return array
+ */
+function gallery_comment_permissions(stdClass $options) {
+    global $CFG, $DB;
+
+    if ($options->commentarea != 'gallery_image_comments') {
+        throw new comment_exception('invalidcommentarea');
+    }
+    if (!$image = $DB->get_record('gallery_images', array('id'=>$options->itemid))) {
+        throw new comment_exception('invalidcommentitemid');
+    }
+    $context = $options->context;
+
+    if (!has_capability('mod/gallery:view', $context)) {
+        return array('post' => false, 'view' => false);
+    }
+
+    return array('post' => true, 'view' => true);
+}

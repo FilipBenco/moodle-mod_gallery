@@ -1,0 +1,104 @@
+/* 
+    Document   : styles
+    Created on : 23.8.2013, 11:46:32
+    Author     : Work
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.mod-gallery-image-thumb-a {
+   float:left;
+   width: 150px;
+   height: 150px;
+   text-align: center;
+   padding: 2px;
+   margin: 3px;
+   border: 1px solid #CCC;
+   display:block;
+}
+
+.mod-gallery-hidden-comments, .mod-gallery-hidden-description {
+    display: none;
+}
+
+.mod-gallery-image-thumb-a:hover {
+    border-color: #999;
+    cursor: pointer;
+}
+
+.mod-gallery-images-div {
+    position: relative;
+}
+
+.mod-gallery-thumb-edit {
+    float:left;
+    width: 162px;
+    height: 180px;
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+.mod-gallery-thumb-actions {
+    
+}
+
+.mod-gallery-clear {
+    clear: both;
+}
+
+.mod-gallery-image-preview {
+    position: absolute;
+    left:0px;
+    right:171px;
+    top:0px;
+    float:left;
+    height: 400px;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.mod-gallery-image-preview-table {
+    width: 100%;
+    display: table;
+    height: 400px;
+}
+
+.mod-gallery-image-preview-table-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.mod-gallery-images-side {
+    float:right;
+    width: 170px;
+    border-left: 1px solid #CCC;
+    height: 400px;
+    padding: 4px 5px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.mod-gallery-images-side a {
+    display:block;
+    margin:2px 1px;
+    text-align: center;
+    padding: 2px;
+    border:1px solid #CCC;
+}
+
+.mod-gallery-images-side a:hover {
+    border-color: #999;
+}
+
+.mod-gallery-image-preview-img {
+    max-width: 100%;
+}
+
+#mod-gallery-edit-buttons .singlebutton, #mod-gallery-edit-buttons .singlebutton form  {
+    display: inline;
+}
+
+.mod-gallery-image-comments-hidden {
+    display:none;
+}

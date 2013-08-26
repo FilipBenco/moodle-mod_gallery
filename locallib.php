@@ -190,7 +190,7 @@ function gallery_process_delete_image($iid, $context, $gallery) {
     require_once($CFG->dirroot.'/comment/lib.php');
     $img = $DB->get_record('gallery_images',array('id'=>$iid));
     $fs = get_file_storage();
-    $file = $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $img->id, '/'.$gallery->id().'/', $img->id);
+    $file = $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $img->id, '/'.$gallery->id().'/', $img->id.'.'.$img->type);
     $image = new gallery_image($img,$file,$context);
     $image->delete();
     $manager = new gallery_imagemanager;

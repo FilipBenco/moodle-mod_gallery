@@ -35,13 +35,16 @@ function gallery_process_drafts($context, $gallery) {
 
     $preloaded_images = array();
     
+    $i = 1;
     foreach($files as $file) {
         if(!$file->is_valid_image()) {
             $packer = get_file_packer($file->get_mimetype());
-            $fs->delete_area_files($context->id, 'mod_gallery', 'unpacktemp', 0);
-            $file->extract_to_storage($packer, $context->id, 'mod_gallery', 'unpacktemp', 0, '/');
-            array_merge($preloaded_images, $fs->get_area_files($context->id, 'mod_gallery', 'unpacktemp', 0));
+            $fs->delete_area_files($context->id, 'mod_gallery', 'unpacktemp', $i);
+            $file->extract_to_storage($packer, $context->id, 'mod_gallery', 'unpacktemp', $i, '/');
+            $unpackedFiles = $fs->get_area_files($context->id, 'mod_gallery', 'unpacktemp', $i);
+            array_merge($preloaded_images, $unpackedFiles);
             $file->delete();
+            $i++;
         } 
             $preloaded_images[] = $file;
     }
@@ -67,10 +70,7 @@ function gallery_process_drafts($context, $gallery) {
             }
         }
     }
-    $fs->delete_area_files($context->id, 'mod_gallery', 'unpacktemp', 0);
-    
-    /*file_save_draft_area_files($data->images, $context->id, 'mod_gallery', GALLERY_IMAGE_DRAFTS_FILEAREA,
-                   $gallery->id(), array('subdirs' => 0));*/
+    $fs->delete_area_files($context->id, 'mod_gallery', 'unpacktemp');
     
     return $images;
 }

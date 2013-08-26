@@ -126,14 +126,13 @@ function gallery_process_images_save($data, $images) {
     foreach($images as $image) {
         $editorname = 'desc-'.$image->id();
         $desc_data = $data->$editorname;
-        if($image->description() == $desc_data['text'])
-            continue;
-        
-        $data = $image->data();
-        $data->description = $desc_data['text'];
-        $data->descriptionformat = $desc_data['format'];
-        $data->timemodified = time();
-        $DB->update_record('gallery_images',$data);
+        if($image->description() != $desc_data['text']) {
+            $data = $image->data();
+            $data->description = $desc_data['text'];
+            $data->descriptionformat = $desc_data['format'];
+            $data->timemodified = time();
+            $DB->update_record('gallery_images',$data);
+        }
     }
 }
 

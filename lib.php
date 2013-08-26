@@ -66,13 +66,20 @@ function gallery_update_instance(stdClass $data, mod_gallery_mod_form $form = nu
  * @return bool success
  */
 function gallery_delete_instance($id) {
-    global $DB;
+    global $DB, $CFG;
+    require_once($CFG->dirroot.'/mod/gallery/locallib.php');
 
     if (!$galerry = $DB->get_record('gallery', array('id'=>$id))) 
         return false;
     
+    $imageIDs = $DB->get_records('gallery_images',array('gallery'=>$gallery->id));
+    $cm = get_coursemodule_from_instance('mod_gallery', $id);
+    $context = context_module::instance($cm->id);
+    foreach($imageIDs as $image) 
+        gallery_process_delete_image ($image, $context, $gallery);
+        
     $DB->delete_records('gallery', array('id'=>$galerry->id));
-
+    
     return true;
 }
 

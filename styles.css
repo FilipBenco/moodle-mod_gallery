@@ -7,14 +7,14 @@
 */
 
 .mod-gallery-image-thumb-a {
-   float:left;
+   float: left;
    width: 150px;
    height: 150px;
    text-align: center;
    padding: 2px;
    margin: 3px;
    border: 1px solid #CCC;
-   display:block;
+   display: block;
 }
 
 .mod-gallery-hidden-comments, .mod-gallery-hidden-description {
@@ -71,7 +71,7 @@
 
 .mod-gallery-images-side {
     float:right;
-    width: 170px;
+    width: 175px;
     border-left: 1px solid #CCC;
     height: 400px;
     padding: 4px 5px;
@@ -80,11 +80,11 @@
 }
 
 .mod-gallery-images-side a {
-    display:block;
-    margin:2px 1px;
+    display: block;
+    margin: 2px 1px;
     text-align: center;
-    padding: 2px;
-    border:1px solid #CCC;
+    padding: 2px 2px 0 2px;
+    border: 1px solid #CCC;
 }
 
 .mod-gallery-images-side a:hover {

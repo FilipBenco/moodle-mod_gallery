@@ -76,6 +76,8 @@ class mod_gallery_renderer extends plugin_renderer_base {
     }
     
     public function render_gallery_image_preview(gallery_image_preview $img) {
+        global $CFG;
+        require_once($CFG->dirroot.'/comment/lib.php');
         $o = '';
         
         if($img->edit) {

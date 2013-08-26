@@ -11,7 +11,7 @@ class mod_gallery_image_upload_form extends moodleform {
         $mform = $this->_form;
         
         $mform->addElement('filemanager','images',  get_string('images','gallery'), null, 
-                array('subdirs'=>0,'accepted_types'=>array('web_image','.zip')));
+                array('subdirs'=>0,'accepted_types'=>array('web_image','archive')));
         
         $mform->addElement('hidden','action','addimages');
         $mform->setType('action', PARAM_ALPHA);

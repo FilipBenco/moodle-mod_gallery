@@ -34,14 +34,15 @@ function gallery_process_drafts($context, $gallery) {
     }
 
     $preloaded_images = array();
-    $packer = get_file_packer('application/zip');
+    
     foreach($files as $file) {
-        if ($file->get_mimetype() == 'application/zip') {
+        if(!$file->is_valid_image()) {
+            $packer = get_file_packer($file->get_mimetype());
             $fs->delete_area_files($context->id, 'mod_gallery', 'unpacktemp', 0);
             $file->extract_to_storage($packer, $context->id, 'mod_gallery', 'unpacktemp', 0, '/');
             array_merge($preloaded_images, $fs->get_area_files($context->id, 'mod_gallery', 'unpacktemp', 0));
             $file->delete();
-        } else 
+        } 
             $preloaded_images[] = $file;
     }
     

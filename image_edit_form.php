@@ -22,7 +22,7 @@ class mod_gallery_image_edit_form extends moodleform {
                     array('rows' => 3), array('collapsed' => true));
             } else {
                 $elementname = 'desc-'.$image->id();
-                $mform->addElement('editor', $elementname,'<img src="'.$image->thumb().'" />',
+                $mform->addElement('editor', $elementname,'<img src="'.$image->thumbnail().'" />',
                     array('rows' => 3), array('collapsed' => true));
             }
             

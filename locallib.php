@@ -161,7 +161,7 @@ function gallery_load_image($context,$iid) {
     $filepath = '/'.$image_db->gallery.'/';
     
     return new gallery_image($image_db, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $image_db->id, $filepath,
-                                       $image_db->id.'.'.$image_db->type),$context);;
+                                       $image_db->id.'.'.$image_db->type),$context);
 }
 
 function gallery_process_move_image($direction,$id) {

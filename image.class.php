@@ -139,10 +139,10 @@ class gallery_image {
         $fileinfo = array(
             'contextid' => $this->context->id,
             'component' => 'mod_gallery',
-            'filearea' => GALLERY_IMAGES_FILEAREA,
-            'itemid' => $this->data->id,
+            'filearea' => $this->image->get_filearea(),
+            'itemid' => $this->image->get_itemid(),
             'filepath' => $this->image->get_filepath(),
-            'filename' => $this->data->id.'.png');
+            'filename' => $this->image->get_filename());
 
         ob_start();
         imagepng($this->get_image_rotated($angle));

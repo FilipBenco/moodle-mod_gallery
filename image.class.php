@@ -151,6 +151,9 @@ class gallery_image {
         $fs = get_file_storage();
         $this->image->delete();
         $this->image = $fs->create_file_from_string($fileinfo, $image);
+        $image_info = $this->image->get_imageinfo();
+        $this->height = $image_info['height'];
+        $this->width = $image_info['width'];
         $this->preview = $this->create_preview();
         $this->thumbnail = $this->create_thumbnail();
         $this->load_preview_info();

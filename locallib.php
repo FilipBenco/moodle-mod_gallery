@@ -42,7 +42,7 @@ function gallery_process_drafts($context, $gallery) {
             $packer = get_file_packer($file->get_mimetype());
             $file->extract_to_storage($packer, $context->id, 'mod_gallery', 'unpacktemp', $i, '/');
             $unpackedFiles = $fs->get_area_files($context->id, 'mod_gallery', 'unpacktemp', $i);
-            $preloaded_images = array_merge($preloaded_images, reverse($unpackedFiles));
+            $preloaded_images = array_merge($preloaded_images, array_reverse($unpackedFiles));
             $file->delete();
             $i++;
         } 

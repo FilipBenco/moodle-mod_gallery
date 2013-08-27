@@ -26,6 +26,7 @@ function gallery_process_drafts($context, $gallery) {
     
     $fs = get_file_storage();
     $fs->delete_area_files($context->id, 'mod_gallery', GALLERY_IMAGE_DRAFTS_FILEAREA, $gallery->id());
+    $fs->delete_area_files($context->id, 'mod_gallery', 'unpacktemp');
     
     $draftid = file_get_submitted_draft_itemid('images');
     if (!$files = $fs->get_area_files(
@@ -39,10 +40,9 @@ function gallery_process_drafts($context, $gallery) {
     foreach($files as $file) {
         if(!$file->is_valid_image()) {
             $packer = get_file_packer($file->get_mimetype());
-            $fs->delete_area_files($context->id, 'mod_gallery', 'unpacktemp', $i);
             $file->extract_to_storage($packer, $context->id, 'mod_gallery', 'unpacktemp', $i, '/');
             $unpackedFiles = $fs->get_area_files($context->id, 'mod_gallery', 'unpacktemp', $i);
-            array_merge($preloaded_images, $unpackedFiles);
+            $preloaded_images = array_merge($preloaded_images, $unpackedFiles);
             $file->delete();
             $i++;
         } 

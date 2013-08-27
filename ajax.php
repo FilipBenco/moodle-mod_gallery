@@ -39,7 +39,7 @@ if($img->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
     $return->source = '<strong>'.get_string('source','gallery') . ':</strong> '.$img->source;
 }
 
-echo json_encode($urlparams);
+echo json_encode($return);
 
 header('Content-Length: ' . ob_get_length() );
 ob_end_flush();

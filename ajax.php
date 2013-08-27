@@ -24,7 +24,7 @@ $img = $DB->get_record('gallery_images',array('id'=>$imageid));
 
 require_once($CFG->dirroot.'/mod/gallery/image.class.php');
 
-$return = stdClass;
+$return = new stdClass;
 
 $return->description = format_text($img->description, $img->descriptionformat);
 $return->name = $img->name;

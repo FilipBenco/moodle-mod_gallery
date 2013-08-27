@@ -184,7 +184,7 @@ function gallery_process_move_image($direction,$id) {
 
 function gallery_process_rotate_image($direction,$iid,$context) {
     $angle = 90;
-    if($direction == 'left')
+    if($direction == 'right')
         $angle = 270;
     $image = gallery_load_image($context, $iid);
     $image->rotate($angle);

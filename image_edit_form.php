@@ -85,7 +85,7 @@ class mod_gallery_image_edit_form extends moodleform {
             if($action == 'addimagedesc') 
                 $uniqueId = clean_param($image->stored_file()->get_filename(), PARAM_ALPHA);  
             else 
-                $uniqueId = 'desc-'.$image->id();
+                $uniqueId = $image->id();
             
             $sourceTypeName = 'sourcetype-'.$uniqueId;
             $sourceName = 'source-'.$uniqueId;
@@ -94,8 +94,6 @@ class mod_gallery_image_edit_form extends moodleform {
                 $source = trim($data[$sourceName]);
             if(!isset($data[$sourceTypeName]) && empty($source))
                 $errors[$sourceName] = get_string('missingsourceerror','gallery');
-
-
         }
         return $errors;
     }

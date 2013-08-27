@@ -24,7 +24,7 @@ class mod_gallery_image_edit_form extends moodleform {
                         $image->stored_file()->get_filepath(), $image->stored_file()->get_filename());
                 
             } else {
-                $uniqueId = 'desc-'.$image->id();
+                $uniqueId = $image->id();
                 $imagePreview = $image->thumbnail();
             }
             

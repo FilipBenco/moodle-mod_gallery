@@ -41,7 +41,7 @@ function gallery_process_drafts($context, $gallery) {
         if(!$file->is_valid_image()) {
             $packer = get_file_packer($file->get_mimetype());
             $file->extract_to_storage($packer, $context->id, 'mod_gallery', 'unpacktemp', $i, '/');
-            $unpackedFiles = $fs->get_area_files($context->id, 'mod_gallery', 'unpacktemp', $i,'filename ASC');
+            $unpackedFiles = $fs->get_area_files($context->id, 'mod_gallery', 'unpacktemp', $i,'filename DESC');
             $preloaded_images = array_merge($preloaded_images, $unpackedFiles);
             $file->delete();
             $i++;

@@ -129,7 +129,7 @@ class gallery_image {
     }
     
     public function from_form($data) {
-        return gallery_image::parse_from_form($this->id(), $data, $this->data);
+        return gallery_image::parse_from_form($this->id(), $data, clone $this->data);
     }
     
     public static function from_form_data($uId, $data) {

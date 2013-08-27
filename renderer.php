@@ -36,8 +36,8 @@ class mod_gallery_renderer extends plugin_renderer_base {
             if(count($widget->images) > 0) {
                 $urlparams['action'] = 'editimages';
                 $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('editimages','gallery'));
-                $o .= $this->output->box_end();
             }
+            $o .= $this->output->box_end();
         }
         
        

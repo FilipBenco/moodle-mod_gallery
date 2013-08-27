@@ -16,6 +16,7 @@ class mod_gallery_image_edit_form extends moodleform {
             
             $uniqueId = '';
             $imagePreview = '';
+            
             if($action == 'addimagedesc') {
                 $uniqueId = clean_param($image->stored_file()->get_filename(), PARAM_ALPHA);
                 $imagePreview =  moodle_url::make_pluginfile_url($image->stored_file()->get_contextid(), $image->stored_file()->get_component(), 
@@ -26,8 +27,9 @@ class mod_gallery_image_edit_form extends moodleform {
                 $uniqueId = 'desc-'.$image->id();
                 $imagePreview = $image->thumbnail();
             }
-            $mform->addElement('header','header-'.$uniqueId,'');
-            $mform->setExpanded('header-'.$uniqueId);
+            
+            /*$mform->addElement('header','header-'.$uniqueId,'');
+            $mform->setExpanded('header-'.$uniqueId);*/
             
             $mform->addElement('text','name-'.$uniqueId,  get_string('imagename','gallery'));
             $mform->setType('name-'.$uniqueId, PARAM_TEXT);

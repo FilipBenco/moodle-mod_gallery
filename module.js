@@ -42,13 +42,13 @@ M.mod_gallery.send_request = function(imageId) {
         }),
         on : {
             success : function(tid, outcome) {
-                YUI().use('json-parse', function (Y) {
+                YUI().use('json-parse', 'node', function (Y) {
                     var data = Y.JSON.parse(outcome.responseText);
                     M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).setHTML(data.description);
                     M.mod_gallery.Y.one('#mod-gallery-image-desc').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML'));
-                    M.mod_gallery.Y.one('"mod-gallery-image-source-' + imageId).setHTML(data.source);
+                    M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).setHTML(data.source);
                     M.mod_gallery.Y.one('#mod-gallery-image-source').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).get('innerHTML'));
-                    M.mod_gallery.Y.one('"mod-gallery-image-name-' + imageId).setHTML(data.name);
+                    M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).setHTML(data.name);
                     M.mod_gallery.Y.one('#mod-gallery-image-name').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).get('innerHTML'));
                 });
             }

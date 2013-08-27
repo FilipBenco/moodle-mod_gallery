@@ -13,6 +13,7 @@ class mod_gallery_image_edit_form extends moodleform {
         
         $data = array();
         foreach($this->_customdata['images'] as $image) {
+            
             $uniqueId = '';
             $imagePreview = '';
             if($action == 'addimagedesc') {
@@ -26,7 +27,7 @@ class mod_gallery_image_edit_form extends moodleform {
                 $mform->addElement('editor', 'desc-'.$uniqueId, '<img src="'.$image->thumbnail().'" />',
                     array('rows' => 3), array('collapsed' => true));
             }
-            
+            $mform->addElement('header','header-'.$uniqueId,'');
             $mform->addElement('text','name-'.$uniqueId,  get_string('imagename','gallery'));
             $mform->setType('name-'.$uniqueId, PARAM_TEXT);
             
@@ -34,7 +35,7 @@ class mod_gallery_image_edit_form extends moodleform {
                     array('rows' => 3), array('collapsed' => true));
             $mform->setType('desc-'.$uniqueId, PARAM_RAW);
             
-            $mform->addElement('checkbox','sourcetype-'.$uniqueId,get_string('ownsource','gallery'));
+            $mform->addElement('checkbox','sourcetype-'.$uniqueId,get_string('sourceown','gallery'));
             $mform->setType('sourcetype-'.$uniqueId, PARAM_BOOL);
             
             $mform->addElement('text','source-'.$uniqueId,  get_string('source','gallery'));

@@ -124,7 +124,7 @@ class gallery_image {
         $data->description = '';
         $data->source = '';
         $data->sourcetype = false;
-        $data->name;
+        $data->name = '';
         return $data;
     }
     

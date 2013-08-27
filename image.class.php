@@ -149,6 +149,7 @@ class gallery_image {
         $image = ob_get_clean();
 
         $fs = get_file_storage();
+        $this->image->delete();
         $this->image = $fs->create_file_from_string($fileinfo, $image);
         $this->preview = $this->create_preview();
         $this->thumbnail = $this->create_thumbnail();

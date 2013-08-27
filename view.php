@@ -74,11 +74,11 @@ if($action == 'rotaterightg') {
 }
 if($action == 'rotatelefti') {
     gallery_process_rotate_image('left',$iid,$context);
-    redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action='.$iid.'&image='.$iid);
+    redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
 }
 if($action == 'rotaterighti') {
     gallery_process_rotate_image('right',$iid,$context);
-    redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action='.$iid.'&image='.$iid);
+    redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
 }
 if($action == 'editimages') {
     require_once($CFG->dirroot.'/mod/gallery/image_edit_form.php');

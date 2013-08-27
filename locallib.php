@@ -97,7 +97,6 @@ function gallery_process_image_drats_save($data, $context, $gallery, $files) {
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
 
     $fs = get_file_storage();
-    var_dump($data); die;
     foreach ($files as $file) {
         $uId = clean_param($file->stored_file()->get_filename(), PARAM_ALPHA);
         $imgData = gallery_image::from_form_data($uId, $data);

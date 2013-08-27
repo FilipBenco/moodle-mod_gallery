@@ -134,8 +134,10 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $o .= $this->output->action_link(new moodle_url('/user/profile.php',$urlparams), fullname($img->user));
         }
         if($img->image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
-            $o .= '<strong>'.get_string('source','gallery') . ':</strong> ';
-            $o .= $img->image->data()->name;
+            if(!empty($img->image->data()->source)) {
+                $o .= '<strong>'.get_string('source','gallery') . ':</strong> ';
+                $o .= $img->image->data()->name;
+            }
         }
         $o .= $this->output->box_end();
         

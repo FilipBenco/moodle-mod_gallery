@@ -17,12 +17,29 @@ header('Content-Type: text/html; charset=utf-8');
 $imageid = required_param('image', PARAM_INT);
 $contextid = required_param('ctx', PARAM_INT);
 
-$context = get_context_instance_by_id($contextid);
-$PAGE->set_context($context);
+$PAGE->set_context(get_context_instance_by_id($contextid));
 $PAGE->set_url(new moodle_url('/mod/gallery/ajax.php',array('image'=>$imageid,'cts'=>$contextid)));
 
 $img = $DB->get_record('gallery_images',array('id'=>$imageid));
-echo format_text($img->description, $img->descriptionformat);
+
+require_once($CFG->dirroot.'/mod/gallery/image.class.php');
+
+$return = stdClass;
+
+$return->description = format_text($img->description, $img->descriptionformat);
+$return->name = $img->name;
+
+if($img->sourcetype == GALLERY_IMAGE_SOURCE_OWN) {
+    $user = $DB->get_record('user',array('id'=>$img->source));
+    $urlparams = array('id'=>$user->id);
+    $return->source = '<strong>'.get_string('author','gallery') . ':</strong> ';
+    $return->source .= $OUTPUT->action_link(new moodle_url('/user/profile.php',$urlparams), fullname($user));
+}
+if($img->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
+    $return->source = '<strong>'.get_string('source','gallery') . ':</strong> '.$img->source;
+}
+
+echo json_encode($urlparams);
 
 header('Content-Length: ' . ob_get_length() );
 ob_end_flush();

@@ -9,9 +9,13 @@ M.mod_gallery.init = function(Y, cfg) {
 M.mod_gallery.showImage = function(imageId) {
     M.mod_gallery.Y.one('#mod-gallery-image-perview-a-'+M.mod_gallery.currentImage).hide();
     M.mod_gallery.Y.one('#mod-gallery-image-perview-a-'+imageId).show();
-    if(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML') != '') 
+    if(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML') !== '' ||
+        M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).get('innerHTML') !== '' ||
+        M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).get('innerHTML') !== '') {
         M.mod_gallery.Y.one('#mod-gallery-image-desc').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML'));
-    else 
+        M.mod_gallery.Y.one('#mod-gallery-image-name').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).get('innerHTML'));
+        M.mod_gallery.Y.one('#mod-gallery-image-source').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).get('innerHTML'));
+    } else 
         M.mod_gallery.send_request(imageId, 'description');
 
     M.mod_gallery.Y.one('#mod-gallery-image-comments-'+M.mod_gallery.currentImage).hide();
@@ -38,8 +42,15 @@ M.mod_gallery.send_request = function(imageId) {
         }),
         on : {
             success : function(tid, outcome) {
-                M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).setHTML(outcome.responseText);
-                M.mod_gallery.Y.one('#mod-gallery-image-desc').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML'));
+                YUI().use('json-parse', function (Y) {
+                    var data = Y.JSON.parse(outcome.responseText);
+                    M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).setHTML(data.description);
+                    M.mod_gallery.Y.one('#mod-gallery-image-desc').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML'));
+                    M.mod_gallery.Y.one('"mod-gallery-image-source-' + imageId).setHteml(data.source);
+                    M.mod_gallery.Y.one('#mod-gallery-image-source').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).get('innerHTML'));
+                    M.mod_gallery.Y.one('"mod-gallery-image-name-' + imageId).setHteml(data.name);
+                    M.mod_gallery.Y.one('#mod-gallery-image-name').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).get('innerHTML'));
+                });
             }
         },
         context : this

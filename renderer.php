@@ -80,7 +80,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
         require_once($CFG->dirroot.'/comment/lib.php');
         $o = '';
         
-        $o .= $this->output->heading($img->image->data()->name, '3');
+        $o .= $this->output->heading($img->image->data()->name, '3','','mod-gallery-image-name');
         
         if($img->edit) {
             $o .= $this->output->box_start('generalbox', 'mod-gallery-edit-buttons');
@@ -122,6 +122,8 @@ class mod_gallery_renderer extends plugin_renderer_base {
         foreach($img->thumbnails as $thumb) {
             $o .= $this->output->action_link('#', '<img src="'.$thumb->thumbnail().'" />',null,array('onclick'=>'return showImage('.$thumb->id().')','data-preview'=>$thumb->preview(),'id'=>'mod-gallery-thumb-'.$thumb->id()));
             $o .= $this->output->box('', 'mod-gallery-hidden-description', 'mod-gallery-image-desc-'.$thumb->id());
+            $o .= $this->output->box('', 'mod-gallery-hidden-name', 'mod-gallery-image-name-'.$thumb->id());
+            $o .= $this->output->box('', 'mod-gallery-hidden-source', 'mod-gallery-image-source-'.$thumb->id());
         }
         $o .= $this->output->box_end();
         $o .= $this->output->box('','mod-gallery-clear');

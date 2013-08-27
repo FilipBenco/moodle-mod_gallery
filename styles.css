@@ -17,7 +17,7 @@
    display: block;
 }
 
-.mod-gallery-hidden-comments, .mod-gallery-hidden-description {
+.mod-gallery-hidden-comments, .mod-gallery-hidden-description, .mod-gallery-hidden-name, .mod-gallery-hidden-source{
     display: none;
 }
 

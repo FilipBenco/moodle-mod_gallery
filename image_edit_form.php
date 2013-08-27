@@ -89,11 +89,12 @@ class mod_gallery_image_edit_form extends moodleform {
             
             $sourceTypeName = 'sourcetype-'.$uniqueId;
             $sourceName = 'source-'.$uniqueId;
-            if(isset($data[$sourceName])) {
+            $source = '';
+            if(isset($data[$sourceName])) 
                 $source = trim($data[$sourceName]);
-                if(!isset($data[$sourceTypeName]) && empty($source))
-                    $errors[$sourceName] = get_string('missingsourceerror','gallery');
-            }
+            if(!isset($data[$sourceTypeName]) && empty($source))
+                $errors[$sourceName] = get_string('missingsourceerror','gallery');
+
 
         }
         return $errors;

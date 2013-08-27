@@ -195,7 +195,7 @@ function gallery_process_rotate_image($direction,$iid,$context) {
 }
 
 function gallery_process_delete_image($iid, $context, $gallery) {
-    global $CFG,$DB;
+    global $CFG;
     require_once($CFG->dirroot.'/mod/gallery/image.class.php');
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
     require_once($CFG->dirroot.'/comment/lib.php');

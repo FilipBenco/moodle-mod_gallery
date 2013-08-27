@@ -31,6 +31,7 @@ $gallery = new gallery($cm->instance);
 
 $mform = null;
 $images = null;
+$loadImages = true;
 if($action == 'addimages') {
     require_once($CFG->dirroot.'/mod/gallery/image_upload_form.php');
     $mform = new mod_gallery_image_upload_form(null,array('id'=>$cm->id));
@@ -38,12 +39,13 @@ if($action == 'addimages') {
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
     if (($formdata = $mform->get_data()) && confirm_sesskey()) {
         $images = gallery_process_drafts($context,$gallery);
-        $action = 'addimagedesc';
+        $action = 'addimagedesc'; $loadImages = false;
     }
 }
 if($action == 'addimagedesc') {
     require_once($CFG->dirroot.'/mod/gallery/image_edit_form.php');
-    $images = gallery_get_draft_images ($context, $gallery);
+    if($loadImages)
+        $images = gallery_get_draft_images ($context, $gallery);
     $mform = new mod_gallery_image_edit_form(null,array('action'=>'addimagedesc','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id));
     if ($mform->is_cancelled()) 
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);

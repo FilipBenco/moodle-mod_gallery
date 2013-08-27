@@ -12,6 +12,7 @@ $string['editimages'] = 'Edit images';
 $string['galleryname'] = 'Name:';
 $string['imagename'] = 'Image name:';
 $string['images'] = 'Images';
+$string['missingsourceerror'] = 'You need to specifiy an image source';
 $string['modulename'] = 'Gallery';
 $string['modulename_help'] = 'Module help';
 $string['modulenameplural'] = 'Galleries';

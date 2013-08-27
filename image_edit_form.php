@@ -43,6 +43,7 @@ class mod_gallery_image_edit_form extends moodleform {
             $mform->addElement('text','source-'.$uniqueId,  get_string('source','gallery'));
             $mform->setType('source-'.$uniqueId,PARAM_TEXT);
             $mform->disabledIf('source-'.$uniqueId, 'sourcetype-'.$uniqueId, 'checked');
+            $mform->addRule('source-'.$uniqueId, get_string('missingsourceerror','gallery'), 'required', 'null','client');
             
             $data['name-'.$uniqueId] = $image->data()->name;
             $data['desc-'.$uniqueId]['text'] = $image->data()->description;

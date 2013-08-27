@@ -2,6 +2,7 @@
 defined('MOODLE_INTERNAL') || die;
 
 $string['addimages'] = 'Add Images';
+$string['author'] = 'Author';
 $string['delete'] = 'delete';
 $string['deleteimage'] = 'Delete image';
 $string['description'] = 'Description:';
@@ -23,6 +24,7 @@ $string['rotateright'] = 'Right rotate';
 $string['saveimages'] = 'Save images';
 $string['showthumbnails'] = 'Show intro thumbnails';
 $string['showthumbnails_help'] = 'Show intro thumbnails help';
+$string['source'] = 'Source';
 $string['thumbnails'] = 'Thumbnails';
 $string['turneditingoff'] = 'End editing gallery';
 $string['turneditingon'] = 'Start editing gallery';

@@ -28,6 +28,8 @@ class mod_gallery_image_edit_form extends moodleform {
                     array('rows' => 3), array('collapsed' => true));
             }
             $mform->addElement('header','header-'.$uniqueId,'');
+            $mform->setExpanded('header-'.$uniqueId);
+            
             $mform->addElement('text','name-'.$uniqueId,  get_string('imagename','gallery'));
             $mform->setType('name-'.$uniqueId, PARAM_TEXT);
             

@@ -24,8 +24,7 @@ class mod_gallery_image_edit_form extends moodleform {
                 
             } else {
                 $uniqueId = 'desc-'.$image->id();
-                $mform->addElement('editor', 'desc-'.$uniqueId, '<img src="'.$image->thumbnail().'" />',
-                    array('rows' => 3), array('collapsed' => true));
+                $imagePreview = $image->thumbnail();
             }
             $mform->addElement('header','header-'.$uniqueId,'');
             $mform->setExpanded('header-'.$uniqueId);

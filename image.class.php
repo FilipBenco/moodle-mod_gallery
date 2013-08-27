@@ -148,8 +148,7 @@ class gallery_image {
         $image->name = $data->$nameName;
         
         $sourceTypeName = 'sourcetype-'.$uId;
-        $sourcetype = $data->$sourceTypeName;
-        if($sourcetype) {
+        if(isset($data->$sourceTypeName)) {
             $image->sourcetype = GALLERY_IMAGE_SOURCE_OWN;
             $image->source = $USER->id;
         } else {

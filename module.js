@@ -46,9 +46,9 @@ M.mod_gallery.send_request = function(imageId) {
                     var data = Y.JSON.parse(outcome.responseText);
                     M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).setHTML(data.description);
                     M.mod_gallery.Y.one('#mod-gallery-image-desc').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML'));
-                    M.mod_gallery.Y.one('"mod-gallery-image-source-' + imageId).setHteml(data.source);
+                    M.mod_gallery.Y.one('"mod-gallery-image-source-' + imageId).setHTML(data.source);
                     M.mod_gallery.Y.one('#mod-gallery-image-source').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).get('innerHTML'));
-                    M.mod_gallery.Y.one('"mod-gallery-image-name-' + imageId).setHteml(data.name);
+                    M.mod_gallery.Y.one('"mod-gallery-image-name-' + imageId).setHTML(data.name);
                     M.mod_gallery.Y.one('#mod-gallery-image-name').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).get('innerHTML'));
                 });
             }

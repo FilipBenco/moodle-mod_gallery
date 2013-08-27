@@ -43,7 +43,6 @@ class mod_gallery_image_edit_form extends moodleform {
             $mform->addElement('text','source-'.$uniqueId,  get_string('source','gallery'));
             $mform->setType('source-'.$uniqueId,PARAM_TEXT);
             $mform->disabledIf('source-'.$uniqueId, 'sourcetype-'.$uniqueId, 'checked');
-            $mform->addRule('source-'.$uniqueId, get_string('missingsourceerror','gallery'), 'required', 'null','client');
             
             $data['name-'.$uniqueId] = $image->data()->name;
             $data['desc-'.$uniqueId]['text'] = $image->data()->description;
@@ -69,5 +68,31 @@ class mod_gallery_image_edit_form extends moodleform {
         $this->add_action_buttons(true, get_string('saveimages','gallery'));
         
         $this->set_data($data);
-    }    
+    }   
+    
+    /**
+     * Perform minimal validation on the grade form
+     * @param array $data
+     * @param array $files
+     */
+    public function validation($data, $files) {
+        $errors = parent::validation($data, $files);
+        
+        $action = $this->_customdata['action'];
+        foreach($this->_customdata['images'] as $image) {
+            $uniqueId = '';
+            if($action == 'addimagedesc') 
+                $uniqueId = clean_param($image->stored_file()->get_filename(), PARAM_ALPHA);  
+            else 
+                $uniqueId = 'desc-'.$image->id();
+            
+            $sourceTypeName = 'sourcetype-'.$uniqueId;
+            $sourceName = 'source-'.$uniqueId;
+            $source = $data->$sourceName;
+            if(!isset($data->$sourceTypeName) && empty(trim($source)))
+                $errors[$sourceName] = get_string('missingsourceerror','gallery');
+
+        }
+        return $errors;
+    }
 }

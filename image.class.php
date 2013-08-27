@@ -120,7 +120,7 @@ class gallery_image {
     public static function get_initial_data() {
         $data = new stdClass;
         $data->id = 0;
-        $data->descriptionformat = FORMAT_MOODLE;
+        $data->descriptionformat = '';
         $data->description = '';
         $data->source = '';
         $data->sourcetype = false;

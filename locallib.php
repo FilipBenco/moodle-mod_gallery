@@ -77,7 +77,7 @@ function gallery_get_draft_images($context, $gallery) {
     global $PAGE, $CFG;
     $fs = get_file_storage();
     if (!$files = $fs->get_area_files(
-        $context->id, 'mod_gallery', GALLERY_IMAGE_DRAFTS_FILEAREA, $gallery->id(), 'filename DESC', false)) {
+        $context->id, 'mod_gallery', GALLERY_IMAGE_DRAFTS_FILEAREA, $gallery->id(), 'filename ASC', false)) {
         redirect($PAGE->url);
     }
     

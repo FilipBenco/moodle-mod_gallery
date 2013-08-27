@@ -48,10 +48,12 @@ class gallery_image {
             $this->thumbnail = $this->get_thumbnail();
             if($this->thumbnail == null)
                 $this->thumbnail = $this->create_thumbnail();
+            $this->load_thumbnail_info();
             
             $this->preview = $this->get_preview();
             if($this->preview == null)
                 $this->preview = $this->create_preview();
+            $this->load_preview_info();
 
             $this->image_url = moodle_url::make_pluginfile_url($this->image->get_contextid(), $this->image->get_component(), 
                     $this->image->get_filearea(), $this->image->get_itemid(), 
@@ -133,6 +135,27 @@ class gallery_image {
         return $this->image;
     }
     
+    public function rotate($angle) {
+        $fileinfo = array(
+            'contextid' => $this->context->id,
+            'component' => 'mod_gallery',
+            'filearea' => GALLERY_IMAGES_FILEAREA,
+            'itemid' => $this->data->id,
+            'filepath' => $this->image->get_filepath(),
+            'filename' => $this->data->id.'.png');
+
+        ob_start();
+        imagepng($this->get_image_rotated($angle));
+        $image = ob_get_clean();
+
+        $fs = get_file_storage();
+        $this->image = $fs->create_file_from_string($fileinfo, $image);
+        $this->create_preview();
+        $this->create_thumbnail();
+        $this->load_preview_info();
+        $this->load_thumbnail_info();
+    }
+    
     public function delete() {
         $this->delete_preview();
         $this->delete_thumbnail();
@@ -143,30 +166,32 @@ class gallery_image {
         $fs = get_file_storage();
         $thumbnail = $fs->get_file($this->context->id, 'mod_gallery', GALLERY_IMAGE_THUMBS_FILEAREA, $this->data->id, $this->image->get_filepath(),
                                        $this->data->id.'.png');
-        if ($thumbnail) {
-            $image_info = $thumbnail->get_imageinfo();
-
-            $this->t_height = $image_info['height'];
-            $this->t_width = $image_info['width'];
-            return $thumbnail;
-        }
-
-        return null;
+        return $thumbnail;
     }
     
     protected function get_preview() {
         $fs = get_file_storage();
         $preview = $fs->get_file($this->context->id, 'mod_gallery', GALLERY_IMAGE_PREVIEWS_FILEAREA, $this->data->id, $this->image->get_filepath(),
                                        $this->data->id.'.png');
-        if ($preview) {
-            $image_info = $preview->get_imageinfo();
+        return $preview;
+    }
+    
+    protected function load_preview_info() {
+        if ($this->preview) {
+            $image_info = $this->preview->get_imageinfo();
 
             $this->p_height = $image_info['height'];
             $this->p_width = $image_info['width'];
-            return $preview;
         }
+    }
+    
+    protected function load_thumbnail_info() {
+        if ($this->thumbnail) {
+            $image_info = $this->thumbnail->get_imageinfo();
 
-        return null;
+            $this->t_height = $image_info['height'];
+            $this->t_width = $image_info['width'];
+        }
     }
     
     public function create_thumbnail() {
@@ -244,5 +269,12 @@ class gallery_image {
         imagecopyresampled($resized, $image, 0, 0, 0, 0, $width, $height, $this->width, $this->height);
 
         return $resized;
+    }
+    
+    protected function get_image_rotated($angle) {
+        $image = imagecreatefromstring($this->image->get_content());
+        $rotated = imagerotate($image, $angle, 0);
+
+        return $rotated;
     }
 }

@@ -182,6 +182,14 @@ function gallery_process_move_image($direction,$id) {
     $DB->update_record('gallery_images',$i2);
 }
 
+function gallery_process_rotate_image($direction,$iid,$context) {
+    $angle = 90;
+    if($direction == 'left')
+        $angle = 270;
+    $image = gallery_load_image($context, $iid);
+    $image->rotate($angle);
+}
+
 function gallery_process_delete_image($iid, $context, $gallery) {
     global $CFG,$DB;
     require_once($CFG->dirroot.'/mod/gallery/image.class.php');

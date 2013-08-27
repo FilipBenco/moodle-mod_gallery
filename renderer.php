@@ -84,6 +84,10 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $o .= $this->output->box_start('generalbox', 'mod-gallery-edit-buttons');
             $urlparams = array('id' => $img->coursemodule->id, 'action' => 'editimage', 'image'=>$img->image->id());
             $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('editimage','gallery'));
+            $urlparams['action'] = 'rotatelefti';
+            $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('rotateleft','gallery'));
+            $urlparams['action'] = 'rotaterighti';
+            $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('rotateright','gallery'));
             $urlparams['action'] = 'imagedelete';
             $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('deleteimage','gallery'));
             $o .= $this->output->box_end();

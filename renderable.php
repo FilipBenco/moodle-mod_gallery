@@ -47,7 +47,7 @@ class gallery_image_preview implements renderable {
         $this->edit = $edit;
         $this->coursemodule = $coursemodule;
         if($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_OWN)
-            $this->user = $DB->get_record('users',array('id'=>$image->data()->source));
+            $this->user = $DB->get_record('user',array('id'=>$image->data()->source));
     }
     
 }

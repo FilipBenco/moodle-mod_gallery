@@ -131,7 +131,7 @@ function gallery_process_images_save($data, $images) {
         $imgData = $image->from_form($data);
         if($image->data()->description != $imgData->description ||
                 $image->data()->descriptionformat != $imgData->descriptionformat ||
-                $image->data()->sourcetype != $imgData->sourceType ||
+                $image->data()->sourcetype != $imgData->sourcetype ||
                 ($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT && $image->data()->source != $imgData->source)) {
             gallery_imagemanager::update_image($imgData);
         }

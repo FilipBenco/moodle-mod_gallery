@@ -150,8 +150,8 @@ class gallery_image {
 
         $fs = get_file_storage();
         $this->image = $fs->create_file_from_string($fileinfo, $image);
-        $this->create_preview();
-        $this->create_thumbnail();
+        $this->preview = $this->create_preview();
+        $this->thumbnail = $this->create_thumbnail();
         $this->load_preview_info();
         $this->load_thumbnail_info();
     }
@@ -177,7 +177,7 @@ class gallery_image {
     }
     
     protected function load_preview_info() {
-        if ($this->preview) {
+        if (isset($this->preview)) {
             $image_info = $this->preview->get_imageinfo();
 
             $this->p_height = $image_info['height'];
@@ -186,7 +186,7 @@ class gallery_image {
     }
     
     protected function load_thumbnail_info() {
-        if ($this->thumbnail) {
+        if (isset($this->thumbnail)) {
             $image_info = $this->thumbnail->get_imageinfo();
 
             $this->t_height = $image_info['height'];

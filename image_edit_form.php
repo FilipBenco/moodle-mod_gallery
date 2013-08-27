@@ -45,7 +45,7 @@ class mod_gallery_image_edit_form extends moodleform {
             $mform->disabledIf('source-'.$uniqueId, 'sourcetype-'.$uniqueId, 'checked');
             
             $data['name-'.$uniqueId] = $image->data()->name;
-            $data['desc-'.$uniqueId]['text'] = $image->data()->decription;
+            $data['desc-'.$uniqueId]['text'] = $image->data()->description;
             $data['desc-'.$uniqueId]['format'] = $image->data()->descriptionformat;
             if($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
                 $data['source-'.$uniqueId] = $image->data()->source;

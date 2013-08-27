@@ -128,7 +128,7 @@ function gallery_process_images_save($data, $images) {
     require_once($CFG->dirroot.'/mod/gallery/image.class.php');
     
     foreach($images as $image) {
-        $imgData = $image->from_form($data);
+        $imgData = clone $image->from_form($data);
         if($image->data()->description != $imgData->description ||
                 $image->data()->descriptionformat != $imgData->descriptionformat ||
                 $image->data()->sourcetype != $imgData->sourceType ||

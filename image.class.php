@@ -8,6 +8,8 @@ define('THUMBNAIL_HEIGHT',150);
 define('PREVIEW_WIDTH',1024);
 define('PREVIEW_HEIGHT',400);
 
+define('GALLERY_IMAGE_SOURCE_OWN',1);
+define('GALLERY_IMAGE_SOURCE_TEXT',2);
 
 require_once($CFG->libdir.'/gdlib.php');
 
@@ -66,29 +68,9 @@ class gallery_image {
                     $this->preview->get_filepath(), $this->preview->get_filename());
         }
     }
-    
-    public function setId($id) {
-        $this->data->id = $id;
-    }
-    
-    public function setDescription($description) {
-        $this->data->description = $description;
-    }
-    
-    public function setOrdering($ordering) {
-        $this->data->ordering = $ordering;
-    }
-    
+        
     public function id() {
         return $this->data->id;
-    }
-    
-    public function description() {
-        return $this->data->description;
-    }
-    
-    public function ordering() {
-        return $this->data->ordering;
     }
     
     public function thumbnail() {
@@ -133,6 +115,50 @@ class gallery_image {
     
     public function stored_file() {
         return $this->image;
+    }
+    
+    public static function get_initial_data() {
+        $data = new stdClass;
+        $data->id = 0;
+        $data->descriptionformat = FORMAT_MOODLE;
+        $data->description = '';
+        $data->source = '';
+        $data->sourcetype = false;
+        $data->name;
+        return $data;
+    }
+    
+    public function from_form($data) {
+        return gallery_image::parse_from_form($this->id(), $data, $this->data);
+    }
+    
+    public static function from_form_data($uId, $data) {
+        $image_data = gallery_image::get_initial_data();
+        
+        return gallery_image::parse_from_form($uId, $data, $image_data);
+    }
+    
+    private static function parse_from_form($uId, $data, $image) {
+        global $USER;
+        $descName = 'desc-'.$uId;  $descData = $data->$descName;
+        $image->description = $descData['text'];
+        $image->descriptionformat = $descData['format'];
+        
+        $nameName = 'name-'.$uId; 
+        $image->name = $data->$nameName;
+        
+        $sourceTypeName = 'sourcetype-'.$uId;
+        $sourcetype = $data->$sourceTypeName;
+        if($sourcetype) {
+            $image->sourcetype = GALLERY_IMAGE_SOURCE_OWN;
+            $image->source = $USER->id;
+        } else {
+            $image->sourcetype = GALLERY_IMAGE_SOURCE_TEXT;
+            $sourceName = 'source-'.$uId;
+            $image->source = $data->$sourceName;
+        }
+        
+        return $image;
     }
     
     public function rotate($angle) {

@@ -51,10 +51,8 @@ function gallery_process_drafts($context, $gallery) {
     
     $images = array();
     foreach ($preloaded_images as $file) {
-        $data = new stdClass;
-        $data->id = 0;
-        $data->descriptionformat = FORMAT_MOODLE;
-        $data->description = $file->get_filename();
+        $data = gallery_image::get_initial_data();
+        $data->name = $file->get_filename();
         if ($file->is_valid_image()) {
             $fileinfo = array(
                 'contextid' => $context->id,
@@ -86,8 +84,8 @@ function gallery_get_draft_images($context, $gallery) {
     require_once($CFG->dirroot.'/mod/gallery/image.class.php');
     $images = array();
     foreach($files as $file) {
-        $data = new stdClass;
-        $data->description = $file->get_filename();
+        $data = gallery_image::get_initial_data();
+        $data->name = $file->get_filename();
         $images[] = new gallery_image($data,$file,null,false);
     }
     return $images;
@@ -95,14 +93,17 @@ function gallery_get_draft_images($context, $gallery) {
 
 function gallery_process_image_drats_save($data, $context, $gallery, $files) {
     global $CFG;
-
+    require_once($CFG->dirroot.'/mod/gallery/image.class.php');
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
-    $imageManager = new gallery_imagemanager;
+
     $fs = get_file_storage();
     foreach ($files as $file) {
-        $editorname = 'desc-'.clean_param($file->stored_file()->get_filename(), PARAM_ALPHA);
-        $desc_data = $data->$editorname;
-        $image_data = $imageManager->create_image($gallery->id(), $desc_data['text'], $desc_data['format'], pathinfo($file->stored_file()->get_filename(), PATHINFO_EXTENSION));
+        $uId = clean_param($file->stored_file()->get_filename(), PARAM_ALPHA);
+        $imgData = gallery_image::from_form_data($uId, $data);
+        $imgData->gallery = $gallery->id();
+        $imgData->type = pathinfo($file->stored_file()->get_filename(), PATHINFO_EXTENSION);
+        $image_data = gallery_imagemanager::create_image($imgData);
+        
         $filepath = '/'.$gallery->id().'/';
         $filename = $image_data->id.'.'.pathinfo($file->stored_file()->get_filename(), PATHINFO_EXTENSION);
         $fileinfo = array(
@@ -122,25 +123,27 @@ function gallery_process_image_drats_save($data, $context, $gallery, $files) {
 }
 
 function gallery_process_images_save($data, $images) {
-    global $DB;
+    global $CFG;
+    require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
+    require_once($CFG->dirroot.'/mod/gallery/image.class.php');
+    
     foreach($images as $image) {
-        $editorname = 'desc-'.$image->id();
-        $desc_data = $data->$editorname;
-        if($image->description() != $desc_data['text']) {
-            $data = $image->data();
-            $data->description = $desc_data['text'];
-            $data->descriptionformat = $desc_data['format'];
-            $data->timemodified = time();
-            $DB->update_record('gallery_images',$data);
+        $imgData = $image->from_form($data);
+        if($image->data()->description != $imgData->description ||
+                $image->data()->descriptionformat != $imgData->descriptionformat ||
+                $image->data()->sourcetype != $imgData->sourceType ||
+                ($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT && $image->data()->source != $imgData->source)) {
+            gallery_imagemanager::update_image($imgData);
         }
     }
 }
 
 function gallery_load_images($gallery, $context) {
     global $CFG;
+    require_once($CFG->dirroot.'/mod/gallery/image.class.php');
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
-    $image_manager = new gallery_imagemanager;
-    $images_db = $image_manager->get_images($gallery);
+    
+    $images_db = gallery_imagemanager::get_images($gallery);
     
     $images = array();
     $fs = get_file_storage();
@@ -153,9 +156,10 @@ function gallery_load_images($gallery, $context) {
 }
 
 function gallery_load_image($context,$iid) {
-    global $DB, $CFG;
+    global $CFG;
     require_once($CFG->dirroot.'/mod/gallery/image.class.php');
-    $image_db = $DB->get_record('gallery_images',array('id'=>$iid));
+    require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
+    $image_db = gallery_imagemanager::get_image($iid);
     
     $fs = get_file_storage();
     $filepath = '/'.$image_db->gallery.'/';
@@ -195,13 +199,12 @@ function gallery_process_delete_image($iid, $context, $gallery) {
     require_once($CFG->dirroot.'/mod/gallery/image.class.php');
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
     require_once($CFG->dirroot.'/comment/lib.php');
-    $img = $DB->get_record('gallery_images',array('id'=>$iid));
+    $img = gallery_imagemanager::get_image($iid);
     $fs = get_file_storage();
     $file = $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $img->id, '/'.$gallery->id().'/', $img->id.'.'.$img->type);
     $image = new gallery_image($img,$file,$context);
     $image->delete();
-    $manager = new gallery_imagemanager;
-    $manager->delete_image($iid);
+    gallery_imagemanager::delete_image($iid);
     comment::delete_comments(array('contextid'=>$context->id,'commentarea'=>'gallery_image_comments','itemid'=>$iid));
 }
 

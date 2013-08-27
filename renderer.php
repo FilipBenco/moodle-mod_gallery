@@ -80,6 +80,8 @@ class mod_gallery_renderer extends plugin_renderer_base {
         require_once($CFG->dirroot.'/comment/lib.php');
         $o = '';
         
+        $o .= $this->output->heading($img->image->data()->name, '3');
+        
         if($img->edit) {
             $o .= $this->output->box_start('generalbox', 'mod-gallery-edit-buttons');
             $urlparams = array('id' => $img->coursemodule->id, 'action' => 'editimage', 'image'=>$img->image->id());
@@ -125,7 +127,19 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box('','mod-gallery-clear');
         $o .= $this->output->box_end();
         
-        $o .= $this->output->box($img->image->description(),null,'mod-gallery-image-desc');
+        $o .= $this->output->box_start('','mod-gallery-image-source');
+        if($img->image->data()->sourcetype == GALLERY_IMAGE_SOURCE_OWN) {
+            $urlparams = array('id'=>$img->user->id);
+            $o .= '<strong>'.get_string('author','gallery') . ':</strong> ';
+            $o .= $this->output->action_link(new moodle_url('/user/profile.php',$urlparams), fullname($img->user));
+        }
+        if($img->image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
+            $o .= '<strong>'.get_string('source','gallery') . ':</strong> ';
+            $o .= $img->image->data()->name;
+        }
+        $o .= $this->output->box_end();
+        
+        $o .= $this->output->box(format_text($img->image->data()->description,$img->image->data()->descriptionformat),null,'mod-gallery-image-desc');
 
         comment::init();
         $options = new stdClass();
@@ -139,11 +153,11 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $comment = new comment($options);
             $comment->set_view_permission(true);
             if($thumb->id() == $img->image->id()) {
-                $o .= '<div id="mod-gallery-image-comments-'.$thumb->id().'" class="box generalbox">';
+                $o .= '<div id="mod-gallery-image-comments-'.$thumb->id().'" class="box generalbox mod-gallery-image-comments">';
                 $o .= $comment->output(true);
                 $o .= "</div>";
             } else {
-                $o .= '<div id="mod-gallery-image-comments-'.$thumb->id().'" class="box generalbox" style="display:none;">';
+                $o .= '<div id="mod-gallery-image-comments-'.$thumb->id().'" class="box generalbox mod-gallery-image-comments" style="display:none;">';
                 $o .= $comment->output(true);
                 $o .= "</div>";
             }

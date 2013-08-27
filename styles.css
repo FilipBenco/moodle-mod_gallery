@@ -99,6 +99,21 @@
     display: inline;
 }
 
+#mod-gallery-image-desc {
+    margin-right: 185px;
+    padding:10px;
+}
+
+#mod-gallery-image-source {
+    margin-right: 185px;
+    padding: 2px 10px 10px 10px;
+    text-align: right;
+}
+
+.mod-gallery-image-comments {
+    padding: 10px;
+}
+
 .mod-gallery-image-comments-hidden {
     display:none;
 }

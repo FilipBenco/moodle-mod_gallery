@@ -37,13 +37,17 @@ class gallery_image_preview implements renderable {
     public $context;
     public $edit;
     public $coursemodule;
+    public $user;
     
     public function __construct($image, $thumbnails, $coursemodule, $context, $edit) {
+        global $DB;
         $this->image = $image;
         $this->thumbnails = $thumbnails;
         $this->context = $context;
         $this->edit = $edit;
         $this->coursemodule = $coursemodule;
+        if($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_OWN)
+            $this->user = $DB->get_record('users',array('id'=>$image->data()->source));
     }
     
 }

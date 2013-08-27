@@ -13,22 +13,44 @@ class mod_gallery_image_edit_form extends moodleform {
         
         $data = array();
         foreach($this->_customdata['images'] as $image) {
+            $uniqueId = '';
+            $imagePreview = '';
             if($action == 'addimagedesc') {
-                $elementname = 'desc-'.  clean_param($image->stored_file()->get_filename(), PARAM_ALPHA);
-                $mform->addElement('editor', $elementname,'<img src="'.
-                moodle_url::make_pluginfile_url($image->stored_file()->get_contextid(), $image->stored_file()->get_component(), 
+                $uniqueId = clean_param($image->stored_file()->get_filename(), PARAM_ALPHA);
+                $imagePreview =  moodle_url::make_pluginfile_url($image->stored_file()->get_contextid(), $image->stored_file()->get_component(), 
                         $image->stored_file()->get_filearea(), $image->stored_file()->get_itemid(), 
-                        $image->stored_file()->get_filepath(), $image->stored_file()->get_filename()).'" style="max-width:150px; max-height:150px;" />',
-                    array('rows' => 3), array('collapsed' => true));
+                        $image->stored_file()->get_filepath(), $image->stored_file()->get_filename());
+                
             } else {
-                $elementname = 'desc-'.$image->id();
-                $mform->addElement('editor', $elementname,'<img src="'.$image->thumbnail().'" />',
+                $uniqueId = 'desc-'.$image->id();
+                $mform->addElement('editor', 'desc-'.$uniqueId, '<img src="'.$image->thumbnail().'" />',
                     array('rows' => 3), array('collapsed' => true));
             }
             
-           
-            $mform->setType($elementname, PARAM_RAW);
-            $data[$elementname]['text'] = $image->description();
+            $mform->addElement('text','name-'.$uniqueId,  get_string('imagename','gallery'));
+            $mform->setType('name-'.$uniqueId, PARAM_TEXT);
+            
+            $mform->addElement('editor', 'desc-'.$uniqueId,'<img src="'.$imagePreview.'" style="max-width:150px; max-height:150px;" />',
+                    array('rows' => 3), array('collapsed' => true));
+            $mform->setType('desc-'.$uniqueId, PARAM_RAW);
+            
+            $mform->addElement('checkbox','sourcetype-'.$uniqueId,get_string('ownsource','gallery'));
+            $mform->setType('sourcetype-'.$uniqueId, PARAM_BOOL);
+            
+            $mform->addElement('text','source-'.$uniqueId,  get_string('source','gallery'));
+            $mform->setType('source-'.$uniqueId,PARAM_TEXT);
+            $mform->disabledIf('source-'.$uniqueId, 'sourcetype-'.$uniqueId, 'checked');
+            
+            $data['name-'.$uniqueId] = $image->data()->name;
+            $data['desc-'.$uniqueId]['text'] = $image->data()->decription;
+            $data['desc-'.$uniqueId]['format'] = $image->data()->descriptionformat;
+            if($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
+                $data['source-'.$uniqueId] = $image->data()->source;
+                $data['sourcetype-'.$uniqueId] = false;
+            } elseif($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_OWN) {
+                $data['source-'.$uniqueId] = '';
+                $data['sourcetype-'.$uniqueId] = true;
+            }
         }
         
         $mform->addElement('hidden','action',$action);

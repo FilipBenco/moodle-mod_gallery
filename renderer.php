@@ -41,11 +41,10 @@ class mod_gallery_renderer extends plugin_renderer_base {
         }
         
        
-        $o .= $this->output->box_start('generalbox','images');
-        $counter = 0;
-        $image_count = count($widget->images);
+        $o .= $this->output->box_start('generalbox','mod-gallery-thumb-container');
+        if($widget->edit)
+            $o .= $this->output->box('','','mod-gallery-drop-indicator');
         foreach($widget->images as $image) {
-            $counter ++;
             $i = '<img src="'.$image->thumbnail().'" style="margin-top:'.floor((150-$image->t_height())/2).'px;"/>';         
             $urlparams = array('id' => $widget->coursemodule->id, 'action' => 'image', 'image' => $image->id());
             $a = $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $i, null, array('class'=>'mod-gallery-image-thumb-a'));
@@ -55,14 +54,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $o .= $a;
                 $o .= $this->output->box('','mod-gallery-clear');
                 $o .= $this->output->box_start('mod-gallery-thumb-actions');
-                if($counter > 1) {
-                    $urlparams['action'] = 'imagemoveleft';
-                    $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('moveleft','gallery').' ');
-                }
-                if($counter < $image_count) {
-                    $urlparams['action'] = 'imagemoveright';
-                    $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('moveright','gallery').' ');
-                }
+                $o .= $this->output->box('', 'mod-gallery-drag-thumb');
                 $urlparams['action'] = 'imagedelete';
                 $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('delete','gallery'));
                 $o .= $this->output->box_end();
@@ -104,9 +96,9 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box_start('mod-gallery-image-preview-table-cell');
         foreach($img->thumbnails as $thumb) {
             if($thumb->id() == $img->image->id()) 
-                $o .= '<a href="'.$thumb->image().'" data-lightbox="gallery" id="mod-gallery-image-perview-a-'.$thumb->id().'" >';
+                $o .= '<a href="'.$thumb->image().'" data-lightbox="gallery" title="'.$thumb->data()->name.'" id="mod-gallery-image-perview-a-'.$thumb->id().'" >';
             else 
-                $o .= '<a href="'.$thumb->image().'" data-lightbox="gallery" style="display:none;" id="mod-gallery-image-perview-a-'.$thumb->id().'" >';
+                $o .= '<a href="'.$thumb->image().'" data-lightbox="gallery" title="'.$thumb->data()->name.'" style="display:none;" id="mod-gallery-image-perview-a-'.$thumb->id().'" >';
                 
             $o .= '<img src="'.$thumb->preview().'" class="mod-gallery-image-preview-img"/>';  
             $o .= '</a>';

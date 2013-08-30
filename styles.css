@@ -35,7 +35,8 @@
     width: 162px;
     height: 180px;
     text-align: center;
-    margin-bottom: 4px;
+    margin: 3px;
+    padding: -3px;
 }
 
 .mod-gallery-thumb-actions {
@@ -116,4 +117,19 @@
 
 .mod-gallery-image-comments-hidden {
     display:none;
+}
+
+.mod-gallery-drag-thumb {
+    width: 16px;
+    height: 16px;
+    float: left;
+    background: red;
+}
+
+#mod-gallery-drop-indicator {
+    width: 2px;
+    margin: 4px -1px;
+    background: red;
+    height: 150px;
+    float: left;
 }

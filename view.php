@@ -54,14 +54,6 @@ if($action == 'addimagedesc') {
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
     }
 }
-if($action == 'imagemoveright') {
-    gallery_process_move_image('right', $iid);
-    $action = 'gallery';
-}
-if($action == 'imagemoveleft') {
-    gallery_process_move_image('left', $iid);
-    $action = 'gallery';
-}
 if($action == 'imagedelete') {
     gallery_process_delete_image($iid, $context, $gallery);
     redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
@@ -109,6 +101,8 @@ if($action == 'editimage') {
 
 switch($action) {
     case 'gallery':
+        if($USER->editing)
+            $PAGE->requires->js('/mod/gallery/js/edit.js');
         echo $renderer->render(new gallery_header($gallery->name(),$context));
         $images = gallery_load_images($gallery, $context);
         echo $renderer->render(new gallery_view_gallery($gallery, $images, $cm, $USER->editing));     
@@ -117,7 +111,7 @@ switch($action) {
         $PAGE->requires->css('/mod/gallery/css/lightbox.css');
         $PAGE->requires->js('/mod/gallery/js/jquery-1.10.2.min.js');
         $PAGE->requires->js('/mod/gallery/js/lightbox-2.6.min.js');        
-        $PAGE->requires->js('/mod/gallery/module.js',true);
+        $PAGE->requires->js('/mod/gallery/js/module.js',true);
         $module = array(
         		'name'      => 'mod_gallery',
         		'fullpath'  => '/mod/gallery/module.js',

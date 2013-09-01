@@ -130,11 +130,8 @@
 }
 
 .mod-gallery-drag-thumb {
-    width: 16px;
-    height: 16px;
     float: left;
-    background: red;
-    cursor:move;
+    cursor: move;
 }
 
 #mod-gallery-drop-indicator {

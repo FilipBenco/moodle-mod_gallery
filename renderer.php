@@ -49,7 +49,6 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $urlparams = array('id' => $widget->coursemodule->id, 'action' => 'image', 'image' => $image->id());
             
             if($widget->edit) {
-                
                 $o .= '<div class="mod-gallery-thumb-edit" data-image-id="'.$image->id().'">';
                 $o .= $a = $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $i, null, array('class'=>'mod-gallery-image-thumb-a-edit'));
                 $o .= $this->output->box('','mod-gallery-clear');

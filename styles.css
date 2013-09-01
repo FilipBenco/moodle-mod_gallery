@@ -130,7 +130,6 @@
 }
 
 .mod-gallery-drag-thumb {
-    float: left;
     cursor: move;
 }
 
@@ -140,4 +139,8 @@
     background: red;
     height: 154px;
     float: left;
+}
+
+.mod-gallery-thumb-actions {
+    text-align: right;
 }

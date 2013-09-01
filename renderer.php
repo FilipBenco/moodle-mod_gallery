@@ -55,7 +55,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $o .= $this->output->box_start('mod-gallery-thumb-actions');
                 $o .= $this->output->box('', 'mod-gallery-drag-thumb');
                 $urlparams['action'] = 'imagedelete';
-                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('delete','gallery'));
+                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('delete','gallery'),array('onclick'=>"return confirm('".get_string('confirmdelete','gallery')."')"));
                 $o .= $this->output->box_end();
                 $o .= '</div>';
             } else
@@ -82,7 +82,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $urlparams['action'] = 'rotaterighti';
             $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('rotateright','gallery'));
             $urlparams['action'] = 'imagedelete';
-            $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('deleteimage','gallery'));
+            $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('deleteimage','gallery'), array('onclick'=>"return confirm('".get_string('confirmdelete','gallery')."')"));
             $o .= $this->output->box_end();
         }
         

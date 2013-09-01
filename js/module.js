@@ -33,12 +33,13 @@ function showImage(imageId) {
 };
 
 M.mod_gallery.send_request = function(imageId) {
-        this.api = M.cfg.wwwroot+'/mod/gallery/ajax.php?sesskey='+M.cfg.sesskey,
-        M.mod_gallery.Y.io(this.api,{
+    this.api = M.cfg.wwwroot+'/mod/gallery/ajax.php?sesskey='+M.cfg.sesskey;
+    M.mod_gallery.Y.io(this.api,{
         method : 'POST',
         data :  build_querystring({
             image : imageId,
-            ctx : M.mod_gallery.context
+            ctx : M.mod_gallery.context,
+            action : 'display'
         }),
         on : {
             success : function(tid, outcome) {

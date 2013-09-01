@@ -43,24 +43,23 @@ class mod_gallery_renderer extends plugin_renderer_base {
        
         $o .= $this->output->box_start('generalbox','mod-gallery-thumb-container');
         if($widget->edit)
-            $o .= $this->output->box('','','mod-gallery-drop-indicator');
+            $o .= '<div id="mod-gallery-drop-indicator" style="display:none;"></div>';
         foreach($widget->images as $image) {
             $i = '<img src="'.$image->thumbnail().'" style="margin-top:'.floor((150-$image->t_height())/2).'px;"/>';         
             $urlparams = array('id' => $widget->coursemodule->id, 'action' => 'image', 'image' => $image->id());
-            $a = $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $i, null, array('class'=>'mod-gallery-image-thumb-a'));
             
             if($widget->edit) {
-                $o .= $this->output->box_start('mod-gallery-thumb-edit');
-                $o .= $a;
+                $o .= '<div class="mod-gallery-thumb-edit" data-image-id="'.$image->id().'">';
+                $o .= $a = $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $i, null, array('class'=>'mod-gallery-image-thumb-a-edit'));
                 $o .= $this->output->box('','mod-gallery-clear');
                 $o .= $this->output->box_start('mod-gallery-thumb-actions');
                 $o .= $this->output->box('', 'mod-gallery-drag-thumb');
                 $urlparams['action'] = 'imagedelete';
                 $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('delete','gallery'));
                 $o .= $this->output->box_end();
-                $o .= $this->output->box_end();
+                $o .= '</div>';
             } else
-                $o.= $a;
+                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $i, null, array('class'=>'mod-gallery-image-thumb-a'));
         }
         $o .= $this->output->box_end();
         

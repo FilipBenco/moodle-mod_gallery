@@ -1,71 +1,99 @@
-YUI().use('dd-drop', 'dd-proxy','dd-constrain','node', function(Y) {
-    //Listen for all drop:over events
-    var X = 0;
-    Y.DD.DDM.on('drop:over', function(e) {
-        var drop = e.drop.get('node');
-        
-        var isLeft = false;
-        if(X < drop.getX()+80)
-            isLeft = true;
-            
-        if(!isLeft)
-            drop = drop.next();
-        dropNode = Y.Node.one('#mod-gallery-drop-indicator');
+M.mod_gallery = M.mod_gallery || {};
 
-        if(drop)
-            drop.insert(dropNode,'before');
-        else
-            Y.Node.one('#mod-gallery-thumb-container').append(dropNode);
-            
-        dropNode.show();
-    });
+M.mod_gallery.init = function(Y, cfg) {
+    this.Y = Y;
+    this.context = cfg.context;
     
-    //Listen for all drag:drag events
-    Y.DD.DDM.on('drag:drag', function(e) {
-        X = e.target.mouseXY[0];
-    });
-    
-    //Listen for all drag:start events
-    Y.DD.DDM.on('drag:start', function(e) {
-        //Get our drag object
-        var drag = e.target;
-        //Set some styles here
-        drag.get('node').setStyle('opacity', '.25');
-        drag.get('dragNode').set('innerHTML', drag.get('node').get('innerHTML'));
-    });
-    //Listen for a drag:end events
-    Y.DD.DDM.on('drag:end', function(e) {
-        var drag = e.target;
-        //Put our styles back
-        drag.get('node').setStyles({
-            visibility: '',
-            opacity: '1'
-        });
-    });
-    //Listen for all drag:drophit events
-    Y.DD.DDM.on('drag:drophit', function(e) {
-        var drag = e.drag.get('node');
-        var dropIndicator = Y.Node.one('#mod-gallery-drop-indicator');
-        dropIndicator.hide();
-        dropIndicator.insert(drag,'before');
-    });
-    
+    this.currentDrag = 0;
+    this.X = 0;
     
     //Get the list of li's in the lists and make them draggable
-    var lis = Y.Node.all('.mod-gallery-drag-thumb');
+    var lis = M.mod_gallery.Y.all('.mod-gallery-drag-thumb');
     lis.each(function(v, k) {
-        var dd = new Y.DD.Drag({
+        var dd = new M.mod_gallery.Y.DD.Drag({
             node: v
-        }).plug(Y.Plugin.DDProxy, {
+        }).plug(M.mod_gallery.Y.Plugin.DDProxy, {
             moveOnEnd: false
         });
     });
 
     //Create simple targets for the 2 lists.
-    var uls = Y.Node.all('.mod-gallery-thumb-edit');
+    var uls = M.mod_gallery.Y.all('.mod-gallery-thumb-edit');
     uls.each(function(v, k) {
-        var tar = new Y.DD.Drop({
+        var tar = new M.mod_gallery.Y.DD.Drop({
             node: v
         });
     });
-});
+    
+    M.mod_gallery.Y.DD.DDM.on('drop:over', function(e) {
+        var drop = e.drop.get('node');
+
+        var isLeft = false;
+        if(M.mod_gallery.X < drop.getX()+80)
+            isLeft = true;
+
+        if(!isLeft)
+            drop = drop.next();
+        var dropNode = M.mod_gallery.Y.one('#mod-gallery-drop-indicator');
+
+        if(drop)
+            drop.insert(dropNode,'before');
+        else
+            M.mod_gallery.Y.one('#mod-gallery-thumb-container').append(dropNode);
+
+        dropNode.show();
+    });
+
+    M.mod_gallery.Y.DD.DDM.on('drag:drag', function(e) {
+        M.mod_gallery.X = e.target.mouseXY[0];
+    });
+
+    M.mod_gallery.Y.DD.DDM.on('drag:start', function(e) {
+        //Get our drag object
+        var drag = e.target;
+        M.mod_gallery.currentDrag = drag.get('node');
+        //Set some styles here
+        drag.get('node').get('parentNode').get('parentNode').setStyle('opacity', '.25');
+        drag.get('dragNode').set('innerHTML', drag.get('node').get('parentNode').get('parentNode').one('.mod-gallery-image-thumb-a-edit').get('innerHTML'));
+        drag.get('dragNode').setStyles({
+            width: '150px',
+            height: '150px',
+            opacity: '0.25'
+        });
+
+    });
+
+    M.mod_gallery.Y.DD.DDM.on('drag:end', function(e) {
+        var drag = e.target;
+        //Put our styles back
+        drag.get('node').get('parentNode').get('parentNode').setStyles({
+            visibility: '',
+            opacity: '1'
+        });
+    });
+
+    M.mod_gallery.Y.DD.DDM.on('drag:drophit', function(e) {
+        var dropIndicator = M.mod_gallery.Y.one('#mod-gallery-drop-indicator');
+        dropIndicator.hide();
+        dropIndicator.insert(M.mod_gallery.currentDrag.get('parentNode').get('parentNode'),'before');
+
+        var beforeNode = M.mod_gallery.currentDrag.get('parentNode').get('parentNode').previous();
+        var beforeId = 0;
+        if(beforeNode)
+            beforeId = beforeNode.getData('image-id');
+
+        this.api = M.cfg.wwwroot+'/mod/gallery/ajax.php?sesskey='+M.cfg.sesskey;
+        M.mod_gallery.Y.io(this.api,{
+            method : 'POST',
+            data :  build_querystring({
+                beforeImage : beforeId,
+                image : M.mod_gallery.currentDrag.get('parentNode').get('parentNode').getData('image-id'),
+                ctx : M.mod_gallery.context,
+                action : 'move'
+            }),
+            context : this
+        });
+
+    });
+};
+

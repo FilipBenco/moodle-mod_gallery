@@ -101,8 +101,16 @@ if($action == 'editimage') {
 
 switch($action) {
     case 'gallery':
-        if($USER->editing)
-            $PAGE->requires->js('/mod/gallery/js/edit.js');
+        if($USER->editing) {
+            $PAGE->requires->js('/mod/gallery/js/edit.js',true);
+            $module = array(
+        		'name'      => 'mod_gallery',
+        		'fullpath'  => '/mod/gallery/js/edit.js',
+        		'requires'  => array('base', 'dom', 'dd-drop', 'dd-proxy', 'io',)
+            );
+            $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id)), false, $module);
+        
+        }
         echo $renderer->render(new gallery_header($gallery->name(),$context));
         $images = gallery_load_images($gallery, $context);
         echo $renderer->render(new gallery_view_gallery($gallery, $images, $cm, $USER->editing));     
@@ -114,7 +122,7 @@ switch($action) {
         $PAGE->requires->js('/mod/gallery/js/module.js',true);
         $module = array(
         		'name'      => 'mod_gallery',
-        		'fullpath'  => '/mod/gallery/module.js',
+        		'fullpath'  => '/mod/gallery/js/module.js',
         		'requires'  => array('base', 'dom', 'event','io',)
         );
         $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id,'currentImage'=>$iid)), false, $module);

@@ -110,7 +110,7 @@ function gallery_extend_settings_navigation(settings_navigation $settings, navig
 }
 
 function gallery_get_coursemodule_info($coursemodule) {
-    global $CFG;
+    global $CFG,$OUTPUT,$PAGE;
     
     require_once($CFG->dirroot.'/mod/gallery/gallery.class.php');
 
@@ -123,7 +123,21 @@ function gallery_get_coursemodule_info($coursemodule) {
             $info->content = format_module_intro('gallery', $gallery->data(), $coursemodule->id, false);
         }
         if($gallery->showthumbnails()) {
-            $info->content .= 'showing thumbnails';
+            require_once($CFG->dirroot.'/mod/gallery/locallib.php');
+            $context = context_module::instance($coursemodule->id);
+            $images = gallery_load_images($gallery, $context);
+            
+            $PAGE->requires->js('/mod/gallery/js/intro.js');
+            
+            $o = '';
+            $o .= $OUTPUT->box_start('mod-gallery-intro-thumb-container');
+            
+            foreach($images as $img)
+                $o .= $OUTPUT->action_link('#', '<img src="'.$img->thumbnail().'" />');
+            
+            $o .= $OUTPUT->box_end();
+            
+            $info->content .= $o;
         }
         
         $info->name  = $gallery->name();

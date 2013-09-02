@@ -32,4 +32,5 @@ M.mod_gallery.moveIntro = function(direction,gallery) {
 
 function modGalleryMoveThumb(gallery,direction) {
     M.mod_gallery.moveIntro(direction,gallery);
+    return false;
 }

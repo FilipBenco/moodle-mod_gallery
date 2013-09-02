@@ -166,7 +166,7 @@
 /********INTRO STYLING*********/
 /******************************/
 #mod-gallery-image-previous-intro {
-    position: fixed;
+    position: absolute;
     top:0px;
     left:0px;
     z-index:2;
@@ -177,7 +177,7 @@
 }
 
 #mod-gallery-image-next-intro {
-    position: fixed;
+    position: absolute;
     top:0px;
     right:0px;
     z-index:2;

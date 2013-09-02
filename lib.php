@@ -135,7 +135,7 @@ function gallery_get_coursemodule_info($coursemodule) {
             
             $o = $OUTPUT->box_start('mod-gallery-intro-thumbnails-container');
             $o .= '<div class="mod-gallery-image-previous-intro" onclick="return modGalleryMoveThumb('.$gallery->id().',"left")">';
-            $o .= $OUTPUT->box_start('mod-gallery-intro-thumb-cont-helper-'.$gallery->id(),'mod-gallery-intro-thumb-cont-helper');
+            $o .= $OUTPUT->box_start('mod-gallery-intro-thumb-cont-helper','mod-gallery-intro-thumb-cont-helper-'.$gallery->id());
             $o .= '<ul>';
             foreach($images as $img) {
                 $urlParams['image']=$img->id();

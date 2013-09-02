@@ -3,7 +3,7 @@ M.mod_gallery = M.mod_gallery || {};
 M.mod_gallery.init = function(Y, cfg) {
     this.Y = Y;
     this.currentPosition = new Array();
-    this.maxPosition = Y.one("#mod-gallery-intro-thumb-cont-helper > ul").get('winWidth');    
+    this.maxPosition = Y.one(".mod-gallery-intro-thumb-cont-helper > ul").get('winWidth');    
 };
 
 M.mod_gallery.moveIntro = function(direction,gallery) {

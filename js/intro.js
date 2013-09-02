@@ -24,6 +24,7 @@ M.mod_gallery.moveIntro = function(direction,gallery) {
     
     var move = new M.mod_gallery.Y.Anim({
             node: '#mod-gallery-intro-thumb-cont-helper-'+gallery,
+            duration: 0.5,
             to: {
                 scroll: [M.mod_gallery.currentPosition[gallery],0]
             }

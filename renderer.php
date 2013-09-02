@@ -56,12 +56,12 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $o .= $this->output->box('','mod-gallery-clear');
                 $o .= $this->output->box_start('mod-gallery-thumb-actions');
                 $urlparams['action'] = 'rotateleftg';
-                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('i/reload', get_string('deleteimage','gallery')));
+                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('rotateleft', get_string('rotateleft','gallery'),'mod_gallery'));
                 $urlparams['action'] = 'rotaterightg';
-                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('i/reload', get_string('deleteimage','gallery')));
-                $o .= $this->output->pix_icon('i/move_2d', get_string('moveimage','gallery'),'moodle',array('class'=>'mod-gallery-drag-thumb'));
+                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('rotateright', get_string('rotateright','gallery'),'mod_gallery'));
+                $o .= $this->output->pix_icon('dragdrop', get_string('moveimage','gallery'),'mod_gallery',array('class'=>'mod-gallery-drag-thumb'));
                 $urlparams['action'] = 'imagedelete';
-                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('t/delete', get_string('deleteimage','gallery')), null, array('onclick'=>"return confirm('".get_string('confirmdelete','gallery')."')"));
+                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('delete', get_string('deleteimage','gallery')), 'mod_gallery', array('onclick'=>"return confirm('".get_string('confirmdelete','gallery')."')"));
                 $o .= $this->output->box_end();
                 $o .= '</div>';
             } else

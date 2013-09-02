@@ -30,8 +30,10 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box_end();
         
         $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');
-        $urlparams = array('id' => $widget->coursemodule->id, 'action' => 'image','image'=>reset($widget->images)->id());
-        $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('viewpreview','gallery'));
+        if(count($widget->images)) {
+            $urlparams = array('id' => $widget->coursemodule->id, 'action' => 'image','image'=>reset($widget->images)->id());
+            $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('viewpreview','gallery'));
+        }
         if($widget->edit) {
             $urlparams = array('id' => $widget->coursemodule->id, 'action' => 'addimages');
             $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('addimages','gallery'));

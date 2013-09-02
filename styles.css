@@ -218,10 +218,11 @@
 }
 
 .mod-gallery-intro-thumbnails-container ul li {
-    display:inline-block;
+    display:block;
     height:152px;
     width:152px;
     padding:2px;
+    float:left;
 }
 
 .mod-gallery-intro-thumbnails-container ul li a {
@@ -229,6 +230,7 @@
     border:1px solid transparent;
     height:150px;
     width:150px;
+    text-align: center;
 }
 
 .mod-gallery-intro-thumbnails-container ul li a:hover {

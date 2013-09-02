@@ -149,6 +149,7 @@ function gallery_get_coursemodule_info($coursemodule) {
                 $o .= '</li>';
             }
             $o .= '</ul>';
+            $o .= $OUTPUT->box('mod-gallery-clear');
             $o .= $OUTPUT->box_end();
             $o .= '<div class="mod-gallery-image-next-intro" onclick="return modGalleryMoveThumb('.$gallery->id().',\'right\')"></div>';
             $o .= $OUTPUT->box_end();

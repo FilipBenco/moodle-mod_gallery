@@ -113,7 +113,13 @@ switch($action) {
         }
         echo $renderer->render(new gallery_header($gallery->name(),$context));
         $images = gallery_load_images($gallery, $context);
-        echo $renderer->render(new gallery_view_gallery($gallery, $images, $cm, $USER->editing));     
+        if($USER->editing)
+            echo $renderer->render(new gallery_view_gallery($gallery, $images, $cm, 
+                    $USER->editing, has_capability('mod/gallery:addimages', $context),
+                    has_capability('mod/gallery:editimages', $context), has_capability('mod/gallery:editownimages', $context),
+                    has_capability('mod/gallery:deleteimages', $context), has_capability('mod/gallery:deleteownimages', $context)));     
+        else
+            echo $renderer->render(new gallery_view_gallery($gallery, $images, $cm));
         break;
     case 'image':
         $PAGE->requires->css('/mod/gallery/css/lightbox.css');
@@ -128,7 +134,12 @@ switch($action) {
         $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id,'currentImage'=>$iid)), false, $module);
         echo $renderer->render(new gallery_header($gallery->name(),$context));
         $images = gallery_load_images($gallery, $context);
-        echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context, $USER->editing));
+        if($USER->editing)
+            echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context, $USER->editing,
+                    has_capability('mod/gallery:editimages', $context), has_capability('mod/gallery:editownimages', $context),
+                    has_capability('mod/gallery:deleteimages', $context), has_capability('mod/gallery:deleteownimages', $context)));
+        else
+            echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context));
         break;
     case 'addimages':
         echo $renderer->render(new gallery_header($gallery->name(),$context));

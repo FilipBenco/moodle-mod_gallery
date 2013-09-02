@@ -99,7 +99,12 @@ function gallery_extend_settings_navigation(settings_navigation $settings, navig
 
     $params = $PAGE->url->params();
 
-    if (!empty($params['id']) && has_capability('mod/gallery:edit', $PAGE->cm->context)) {
+    if (!empty($params['id']) && (has_capability('mod/gallery:edit', $PAGE->cm->context) ||
+                has_capability('mod/gallery:addimages', $PAGE->cm->context) ||
+                has_capability('mod/gallery:editimages', $PAGE->cm->context) ||
+                has_capability('mod/gallery:editownimages', $PAGE->cm->context) ||
+                has_capability('mod/gallery:deleteimages', $PAGE->cm->context) ||
+                has_capability('mod/gallery:deleteownimages', $PAGE->cm->context))) {
         if (!empty($USER->editing)) {
             $string = get_string("turneditingoff","gallery");
             $edit = '0';

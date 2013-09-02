@@ -43,6 +43,9 @@ if($action == 'display') {
         $return->source = '<strong>'.get_string('source','gallery') . ':</strong> '.$img->source;
     }
 
+    $return->canedit = has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $img->user == $USER->id);
+    $return->candelete = has_capability('mod/gallery:deleteimages', $context) || (has_capability('mod/gallery:deleteownimages', $context) && $img->user == $USER->id);
+    
     echo json_encode($return);
 
     header('Content-Length: ' . ob_get_length() );

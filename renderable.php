@@ -9,11 +9,27 @@ class gallery_view_gallery implements renderable {
     public $coursemodule;
     public $images;
     
-    public function __construct(gallery $gallery, array $images, $coursemodule, $edit = 0) {
+    public $canadd;
+    
+    public $canedit;
+    public $caneditown;
+    
+    public $candelete;
+    public $candeleteown;
+    
+    public $currentuser;
+    
+    public function __construct(gallery $gallery, array $images, $coursemodule, $edit = 0, $canadd = 0, $canedit = 0, $caneditown = 0, $candelete = 0, $candeleteown = 0, $currentuser = 0) {
         $this->gallery = $gallery;
         $this->edit = $edit;
         $this->coursemodule = $coursemodule;
         $this->images = $images;
+        $this->canadd = $canadd;
+        $this->canedit = $canedit;
+        $this->caneditown = $caneditown;
+        $this->candelete = $candelete;
+        $this->candeleteown = $candeleteown;
+        $this->currentuser = $currentuser;
     }
 }
 
@@ -39,13 +55,26 @@ class gallery_image_preview implements renderable {
     public $coursemodule;
     public $user;
     
-    public function __construct($image, $thumbnails, $coursemodule, $context, $edit) {
+    public $canedit;
+    public $caneditown;
+    
+    public $candelete;
+    public $candeleteown;
+    
+    public $currentuser;
+    
+    public function __construct($image, $thumbnails, $coursemodule, $context, $edit = 0, $canedit = 0, $caneditown = 0, $candelete = 0, $candeleteown = 0, $currentuser = 0) {
         global $DB;
         $this->image = $image;
         $this->thumbnails = $thumbnails;
         $this->context = $context;
         $this->edit = $edit;
         $this->coursemodule = $coursemodule;
+        $this->canedit = $canedit;
+        $this->caneditown = $caneditown;
+        $this->candelete = $candelete;
+        $this->candeleteown = $candeleteown;
+        $this->currentuser = $currentuser;
         if($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_OWN)
             $this->user = $DB->get_record('user',array('id'=>$image->data()->source));
     }

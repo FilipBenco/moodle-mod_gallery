@@ -118,6 +118,7 @@ class gallery_image {
     }
     
     public static function get_initial_data() {
+        global $USER;
         $data = new stdClass;
         $data->id = 0;
         $data->descriptionformat = FORMAT_HTML;
@@ -125,6 +126,7 @@ class gallery_image {
         $data->source = '';
         $data->sourcetype = false;
         $data->name = '';
+        $data->user = $USER->id;
         return $data;
     }
     

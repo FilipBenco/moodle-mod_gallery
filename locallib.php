@@ -11,7 +11,12 @@ define('GALLERY_IMAGE_DRAFTS_FILEAREA','gallery_drafts');
 function gallery_process_editing($edit, $context) {
     global $USER;
 
-    if (has_capability('mod/gallery:edit', $context)) {
+    if (has_capability('mod/gallery:edit', $context) || 
+            has_capability('mod/gallery:editimages', $context) ||
+            has_capability('mod/gallery:editownimages', $context) ||
+            has_capability('mod/gallery:deleteimages', $context) ||
+            has_capability('mod/gallery:deleteownimages', $context) ||
+            has_capability('mod/gallery:addimages', $context)) {
         if ($edit != -1 and confirm_sesskey()) 
             $USER->editing = $edit;
     } else

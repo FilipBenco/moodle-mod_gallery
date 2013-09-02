@@ -99,7 +99,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
         else
             $o .= $this->output->pix_icon('prev', get_string('previousimage','gallery'), 'mod_gallery',array('class'=>'mod-gallery-image-previous','style'=>'display:none;'));
         
-        if($img->image->data()->ordering != count($img->thumbnails))
+        if($img->image->data()->ordering == count($img->thumbnails))
             $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('class'=>'mod-gallery-image-next','style'=>'display:none;'));
         else
             $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('class'=>'mod-gallery-image-next'));

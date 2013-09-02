@@ -36,7 +36,8 @@ function showImageNext() {
     var next = M.mod_gallery.Y.one('#mod-gallery-thumb-'+M.mod_gallery.currentImage).next('a');
     var imageId = next.getData('id');
     M.mod_gallery.showImage(imageId);
-    if(next.next('a'))
+    var sNext = next.next('a');
+    if(sNext)
         M.mod_gallery.Y.one('#mod-gallery-image-next').show();
     else
         M.mod_gallery.Y.one('#mod-gallery-image-next').hide();

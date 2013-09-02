@@ -141,15 +141,14 @@ function gallery_get_coursemodule_info($coursemodule) {
             $o = $OUTPUT->box_start('mod-gallery-intro-thumbnails-container');
             $o .= '<div class="mod-gallery-image-previous-intro" onclick="return modGalleryMoveThumb('.$gallery->id().',\'left\')"></div>';
             $o .= $OUTPUT->box_start('mod-gallery-intro-thumb-cont-helper','mod-gallery-intro-thumb-cont-helper-'.$gallery->id());
-            $o .= '<ul>';
+            $o .= $OUTPUT->box_start('mod-gallery-intro-thumbnails-table');
             foreach($images as $img) {
                 $urlParams['image']=$img->id();
-                $o .= '<li>';
+                $o .= $OUTPUT->box_start('mod-gallery-intro-thumbnails-table-cell');
                 $o .= $OUTPUT->action_link(new moodle_url('/mod/gallery/view.php',$urlParams), '<img src="'.$img->thumbnail().'" style="margin-top:'.floor((150-$img->t_height())/2).'px;" />');
-                $o .= '</li>';
+                $o .= $OUTPUT->box_end();
             }
-            $o .= '</ul>';
-            $o .= $OUTPUT->box('mod-gallery-clear');
+            $o .= $OUTPUT->box_end();
             $o .= $OUTPUT->box_end();
             $o .= '<div class="mod-gallery-image-next-intro" onclick="return modGalleryMoveThumb('.$gallery->id().',\'right\')"></div>';
             $o .= $OUTPUT->box_end();

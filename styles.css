@@ -209,23 +209,21 @@
     position:relative;
 }
 
-.mod-gallery-intro-thumbnails-container ul {
+.mod-gallery-intro-thumbnails-table {
     height:156px;
-    list-style:none outside none;
-    margin:0;
-    padding:0;
-    white-space:nowrap;
+    margin:0px;
+    padding:0px;
+    display:table;
 }
 
-.mod-gallery-intro-thumbnails-container ul li {
-    display:block;
+.mod-gallery-intro-thumbnails-table-cell {
+    display:table-cell;
     height:152px;
     width:152px;
     padding:2px;
-    float:left;
 }
 
-.mod-gallery-intro-thumbnails-container ul li a {
+.mod-gallery-intro-thumbnails-table-cell a {
     display: block;
     border:1px solid transparent;
     height:150px;

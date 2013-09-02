@@ -48,7 +48,7 @@ function showImagePrev() {
     var previous = M.mod_gallery.Y.one('#mod-gallery-thumb-'+M.mod_gallery.currentImage).previous('a');
     var imageId = previous.getData('id');
     M.mod_gallery.showImage(imageId);
-    if(previous.previous('a').previous())
+    if(previous.previous('a'))
         M.mod_gallery.Y.one('#mod-gallery-image-previous').show();
     else
         M.mod_gallery.Y.one('#mod-gallery-image-previous').hide();

@@ -4,6 +4,7 @@ M.mod_gallery.init = function(Y, cfg) {
     this.Y = Y;
     this.currentPosition = 0;
     this.maxPosition = Y.one("#mod-gallery-intro-thumbnails-container > ul").get('winWidth');
+    this.currentY = Y.one("#mod-gallery-intro-thumbnails-container > ul").getY();
     
     M.mod_gallery.Y.one('#mod-gallery-image-next-intro').on('click',function(e) {
         M.mod_gallery.moveIntro('right');
@@ -30,7 +31,7 @@ M.mod_gallery.moveIntro = function(direction) {
     var move = new M.mod_gallery.Y.Anim({
             node: '#mod-gallery-intro-thumbnails-container',
             to: {
-                xy: [0,M.mod_gallery.currentPosition]
+                xy: [M.mod_gallery.currentPosition,M.mod_gallery.currentY]
             }
         });
     move.run();

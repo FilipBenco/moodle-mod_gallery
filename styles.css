@@ -227,3 +227,9 @@
 #mod-gallery-intro-thumbnails-container ul li a:hover {
     border-color: #999;
 }
+
+#mod-gallery-intro-thumb-cont-helper {
+    position:absolute;
+    height:100%;
+    width:100%;
+}

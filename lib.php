@@ -114,7 +114,7 @@ function gallery_extend_settings_navigation(settings_navigation $settings, navig
 }
 
 function gallery_get_coursemodule_info($coursemodule) {
-    global $CFG,$OUTPUT,$PAGE;
+    global $CFG,$OUTPUT;
     
     require_once($CFG->dirroot.'/mod/gallery/gallery.class.php');
 
@@ -130,8 +130,6 @@ function gallery_get_coursemodule_info($coursemodule) {
             require_once($CFG->dirroot.'/mod/gallery/locallib.php');
             $context = context_module::instance($coursemodule->id);
             $images = gallery_load_images($gallery, $context);
-            
-            $PAGE->requires->js('/mod/gallery/js/intro.js');
             
             $o = '';
             $o .= $OUTPUT->box_start('','mod-gallery-intro-thumb-container');
@@ -149,6 +147,11 @@ function gallery_get_coursemodule_info($coursemodule) {
     } else {
         return null;
     }
+}
+
+function gallery_cm_info_view() {
+    global $PAGE;
+    $PAGE->requires->js('/mod/gallery/js/intro.js');
 }
 
 function gallery_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {

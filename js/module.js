@@ -33,10 +33,10 @@ function showImage(imageId) {
 };
 
 function showImageNext() {
-    var current = M.mod_gallery.Y.one('#mod-gallery-thumb-'+M.mod_gallery.currentImage);
-    var imageId = current.next().getData('id');
+    var next = M.mod_gallery.Y.one('#mod-gallery-thumb-'+M.mod_gallery.currentImage).next();
+    var imageId = next.getData('id');
     M.mod_gallery.showImage(imageId);
-    if(current.next().next())
+    if(next.next())
         M.mod_gallery.Y.one('#mod-gallery-image-next').show();
     else
         M.mod_gallery.Y.one('#mod-gallery-image-next').hide();
@@ -44,10 +44,10 @@ function showImageNext() {
 }
 
 function showImagePrev() {
-    var current = M.mod_gallery.Y.one('#mod-gallery-thumb-'+M.mod_gallery.currentImage);
-    var imageId = current.previous().getData('id');
+    var previous = M.mod_gallery.Y.one('#mod-gallery-thumb-'+M.mod_gallery.currentImage).previous();
+    var imageId = previous.getData('id');
     M.mod_gallery.showImage(imageId);
-    if(current.previous().previous())
+    if(previous.previous().previous())
         M.mod_gallery.Y.one('#mod-gallery-image-next').show();
     else
         M.mod_gallery.Y.one('#mod-gallery-image-next').hide();

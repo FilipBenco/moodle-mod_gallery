@@ -61,7 +61,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('rotateright', get_string('rotateright','gallery'),'mod_gallery'));
                 $o .= $this->output->pix_icon('dragdrop', get_string('moveimage','gallery'),'mod_gallery',array('class'=>'mod-gallery-drag-thumb'));
                 $urlparams['action'] = 'imagedelete';
-                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('delete', get_string('deleteimage','gallery')), 'mod_gallery', array('onclick'=>"return confirm('".get_string('confirmdelete','gallery')."')"));
+                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('delete', get_string('deleteimage','gallery'),'mod_gallery'), null, array('onclick'=>"return confirm('".get_string('confirmdelete','gallery')."')"));
                 $o .= $this->output->box_end();
                 $o .= '</div>';
             } else

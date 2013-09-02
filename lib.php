@@ -141,7 +141,7 @@ function gallery_get_coursemodule_info($coursemodule) {
                 $o .= '</li>';
             }
             $o .= '</ul>';
-            $OUTPUT->pix_icon('next', get_string('next','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-previous','onclick'=>'return showImagePrev()'));
+            $o .= $OUTPUT->pix_icon('next', get_string('next','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-previous','onclick'=>'return showImagePrev()'));
             $o .= '</div>';
             
             $info->content .= $o;

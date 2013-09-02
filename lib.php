@@ -149,7 +149,7 @@ function gallery_get_coursemodule_info($coursemodule) {
     }
 }
 
-function gallery_cm_info_view() {
+function gallery_cm_info_view(cm_info $cm) {
     global $PAGE;
     $PAGE->requires->js('/mod/gallery/js/intro.js');
 }

@@ -81,7 +81,7 @@ if($action == 'rotaterightg') {
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
     $img = gallery_imagemanager::get_image($iid);
     if(has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
-        gallery_process_rotate_image('right',$iid,$context);
+        gallery_process_rotate_image('right',$img,$context);
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
     } else
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
@@ -90,7 +90,7 @@ if($action == 'rotatelefti') {
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
     $img = gallery_imagemanager::get_image($iid);
     if(has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
-        gallery_process_rotate_image('left',$iid,$context);
+        gallery_process_rotate_image('left',$img,$context);
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
     } else
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
@@ -99,7 +99,7 @@ if($action == 'rotaterighti') {
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
     $img = gallery_imagemanager::get_image($iid);
     if(has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
-        gallery_process_rotate_image('right',$iid,$context);
+        gallery_process_rotate_image('right',$img,$context);
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
     } else
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');

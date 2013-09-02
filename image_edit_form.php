@@ -28,7 +28,7 @@ class mod_gallery_image_edit_form extends moodleform {
                 $imagePreview = $image->thumbnail();
             }
             
-            $mform->addElement('header','header-'.$uniqueId,'');
+            $mform->addElement('header','header-'.$uniqueId,$image->data()->name);
             $mform->setExpanded('header-'.$uniqueId);
             
             $mform->addElement('text','name-'.$uniqueId,  get_string('imagename','gallery'));

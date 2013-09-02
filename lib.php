@@ -132,11 +132,11 @@ function gallery_get_coursemodule_info($coursemodule) {
             $images = gallery_load_images($gallery, $context);
             
             
-            $o = '<div style="overflow:hidden;height:160px;width:100%;">';
+            $o = '<div style="overflow:hidden;height:154px;width:100%;">';
             $o .= '<ul style="height:160;list-style:none outside none;margin:0;padding:0;white-space:nowrap;">';
             foreach($images as $img) {
-                $o .= '<li style="display:inline-block;height: 160px;">';
-                $o .= $OUTPUT->action_link('#', '<img src="'.$img->thumbnail().'" />');
+                $o .= '<li style="display:inline-block;height:150px;width:150px;padding:2px;">';
+                $o .= $OUTPUT->action_link('#', '<img src="'.$img->thumbnail().'" style="margin-top:'.floor((150-$img->t_height())/2).'px;" />');
                 $o .= '</li>';
             }
             $o .= '</ul>';

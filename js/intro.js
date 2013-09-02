@@ -3,7 +3,8 @@ M.mod_gallery = M.mod_gallery || {};
 M.mod_gallery.init = function(Y, cfg) {
     this.Y = Y;
     this.currentPosition = new Array();
-    this.maxScroll = Y.one(".mod-gallery-intro-thumb-cont-helper > ul").get('winWidth')-Y.one('.mod-gallery-intro-thumb-cont-helper').get('docWidth');    
+    var test = Y.one('.mod-gallery-intro-thumb-cont-helper').get('docWidth');
+    this.maxScroll = Y.one(".mod-gallery-intro-thumb-cont-helper > ul").get('winWidth') - Y.one('.mod-gallery-intro-thumb-cont-helper').get('docWidth');    
 };
 
 M.mod_gallery.moveIntro = function(direction,gallery) {

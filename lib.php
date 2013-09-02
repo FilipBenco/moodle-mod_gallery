@@ -131,12 +131,15 @@ function gallery_get_coursemodule_info($coursemodule) {
             $context = context_module::instance($coursemodule->id);
             $images = gallery_load_images($gallery, $context);
             
-            $o = '';
-            $o .= '<div style="overflow:hidden;height:160px;width:100%;">';
             
-            foreach($images as $img)
+            $o = '<div style="overflow:hidden;height:160px;width:100%;">';
+            $o .= '<ul style="height:160;list-style:none outside none;margin:0;padding:0;white-space:nowrap;">';
+            foreach($images as $img) {
+                $o .= '<li style="display:inline-block;height: 160px;">';
                 $o .= $OUTPUT->action_link('#', '<img src="'.$img->thumbnail().'" />');
-            
+                $o .= '</li>';
+            }
+            $o .= '</ul>';
             $o .= '</div>';
             
             $info->content .= $o;

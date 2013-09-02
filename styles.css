@@ -217,7 +217,7 @@
 }
 
 .mod-gallery-intro-thumbnails-table a {
-    display: table-cell;
+    display:table-cell;
     border:1px solid transparent;
     height:150px;
     width:150px;

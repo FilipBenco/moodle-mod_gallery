@@ -165,7 +165,7 @@
 /******************************/
 /********INTRO STYLING*********/
 /******************************/
-#mod-gallery-image-previous-intro {
+.mod-gallery-image-previous-intro {
     position: absolute;
     top:0px;
     left:0px;
@@ -176,7 +176,7 @@
     background:url([[pix:gallery|previntro]]); 
 }
 
-#mod-gallery-image-next-intro {
+.mod-gallery-image-next-intro {
     position: absolute;
     top:0px;
     right:0px;
@@ -187,21 +187,21 @@
     background:url([[pix:gallery|nextintro]]); 
 }
 
-#mod-gallery-image-previous-intro:hover {
+.mod-gallery-image-previous-intro:hover {
     background:url([[pix:gallery|previntrohover]]); 
 }
 
-#mod-gallery-image-next-intro:hover {
+.mod-gallery-image-next-intro:hover {
     background:url([[pix:gallery|nextintrohover]]); 
 }
 
-#mod-gallery-intro-thumbnails-container {
+.mod-gallery-intro-thumbnails-container {
     height:156px;
     width:100%;
     position:relative;
 }
 
-#mod-gallery-intro-thumbnails-container ul {
+.mod-gallery-intro-thumbnails-container ul {
     height:156px;
     list-style:none outside none;
     margin:0;
@@ -209,25 +209,25 @@
     white-space:nowrap;
 }
 
-#mod-gallery-intro-thumbnails-container ul li {
+.mod-gallery-intro-thumbnails-container ul li {
     display:inline-block;
     height:152px;
     width:152px;
     padding:2px;
 }
 
-#mod-gallery-intro-thumbnails-container ul li a {
+.mod-gallery-intro-thumbnails-container ul li a {
     display: block;
     border:1px solid transparent;
     height:150px;
     width:150px;
 }
 
-#mod-gallery-intro-thumbnails-container ul li a:hover {
+.mod-gallery-intro-thumbnails-container ul li a:hover {
     border-color: #999;
 }
 
-#mod-gallery-intro-thumb-cont-helper {
+.mod-gallery-intro-thumb-cont-helper {
     position:absolute;
     overflow:hidden;
     top:0px;

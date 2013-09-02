@@ -133,9 +133,9 @@ function gallery_get_coursemodule_info($coursemodule) {
             
             $urlParams = array('id'=>$coursemodule->id,'action'=>'image');
             
-            $o = $OUTPUT->box_start('','mod-gallery-intro-thumbnails-container');
-            $o .= $OUTPUT->box('','','mod-gallery-image-previous-intro');
-            $o .= $OUTPUT->box_start('','mod-gallery-intro-thumb-cont-helper');
+            $o = $OUTPUT->box_start('mod-gallery-intro-thumbnails-container');
+            $o .= '<div class="mod-gallery-image-previous-intro" onclick="return modGalleryMoveThumb('.$gallery->id().',"left")">';
+            $o .= $OUTPUT->box_start('mod-gallery-intro-thumb-cont-helper-'.$gallery->id(),'mod-gallery-intro-thumb-cont-helper');
             $o .= '<ul>';
             foreach($images as $img) {
                 $urlParams['image']=$img->id();
@@ -145,7 +145,7 @@ function gallery_get_coursemodule_info($coursemodule) {
             }
             $o .= '</ul>';
             $o .= $OUTPUT->box_end();
-            $o .= $OUTPUT->box('','','mod-gallery-image-next-intro');
+            $o .= '<div class="mod-gallery-image-next-intro" onclick="return modGalleryMoveThumb('.$gallery->id().',"right")">';
             $o .= $OUTPUT->box_end();
             
             $info->content .= $o;

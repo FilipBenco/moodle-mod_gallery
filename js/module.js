@@ -33,8 +33,10 @@ M.mod_gallery.showImage = function(imageId) {
     else
         M.mod_gallery.Y.one('#mod-gallery-image-previous').hide();
 
-    M.mod_gallery.Y.all('#mod-gallery-edit-buttons input[name="image"]').set('value',imageId);
-    return false;
+    var links = M.mod_gallery.Y.all('#mod-gallery-navigation-buttons a');    
+    links.each(function (linkNode) {
+        linkNode.set('href',linkNode.get('href').replace('&image=(.*)$','&image=' + M.mod_gallery.currentImage));
+    });
 };
 
 function showImage(imageId) {

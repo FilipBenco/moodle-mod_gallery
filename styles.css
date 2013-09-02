@@ -161,3 +161,18 @@
     text-align: right;
 }
 
+#mod-gallery-image-previous-intro {
+    position: absolute;
+    top:54px;
+    left:-15px;
+    z-index: 2;
+    cursor: pointer;
+}
+
+#mod-gallery-image-next-intro {
+    position: absolute;
+    top:54px;
+    right:-15px;
+    z-index: 2;
+    cursor: pointer;
+}

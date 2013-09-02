@@ -163,11 +163,11 @@
 
 #mod-gallery-image-previous-intro {
     position: absolute;
-    top:54px;
+    top:0px;
     left:0px;
     z-index:2;
     bottom:0px;
-    width:10px;
+    width:32px;
     cursor: pointer;
     background:url([[pix:gallery|previntro]]); 
 }
@@ -178,7 +178,7 @@
     right:0px;
     z-index:2;
     bottom:0px;
-    width:10px;
+    width:32px;
     cursor: pointer;
     background:url([[pix:gallery|nextintro]]); 
 }

@@ -16,12 +16,12 @@ M.mod_gallery.init = function(Y, cfg) {
 };
 
 M.mod_gallery.moveIntro = function(direction) {
-    if(direction === 'left') {
+    if(direction === 'right') {
         if(M.mod_gallery.currentPosition < 154)
             M.mod_gallery.currentPosition = 0;
         else
             M.mod_gallery.currentPosition -= 154;
-    } else if(direction ==='right') {
+    } else if(direction ==='left') {
         if((M.mod_gallery.maxPosition - M.mod_gallery.currentPosition) < 154)
             M.mod_gallery.currentPosition = M.mod_gallery.maxPosition;
         else

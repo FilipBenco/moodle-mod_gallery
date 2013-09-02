@@ -97,12 +97,12 @@ M.mod_gallery.send_request = function(imageId) {
                     M.mod_gallery.Y.one('#mod-gallery-image-source').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).get('innerHTML'));
                     M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).setHTML(data.name);
                     M.mod_gallery.Y.one('#mod-gallery-image-name').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).get('innerHTML'));
-                    if(this.perm[imageId][0])
+                    if(M.mod_gallery.perm[imageId][0])
                         M.mod_gallery.Y.all('.mod-gallery-edit-actions').show();
                     else
                         M.mod_gallery.Y.all('.mod-gallery-edit-actions').hide();
 
-                    if(this.perm[imageId][1])
+                    if(M.mod_gallery.perm[imageId][1])
                         M.mod_gallery.Y.all('.mod-gallery-delete-actions').show();
                     else
                         M.mod_gallery.Y.all('.mod-gallery-delete-actions').hide();

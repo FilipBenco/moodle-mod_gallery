@@ -27,6 +27,7 @@ $string['modulenameplural'] = 'Galleries';
 $string['moveimage'] = 'move image';
 $string['nextimage'] = 'Next Image';
 $string['next'] = 'Next';
+$string['nopermission'] = 'Sorry, but you don\'t have a permission to do this action.';
 $string['pluginadministration'] = 'Gallery administration';
 $string['pluginname'] = 'Gallery';
 $string['previews'] = 'Previews';

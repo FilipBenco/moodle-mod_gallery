@@ -94,3 +94,12 @@ class gallery_form implements renderable {
     }
 
 }
+
+class gallery_no_permission implements renderable {
+    
+    public $cm;
+    
+    public function __construct($cm) {
+        $this->cm = $cm;
+    }
+}

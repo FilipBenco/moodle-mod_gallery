@@ -33,6 +33,8 @@ $mform = null;
 $images = null;
 $loadImages = true;
 if($action == 'addimages') {
+    if(!has_capability('mod/gallery:addimages', $context))
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
     require_once($CFG->dirroot.'/mod/gallery/image_upload_form.php');
     $mform = new mod_gallery_image_upload_form(null,array('id'=>$cm->id));
     if ($mform->is_cancelled()) 
@@ -43,6 +45,9 @@ if($action == 'addimages') {
     }
 }
 if($action == 'addimagedesc') {
+    if(!has_capability('mod/gallery:addimages', $context))
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
+    
     require_once($CFG->dirroot.'/mod/gallery/image_edit_form.php');
     if($loadImages)
         $images = gallery_get_draft_images ($context, $gallery);
@@ -55,26 +60,54 @@ if($action == 'addimagedesc') {
     }
 }
 if($action == 'imagedelete') {
-    gallery_process_delete_image($iid, $context, $gallery);
-    redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
+    require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
+    $img = gallery_imagemanager::get_image($iid);
+    if(has_capability('mod/gallery:deleteimages', $context) || (has_capability('mod/gallery:deleteownimages', $context) && $USER->id == $img->user)) {
+        gallery_process_delete_image($img, $context, $gallery);
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
+    } else 
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
 }
 if($action == 'rotateleftg') {
-    gallery_process_rotate_image('left',$iid,$context);
-    redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
+    require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
+    $img = gallery_imagemanager::get_image($iid);
+    if(has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
+        gallery_process_rotate_image('left',$img,$context);
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
+    } else 
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
 }
 if($action == 'rotaterightg') {
-    gallery_process_rotate_image('right',$iid,$context);
-    redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
+    require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
+    $img = gallery_imagemanager::get_image($iid);
+    if(has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
+        gallery_process_rotate_image('right',$iid,$context);
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
+    } else
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
 }
 if($action == 'rotatelefti') {
-    gallery_process_rotate_image('left',$iid,$context);
-    redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
+    require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
+    $img = gallery_imagemanager::get_image($iid);
+    if(has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
+        gallery_process_rotate_image('left',$iid,$context);
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
+    } else
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
 }
 if($action == 'rotaterighti') {
-    gallery_process_rotate_image('right',$iid,$context);
-    redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
+    require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
+    $img = gallery_imagemanager::get_image($iid);
+    if(has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
+        gallery_process_rotate_image('right',$iid,$context);
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
+    } else
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
 }
 if($action == 'editimages') {
+    if(!has_capability('mod/gallery:editimages', $context))
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
+    
     require_once($CFG->dirroot.'/mod/gallery/image_edit_form.php');
     $images = gallery_load_images ($gallery, $context);
     $mform = new mod_gallery_image_edit_form(null,array('action'=>'editimages','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id));
@@ -87,14 +120,19 @@ if($action == 'editimages') {
 }
 if($action == 'editimage') {
     require_once($CFG->dirroot.'/mod/gallery/image_edit_form.php');
-    $images = array(gallery_load_image($context, $iid));
-    $mform = new mod_gallery_image_edit_form(null,array('action'=>'editimage','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id, 'image'=>$iid));
-    if ($mform->is_cancelled()) 
-        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
-    if (($formdata = $mform->get_data()) && confirm_sesskey()) {
-        gallery_process_images_save($formdata, $images);
-        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
-    }
+    require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
+    $img = gallery_imagemanager::get_image($iid);
+    if(has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
+        $images = array(gallery_load_image($context, $img));
+        $mform = new mod_gallery_image_edit_form(null,array('action'=>'editimage','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id, 'image'=>$iid));
+        if ($mform->is_cancelled()) 
+            redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
+        if (($formdata = $mform->get_data()) && confirm_sesskey()) {
+            gallery_process_images_save($formdata, $images);
+            redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
+        }
+    } else
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
 }
 
 
@@ -131,7 +169,9 @@ switch($action) {
         		'fullpath'  => '/mod/gallery/js/module.js',
         		'requires'  => array('base', 'dom', 'event','io')
         );
-        $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id,'currentImage'=>$iid)), false, $module);
+        $canedit = has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $images[$iid]->data()->user);
+        $candelete = has_capability('mod/gallery:deleteimages', $context) || (has_capability('mod/gallery:deleteownimages', $context) && $USER->id == $images[$iid]->data()->user);
+        $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id,'currentImage'=>$iid,'canEdit'=>$canedit,'canDelete'=>$candelete)), false, $module);
         echo $renderer->render(new gallery_header($gallery->name(),$context));
         $images = gallery_load_images($gallery, $context);
         if($USER->editing)
@@ -151,6 +191,10 @@ switch($action) {
         echo $renderer->render(new gallery_header($gallery->name(),$context));
         require_once($CFG->dirroot.'/mod/gallery/image_edit_form.php');
         echo $renderer->render(new gallery_form('imageedit', $mform));
+        break;
+    case 'nopermission':
+        echo $renderer->render(new gallery_header($gallery->name(),$context));
+        echo $renderer->render(new gallery_no_permission($cm));
         break;
 }
 

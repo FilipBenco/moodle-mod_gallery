@@ -4,6 +4,10 @@ M.mod_gallery.init = function(Y, cfg) {
     this.Y = Y;
     this.context = cfg.context;
     this.currentImage = cfg.currentImage;
+    this.perm = new Array();
+    this.perm[cfg.currentImage] = new Array();
+    this.perm[cfg.currentImage][0] = cfg.canEdit;
+    this.perm[cfg.currentImage][1] = cfg.canDelete;
 };
 
 M.mod_gallery.showImage = function(imageId) {
@@ -12,6 +16,17 @@ M.mod_gallery.showImage = function(imageId) {
     if(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML') !== '' ||
         M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).get('innerHTML') !== '' ||
         M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).get('innerHTML') !== '') {
+    
+        if(this.perm[imageId][0])
+            M.mod_gallery.Y.all('.mod-gallery-edit-actions').show();
+        else
+            M.mod_gallery.Y.all('.mod-gallery-edit-actions').hide();
+        
+        if(this.perm[imageId][1])
+            M.mod_gallery.Y.all('.mod-gallery-delete-actions').show();
+        else
+            M.mod_gallery.Y.all('.mod-gallery-delete-actions').hide();
+        
         M.mod_gallery.Y.one('#mod-gallery-image-desc').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML'));
         M.mod_gallery.Y.one('#mod-gallery-image-name').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).get('innerHTML'));
         M.mod_gallery.Y.one('#mod-gallery-image-source').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).get('innerHTML'));
@@ -73,12 +88,24 @@ M.mod_gallery.send_request = function(imageId) {
             success : function(tid, outcome) {
                 YUI().use('json-parse', 'node', function (Y) {
                     var data = Y.JSON.parse(outcome.responseText);
+                    M.mod_gallery.perm[imageId] = new Array();
+                    M.mod_gallery.perm[imageId][0] = data.canedit;
+                    M.mod_gallery.perm[imageId][1] = data.candelete;
                     M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).setHTML(data.description);
                     M.mod_gallery.Y.one('#mod-gallery-image-desc').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML'));
                     M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).setHTML(data.source);
                     M.mod_gallery.Y.one('#mod-gallery-image-source').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).get('innerHTML'));
                     M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).setHTML(data.name);
                     M.mod_gallery.Y.one('#mod-gallery-image-name').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).get('innerHTML'));
+                    if(this.perm[imageId][0])
+                        M.mod_gallery.Y.all('.mod-gallery-edit-actions').show();
+                    else
+                        M.mod_gallery.Y.all('.mod-gallery-edit-actions').hide();
+
+                    if(this.perm[imageId][1])
+                        M.mod_gallery.Y.all('.mod-gallery-delete-actions').show();
+                    else
+                        M.mod_gallery.Y.all('.mod-gallery-delete-actions').hide();
                 });
             }
         },

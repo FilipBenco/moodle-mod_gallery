@@ -160,11 +160,10 @@ function gallery_load_images($gallery, $context) {
     return $images;
 }
 
-function gallery_load_image($context,$iid) {
+function gallery_load_image($context,$image_db) {
     global $CFG;
     require_once($CFG->dirroot.'/mod/gallery/image.class.php');
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
-    $image_db = gallery_imagemanager::get_image($iid);
     
     $fs = get_file_storage();
     $filepath = '/'.$image_db->gallery.'/';
@@ -191,26 +190,25 @@ function gallery_process_move_image($direction,$id) {
     $DB->update_record('gallery_images',$i2);
 }
 
-function gallery_process_rotate_image($direction,$iid,$context) {
+function gallery_process_rotate_image($direction,$img,$context) {
     $angle = 90;
     if($direction == 'right')
         $angle = 270;
-    $image = gallery_load_image($context, $iid);
+    $image = gallery_load_image($context, $img);
     $image->rotate($angle);
 }
 
-function gallery_process_delete_image($iid, $context, $gallery) {
+function gallery_process_delete_image($img, $context, $gallery) {
     global $CFG;
     require_once($CFG->dirroot.'/mod/gallery/image.class.php');
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
     require_once($CFG->dirroot.'/comment/lib.php');
-    $img = gallery_imagemanager::get_image($iid);
     $fs = get_file_storage();
     $file = $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $img->id, '/'.$gallery->id().'/', $img->id.'.'.$img->type);
     $image = new gallery_image($img,$file,$context);
     $image->delete();
-    gallery_imagemanager::delete_image($iid);
-    comment::delete_comments(array('contextid'=>$context->id,'commentarea'=>'gallery_image_comments','itemid'=>$iid));
+    gallery_imagemanager::delete_image($img->id);
+    comment::delete_comments(array('contextid'=>$context->id,'commentarea'=>'gallery_image_comments','itemid'=>$img->id));
 }
 
 class gallery_content_file_info extends file_info_stored {

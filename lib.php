@@ -144,7 +144,7 @@ function gallery_get_coursemodule_info($coursemodule) {
                 $o .= '</li>';
             }
             $o .= '</ul>';
-            $o .= '<div id="mod-gallery-image-next-intro"></div>';
+            $o .= $OUTPUT->box('','','mod-gallery-image-next-intro');
             $o .= $OUTPUT->box_end();
             $o .= $OUTPUT->box_end();
             

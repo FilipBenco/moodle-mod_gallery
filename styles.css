@@ -216,22 +216,16 @@
     display:table;
 }
 
-.mod-gallery-intro-thumbnails-table-cell {
-    display:table-cell;
-    height:152px;
-    width:152px;
-    padding:2px;
-}
-
-.mod-gallery-intro-thumbnails-table-cell a {
-    display: block;
+.mod-gallery-intro-thumbnails-table a {
+    display: table-cell;
     border:1px solid transparent;
     height:150px;
     width:150px;
     text-align: center;
+    vertical-align: middle;
 }
 
-.mod-gallery-intro-thumbnails-container ul li a:hover {
+.mod-gallery-intro-thumbnails-table a:hover {
     border-color: #999;
 }
 

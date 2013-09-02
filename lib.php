@@ -144,9 +144,7 @@ function gallery_get_coursemodule_info($coursemodule) {
             $o .= $OUTPUT->box_start('mod-gallery-intro-thumbnails-table');
             foreach($images as $img) {
                 $urlParams['image']=$img->id();
-                $o .= $OUTPUT->box_start('mod-gallery-intro-thumbnails-table-cell');
-                $o .= $OUTPUT->action_link(new moodle_url('/mod/gallery/view.php',$urlParams), '<img src="'.$img->thumbnail().'" style="margin-top:'.floor((150-$img->t_height())/2).'px;" />');
-                $o .= $OUTPUT->box_end();
+                $o .= $OUTPUT->action_link(new moodle_url('/mod/gallery/view.php',$urlParams), '<img src="'.$img->thumbnail().'"/>');
             }
             $o .= $OUTPUT->box_end();
             $o .= $OUTPUT->box_end();

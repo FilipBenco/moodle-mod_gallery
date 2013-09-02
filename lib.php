@@ -132,12 +132,12 @@ function gallery_get_coursemodule_info($coursemodule) {
             $images = gallery_load_images($gallery, $context);
             
             $o = '';
-            $o .= $OUTPUT->box_start('','mod-gallery-intro-thumb-container');
+            $o .= '<div style="overflow:hidden;height:160px;width:100%;">';
             
             foreach($images as $img)
                 $o .= $OUTPUT->action_link('#', '<img src="'.$img->thumbnail().'" />');
             
-            $o .= $OUTPUT->box_end();
+            $o .= '</div>';
             
             $info->content .= $o;
         }
@@ -152,7 +152,6 @@ function gallery_get_coursemodule_info($coursemodule) {
 function gallery_cm_info_view(cm_info $cm) {
     global $PAGE;
     $PAGE->requires->js('/mod/gallery/js/intro.js');
-    $PAGE->requires->css('/mod/gallery/css/intro');
 }
 
 function gallery_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {

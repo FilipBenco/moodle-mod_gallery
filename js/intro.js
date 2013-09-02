@@ -3,7 +3,7 @@ M.mod_gallery = M.mod_gallery || {};
 M.mod_gallery.init = function(Y, cfg) {
     this.Y = Y;
     this.currentPosition = new Array();
-    this.maxPosition = Y.one(".mod-gallery-intro-thumb-cont-helper > ul").get('winWidth');    
+    this.maxScroll = Y.one(".mod-gallery-intro-thumb-cont-helper > ul").get('winWidth')-Y.one('.mod-gallery-intro-thumbnails-container').get('winWidth');    
 };
 
 M.mod_gallery.moveIntro = function(direction,gallery) {
@@ -15,8 +15,8 @@ M.mod_gallery.moveIntro = function(direction,gallery) {
         else
             M.mod_gallery.currentPosition[gallery] -= 154;
     } else if(direction ==='right') {
-        if((M.mod_gallery.maxPosition - M.mod_gallery.currentPosition[gallery]) < 154)
-            M.mod_gallery.currentPosition[gallery] = M.mod_gallery.maxPosition;
+        if((M.mod_gallery.maxScroll - M.mod_gallery.currentPosition[gallery]) < 154)
+            M.mod_gallery.currentPosition[gallery] = M.mod_gallery.maxScroll;
         else
             M.mod_gallery.currentPosition[gallery] += 154;
     }

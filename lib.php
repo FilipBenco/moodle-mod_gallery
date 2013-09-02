@@ -130,7 +130,7 @@ function gallery_get_coursemodule_info($coursemodule) {
             $PAGE->requires->js('/mod/gallery/js/intro.js');
             
             $o = '';
-            $o .= $OUTPUT->box_start('mod-gallery-intro-thumb-container');
+            $o .= $OUTPUT->box_start('','mod-gallery-intro-thumb-container');
             
             foreach($images as $img)
                 $o .= $OUTPUT->action_link('#', '<img src="'.$img->thumbnail().'" />');

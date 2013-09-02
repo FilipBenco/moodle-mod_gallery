@@ -29,7 +29,7 @@ M.mod_gallery.moveIntro = function(direction) {
     }
     
     var move = new M.mod_gallery.Y.Anim({
-            node: '#mod-gallery-intro-thumbnails-container',
+            node: '#mod-gallery-intro-thumbnails-container > ul',
             to: {
                 xy: [M.mod_gallery.currentPosition,M.mod_gallery.currentY]
             }

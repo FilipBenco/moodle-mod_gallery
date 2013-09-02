@@ -29,9 +29,9 @@ M.mod_gallery.moveIntro = function(direction) {
     }
     
     var move = new M.mod_gallery.Y.Anim({
-            node: '#mod-gallery-intro-thumbnails-container > ul',
+            node: '#mod-gallery-intro-thumbnails-container',
             to: {
-                scrollLeft: 154
+                scroll: [154,0]
             }
         });
     move.run();

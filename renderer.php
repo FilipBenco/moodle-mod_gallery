@@ -95,14 +95,14 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box_start('mod-gallery-image-preview');
         
         if($img->image->data()->ordering != 1)
-            $o .= $this->output->pix_icon('prev', get_string('previousimage','gallery'), 'mod_gallery',array('class'=>'mod-gallery-image-previous'));
+            $o .= $this->output->pix_icon('prev', get_string('previousimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-previous','onclick'=>'return showImagePrev()'));
         else
-            $o .= $this->output->pix_icon('prev', get_string('previousimage','gallery'), 'mod_gallery',array('class'=>'mod-gallery-image-previous','style'=>'display:none;'));
+            $o .= $this->output->pix_icon('prev', get_string('previousimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-previous','onclick'=>'return showImagePrev()','style'=>'display:none;'));
         
         if($img->image->data()->ordering == count($img->thumbnails))
-            $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('class'=>'mod-gallery-image-next','style'=>'display:none;'));
+            $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-next','onclick'=>'return showImageNext()','style'=>'display:none;'));
         else
-            $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('class'=>'mod-gallery-image-next'));
+            $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-next','onclick'=>'return showImageNext()'));
         
         $o .= $this->output->box_start();
         $o .= $this->output->box_start('mod-gallery-image-preview-table');
@@ -125,7 +125,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box_start('mod-gallery-images-side');
                 
         foreach($img->thumbnails as $thumb) {
-            $o .= $this->output->action_link('#', '<img src="'.$thumb->thumbnail().'" />',null,array('onclick'=>'return showImage('.$thumb->id().')','data-preview'=>$thumb->preview(),'id'=>'mod-gallery-thumb-'.$thumb->id()));
+            $o .= $this->output->action_link('#', '<img src="'.$thumb->thumbnail().'" />',null,array('onclick'=>'return showImage('.$thumb->id().')','data-id'=>$thumb->id(),'data-preview'=>$thumb->preview(),'id'=>'mod-gallery-thumb-'.$thumb->id()));
             $o .= $this->output->box('', 'mod-gallery-hidden-description', 'mod-gallery-image-desc-'.$thumb->id());
             $o .= $this->output->box('', 'mod-gallery-hidden-name', 'mod-gallery-image-name-'.$thumb->id());
             $o .= $this->output->box('', 'mod-gallery-hidden-source', 'mod-gallery-image-source-'.$thumb->id());

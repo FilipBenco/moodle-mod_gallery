@@ -32,6 +32,28 @@ function showImage(imageId) {
     return false;
 };
 
+function showImageNext() {
+    var current = M.mod_gallery.Y.one('#mod-gallery-thumb-'+M.mod_gallery.currentImage);
+    var imageId = current.next().getData('id');
+    M.mod_gallery.showImage(imageId);
+    if(current.next().next())
+        M.mod_gallery.Y.one('#mod-gallery-image-next').show();
+    else
+        M.mod_gallery.Y.one('#mod-gallery-image-next').hide();
+    return false;
+}
+
+function showImagePrev() {
+    var current = M.mod_gallery.Y.one('#mod-gallery-thumb-'+M.mod_gallery.currentImage);
+    var imageId = current.previous().getData('id');
+    M.mod_gallery.showImage(imageId);
+    if(current.previous().previous())
+        M.mod_gallery.Y.one('#mod-gallery-image-next').show();
+    else
+        M.mod_gallery.Y.one('#mod-gallery-image-next').hide();
+    return false;
+}
+
 M.mod_gallery.send_request = function(imageId) {
     this.api = M.cfg.wwwroot+'/mod/gallery/ajax.php?sesskey='+M.cfg.sesskey;
     M.mod_gallery.Y.io(this.api,{

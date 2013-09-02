@@ -69,18 +69,20 @@
     vertical-align: middle;
 }
 
-.mod-gallery-image-previous {
+#mod-gallery-image-previous {
     position: absolute;
     top:177px;
     left:0px;
     z-index: 2;
+    cursor: pointer;
 }
 
-.mod-gallery-image-next {
+#mod-gallery-image-next {
     position: absolute;
     top:177px;
     right:0px;
     z-index: 2;
+    cursor: pointer;
 }
 
 .mod-gallery-image-preview-table {

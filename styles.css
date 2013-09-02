@@ -164,15 +164,29 @@
 #mod-gallery-image-previous-intro {
     position: absolute;
     top:54px;
-    left:-15px;
-    z-index: 2;
+    left:0px;
+    z-index:2;
+    bottom:0px;
+    width:10px;
     cursor: pointer;
+    background:url([[pix:gallery|previntro]]); 
 }
 
 #mod-gallery-image-next-intro {
     position: absolute;
-    top:54px;
-    right:-15px;
-    z-index: 2;
+    top:0px;
+    right:0px;
+    z-index:2;
+    bottom:0px;
+    width:10px;
     cursor: pointer;
+    background:url([[pix:gallery|nextintro]]); 
+}
+
+#mod-gallery-image-previous-intro:hover {
+    background:url([[pix:gallery|previntrohover]]); 
+}
+
+#mod-gallery-image-next-intro:hover {
+    background:url([[pix:gallery|nextintrohover]]); 
 }

@@ -133,8 +133,7 @@ function gallery_get_coursemodule_info($coursemodule) {
             
             
             $o = '<div style="overflow:hidden;height:154px;width:100%;position:relative;">';
-            $o .= $OUTPUT->pix_icon('prev', get_string('previous','gallery'), 'mod_gallery',
-                    array('id'=>'mod-gallery-image-previous-intro','onclick'=>'return modGalleryMove(-154)'));
+            $o .= '<div id="mod-gallery-image-previous-intro"></div>';
             $o .= '<ul style="height:160;list-style:none outside none;margin:0;padding:0;white-space:nowrap;">';
             foreach($images as $img) {
                 $o .= '<li style="display:inline-block;height:150px;width:150px;padding:2px;">';
@@ -142,8 +141,7 @@ function gallery_get_coursemodule_info($coursemodule) {
                 $o .= '</li>';
             }
             $o .= '</ul>';
-            $o .= $OUTPUT->pix_icon('next', get_string('next','gallery'), 'mod_gallery',
-                    array('id'=>'mod-gallery-image-next-intro','onclick'=>'return modGalleryMove(154)'));
+            $o .= '<div id="mod-gallery-image-next-intro"></div>';
             $o .= '</div>';
             
             $info->content .= $o;

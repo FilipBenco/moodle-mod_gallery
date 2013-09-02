@@ -93,7 +93,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box_start('mod-gallery-images-div');
         
         $o .= $this->output->box_start('mod-gallery-image-preview');
-        
+
         if($img->image->data()->ordering != 1)
             $o .= $this->output->pix_icon('prev', get_string('previousimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-previous','onclick'=>'return showImagePrev()'));
         else

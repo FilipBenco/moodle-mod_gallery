@@ -21,6 +21,16 @@ M.mod_gallery.showImage = function(imageId) {
     M.mod_gallery.Y.one('#mod-gallery-image-comments-'+M.mod_gallery.currentImage).hide();
     M.mod_gallery.Y.one('#mod-gallery-image-comments-'+imageId).show();
     
+    if(M.mod_gallery.Y.one('#mod-gallery-thumb-'+M.mod_gallery.currentImage).next('a')) 
+        M.mod_gallery.Y.one('#mod-gallery-image-next').show();
+    else
+        M.mod_gallery.Y.one('#mod-gallery-image-next').hide();
+    
+    if(M.mod_gallery.Y.one('#mod-gallery-thumb-'+M.mod_gallery.currentImage).previous('a')) 
+        M.mod_gallery.Y.one('#mod-gallery-image-previous').show();
+    else
+        M.mod_gallery.Y.one('#mod-gallery-image-previous').hide();
+    
     M.mod_gallery.currentImage = imageId;
 
     M.mod_gallery.Y.all('#mod-gallery-edit-buttons input[name="image"]').set('value',imageId);
@@ -36,11 +46,6 @@ function showImageNext() {
     var next = M.mod_gallery.Y.one('#mod-gallery-thumb-'+M.mod_gallery.currentImage).next('a');
     var imageId = next.getData('id');
     M.mod_gallery.showImage(imageId);
-    if(next.next('a'))
-        M.mod_gallery.Y.one('#mod-gallery-image-next').show();
-    else
-        M.mod_gallery.Y.one('#mod-gallery-image-next').hide();
-    M.mod_gallery.Y.one('#mod-gallery-image-previous').show();
     return false;
 }
 
@@ -48,11 +53,6 @@ function showImagePrev() {
     var previous = M.mod_gallery.Y.one('#mod-gallery-thumb-'+M.mod_gallery.currentImage).previous('a');
     var imageId = previous.getData('id');
     M.mod_gallery.showImage(imageId);
-    if(previous.previous('a'))
-        M.mod_gallery.Y.one('#mod-gallery-image-previous').show();
-    else
-        M.mod_gallery.Y.one('#mod-gallery-image-previous').hide();
-    M.mod_gallery.Y.one('#mod-gallery-image-next').show();
     return false;
 }
 

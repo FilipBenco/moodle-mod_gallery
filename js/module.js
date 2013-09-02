@@ -36,11 +36,11 @@ function showImageNext() {
     var next = M.mod_gallery.Y.one('#mod-gallery-thumb-'+M.mod_gallery.currentImage).next('a');
     var imageId = next.getData('id');
     M.mod_gallery.showImage(imageId);
-    var sNext = next.next('a');
-    if(sNext)
+    if(next.next('a'))
         M.mod_gallery.Y.one('#mod-gallery-image-next').show();
     else
         M.mod_gallery.Y.one('#mod-gallery-image-next').hide();
+    M.mod_gallery.Y.one('#mod-gallery-image-previous').show();
     return false;
 }
 
@@ -49,9 +49,10 @@ function showImagePrev() {
     var imageId = previous.getData('id');
     M.mod_gallery.showImage(imageId);
     if(previous.previous('a').previous())
-        M.mod_gallery.Y.one('#mod-gallery-image-next').show();
+        M.mod_gallery.Y.one('#mod-gallery-image-previous').show();
     else
-        M.mod_gallery.Y.one('#mod-gallery-image-next').hide();
+        M.mod_gallery.Y.one('#mod-gallery-image-previous').hide();
+    M.mod_gallery.Y.one('#mod-gallery-image-next').show();
     return false;
 }
 

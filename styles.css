@@ -214,12 +214,12 @@
     display:inline-block;
     height:152px;
     width:152px;
-    padding:1px;
+    padding:2px;
 }
 
 #mod-gallery-intro-thumbnails-container ul li a {
     display: block;
-    border:2px solid transparent;
+    border:1px solid transparent;
     height:150px;
     width:150px;
 }

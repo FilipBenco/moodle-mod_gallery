@@ -131,13 +131,15 @@ function gallery_get_coursemodule_info($coursemodule) {
             $context = context_module::instance($coursemodule->id);
             $images = gallery_load_images($gallery, $context);
             
+            $urlParams = array('id'=>$coursemodule->id,'action'=>'image');
             
-            $o = '<div style="overflow:hidden;height:154px;width:100%;position:relative;">';
+            $o = '<div id="mod-gallery-intro-thumbnails-container">';
             $o .= '<div id="mod-gallery-image-previous-intro"></div>';
-            $o .= '<ul style="height:160;list-style:none outside none;margin:0;padding:0;white-space:nowrap;">';
+            $o .= '<ul>';
             foreach($images as $img) {
-                $o .= '<li style="display:inline-block;height:150px;width:150px;padding:2px;">';
-                $o .= $OUTPUT->action_link('#', '<img src="'.$img->thumbnail().'" style="margin-top:'.floor((150-$img->t_height())/2).'px;" />');
+                $urlParams['image']=$img->id();
+                $o .= '<li>';
+                $o .= $OUTPUT->action_link(new moodle_url('/mod/gallery/view.php',$urlParams), '<img src="'.$img->thumbnail().'" style="margin-top:'.floor((150-$img->t_height())/2).'px;" />');
                 $o .= '</li>';
             }
             $o .= '</ul>';

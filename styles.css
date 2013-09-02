@@ -161,6 +161,10 @@
     text-align: right;
 }
 
+
+/******************************/
+/********INTRO STYLING*********/
+/******************************/
 #mod-gallery-image-previous-intro {
     position: absolute;
     top:0px;
@@ -189,4 +193,34 @@
 
 #mod-gallery-image-next-intro:hover {
     background:url([[pix:gallery|nextintrohover]]); 
+}
+
+#mod-gallery-intro-thumbnails-container {
+    overflow:hidden;
+    height:156px;
+    width:100%;
+    position:relative;
+}
+
+#mod-gallery-intro-thumbnails-container ul {
+    height:156px;
+    list-style:none outside none;
+    margin:0;
+    padding:0;
+    white-space:nowrap;
+}
+
+#mod-gallery-intro-thumbnails-container ul li {
+    display:inline-block;
+    height:152px;
+    width:152px;
+    padding:2px;
+}
+
+#mod-gallery-intro-thumbnails-container ul li a {
+    border:1px solid transparent;
+}
+
+#mod-gallery-intro-thumbnails-container ul li a:hover {
+    border-color: #999;
 }

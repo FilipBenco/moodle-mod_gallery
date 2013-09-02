@@ -109,6 +109,30 @@ function gallery_extend_settings_navigation(settings_navigation $settings, navig
     }
 }
 
+function gallery_get_coursemodule_info($coursemodule) {
+    global $CFG;
+    
+    require_once($CFG->dirroot.'/mod/gallery/gallery.class.php');
+
+    $gallery = new gallery($coursemodule->instance);
+    if ($gallery->isValid()) {
+        $info = new cached_cm_info();
+        // no filtering here because this info is cached and filtered later
+        if($gallery->showdescription()) {
+            $info->content = format_module_intro('gallery', $gallery->data(), $coursemodule->id, false);
+        }
+        elseif($gallery->showthumbnails()) {
+            $info->content .= 'showing thumbnails';
+        } else 
+            $info->content = '';
+        
+        $info->name  = $gallery->name();
+        return $info;
+    } else {
+        return null;
+    }
+}
+
 function gallery_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
     global $CFG;
 
@@ -252,7 +276,7 @@ function gallery_comment_validate(stdClass $options) {
  * @return array
  */
 function gallery_comment_permissions(stdClass $options) {
-    global $CFG, $DB;
+    global $DB;
 
     if ($options->commentarea != 'gallery_image_comments') {
         throw new comment_exception('invalidcommentarea');

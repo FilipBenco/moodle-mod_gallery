@@ -27,4 +27,19 @@ class gallery {
         return $this->data->introformat;
     }
     
+    public function showdescription() {
+        return $this->data->showdescription;
+    }
+    
+    public function showthumbnails() {
+        return $this->data->showthumbnails;
+    }
+    
+    public function isValid() {
+        return !is_null($this->data);
+    }
+    
+    public function data() {
+        return $this->data;
+    }
 }

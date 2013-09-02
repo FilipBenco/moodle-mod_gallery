@@ -80,13 +80,13 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('returntogallery','gallery'));
         if($img->edit) {
             $urlparams = array('id' => $img->coursemodule->id, 'action' => 'editimage', 'image'=>$img->image->id());
-            $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('editimage','gallery'));
+            $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('t/edit', get_string('editimage','gallery')));
             $urlparams['action'] = 'rotatelefti';
             $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('rotateleft','gallery'));
             $urlparams['action'] = 'rotaterighti';
             $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('rotateright','gallery'));
             $urlparams['action'] = 'imagedelete';
-            $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('deleteimage','gallery'));
+            $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('t/delete', get_string('deleteimage','gallery')), null, array('onclick'=>"return confirm('".get_string('confirmdelete','gallery')."')"));
         }
         $o .= $this->output->box_end();
         

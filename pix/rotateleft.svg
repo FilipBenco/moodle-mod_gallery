@@ -12,15 +12,15 @@
    version="1.1"
    x="0px"
    y="0px"
-   width="16px"
-   height="16px"
-   viewBox="0 0 16 16"
-   style="overflow:visible;enable-background:new 0 0 16 16;"
+   width="12"
+   height="12"
+   viewBox="0 0 12 12"
+   style="overflow:visible"
    xml:space="preserve"
    preserveAspectRatio="xMinYMid meet"
    id="svg3045"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="rotateright.svg"><metadata
+   sodipodi:docname="rotateleft.svg"><metadata
    id="metadata3053"><rdf:RDF><cc:Work
        rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
          rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><sodipodi:namedview
@@ -42,13 +42,17 @@
    inkscape:window-x="-8"
    inkscape:window-y="-8"
    inkscape:window-maximized="1"
-   inkscape:current-layer="svg3045" />
+   inkscape:current-layer="svg3045"
+   fit-margin-top="0"
+   fit-margin-left="0"
+   fit-margin-right="0"
+   fit-margin-bottom="0" />
 <defs
    id="defs3047">
 </defs>
 <path
    style="fill:#999999"
-   d="M 8.1,16 C 4.1,16 0.7,13 0.3,9 h 3 c 0.5,2 2.5,4 4.9,4 2.8,0 5,-2.2 5,-5 0,-2.8 -2.2,-5 -5,-5 -1.1,0 -2.1,0 -3,1 h 1 C 6.7,4 7,4.5 7,5.1 v 1 C 7,6.6 6.7,7 6.2,7 h -4 -1 C 0.6,7 0,6.6 0,6.1 v -1 -4 C 0,0.5 0.6,0 1.2,0 h 1 C 2.7,0 3,0.5 3,1.1 V 2 C 4,0.9 6.1,0.2 8,0.2 c 4.4,0 8,3.5 8,7.9 0,4.3 -3.5,7.9 -7.9,7.9 z"
+   d="m 6.075,12 c -3,0 -5.55,-2.25 -5.85,-5.25 h 2.25 c 0.375,1.5 1.875,3 3.675,3 C 8.25,9.75 9.9,8.1 9.9,6 9.9,3.9 8.25,2.25 6.15,2.25 5.325,2.25 4.575,2.25 3.9,3 h 0.75 c 0.375,0 0.6,0.375 0.6,0.825 v 0.75 C 5.25,4.95 5.025,5.25 4.65,5.25 H 1.65 0.9 C 0.45,5.25 0,4.95 0,4.575 v -0.75 -3 C 0,0.375 0.45,0 0.9,0 h 0.75 c 0.375,0 0.6,0.375 0.6,0.825 V 1.5 C 3,0.675 4.575,0.15 6,0.15 c 3.3,0 6,2.625 6,5.925 C 12,9.3 9.375,12 6.075,12 z"
    id="path3049"
    inkscape:connector-curvature="0" />
 </svg>

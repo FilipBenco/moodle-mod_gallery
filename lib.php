@@ -152,6 +152,7 @@ function gallery_get_coursemodule_info($coursemodule) {
 function gallery_cm_info_view(cm_info $cm) {
     global $PAGE;
     $PAGE->requires->js('/mod/gallery/js/intro.js');
+    $PAGE->requires->css('/mod/gallery/css/intro');
 }
 
 function gallery_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {

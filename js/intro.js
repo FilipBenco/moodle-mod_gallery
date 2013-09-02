@@ -3,8 +3,8 @@ M.mod_gallery = M.mod_gallery || {};
 M.mod_gallery.init = function(Y, cfg) {
     this.Y = Y;
     this.currentPosition = 0;
-    this.maxPosition = Y.one("#mod-gallery-intro-thumbnails-container > ul").get('winWidth');
-    this.currentY = Y.one("#mod-gallery-intro-thumbnails-container > ul").getY();
+    this.maxPosition = Y.one("#mod-gallery-intro-thumb-cont-helper > ul").get('winWidth');
+    this.currentY = Y.one("#mod-gallery-intro-thumb-cont-helper > ul").getY();
     
     M.mod_gallery.Y.one('#mod-gallery-image-next-intro').on('click',function(e) {
         M.mod_gallery.moveIntro('right');

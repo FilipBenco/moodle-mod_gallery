@@ -3,7 +3,7 @@ M.mod_gallery = M.mod_gallery || {};
 M.mod_gallery.init = function(Y, cfg) {
     this.Y = Y;
     this.currentPosition = new Array();
-    var test = Y.one('.mod-gallery-intro-thumbnails-container').get('winWidth');
+    var test = Y.one('.mod-gallery-intro-thumbnails-container').getComputedStyle('width');
     this.maxScroll = Y.one(".mod-gallery-intro-thumb-cont-helper > ul").get('winWidth') - Y.one('.mod-gallery-intro-thumb-cont-helper').get('docWidth');    
 };
 

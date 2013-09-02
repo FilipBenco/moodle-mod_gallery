@@ -106,7 +106,7 @@ switch($action) {
             $module = array(
         		'name'      => 'mod_gallery',
         		'fullpath'  => '/mod/gallery/js/edit.js',
-        		'requires'  => array('base', 'dom', 'dd-drop', 'dd-proxy', 'io',)
+        		'requires'  => array('base', 'dom', 'dd-drop', 'dd-proxy', 'io')
             );
             $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id)), false, $module);
         
@@ -123,7 +123,7 @@ switch($action) {
         $module = array(
         		'name'      => 'mod_gallery',
         		'fullpath'  => '/mod/gallery/js/module.js',
-        		'requires'  => array('base', 'dom', 'event','io',)
+        		'requires'  => array('base', 'dom', 'event','io')
         );
         $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id,'currentImage'=>$iid)), false, $module);
         echo $renderer->render(new gallery_header($gallery->name(),$context));

@@ -135,7 +135,7 @@ function gallery_get_coursemodule_info($coursemodule) {
             $o = '<div style="overflow:hidden;height:154px;width:100%;position:relative;">';
             $o .= $OUTPUT->pix_icon('prev', get_string('previous','gallery'), 'mod_gallery',
                     array('id'=>'mod-gallery-image-previous','onclick'=>'return modGalleryMove(-154)',
-                        'style'=>'position:absolute;left:0;top:54px;z-index:2;'));
+                        'style'=>'position:absolute;left:0px;top:54px;z-index:2;'));
             $o .= '<ul style="height:160;list-style:none outside none;margin:0;padding:0;white-space:nowrap;">';
             foreach($images as $img) {
                 $o .= '<li style="display:inline-block;height:150px;width:150px;padding:2px;">';
@@ -144,8 +144,8 @@ function gallery_get_coursemodule_info($coursemodule) {
             }
             $o .= '</ul>';
             $o .= $OUTPUT->pix_icon('next', get_string('next','gallery'), 'mod_gallery',
-                    array('id'=>'mod-gallery-image-previous','onclick'=>'return modGalleryMove(154)',
-                        'style'=>'position:absolute;right:0;top:54px;z-index:2;'));
+                    array('id'=>'mod-gallery-image-next','onclick'=>'return modGalleryMove(154)',
+                        'style'=>'position:absolute;right:0px;top:54px;z-index:2;'));
             $o .= '</div>';
             
             $info->content .= $o;

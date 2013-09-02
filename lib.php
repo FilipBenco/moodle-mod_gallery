@@ -117,14 +117,14 @@ function gallery_get_coursemodule_info($coursemodule) {
     $gallery = new gallery($coursemodule->instance);
     if ($gallery->isValid()) {
         $info = new cached_cm_info();
+        $info->content = '';
         // no filtering here because this info is cached and filtered later
         if($gallery->showdescription()) {
             $info->content = format_module_intro('gallery', $gallery->data(), $coursemodule->id, false);
         }
-        elseif($gallery->showthumbnails()) {
+        if($gallery->showthumbnails()) {
             $info->content .= 'showing thumbnails';
-        } else 
-            $info->content = '';
+        }
         
         $info->name  = $gallery->name();
         return $info;

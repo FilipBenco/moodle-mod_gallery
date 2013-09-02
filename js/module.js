@@ -35,7 +35,8 @@ M.mod_gallery.showImage = function(imageId) {
 
     var links = M.mod_gallery.Y.all('#mod-gallery-navigation-buttons a');    
     links.each(function (linkNode) {
-        var test = linkNode.getAttribute('href').replace('/&image=(.*)$/','&image=' + M.mod_gallery.currentImage);
+        var reg = new RegExp("&image=(.*)$");
+        var test = linkNode.getAttribute('href').replace(reg,'&image=' + M.mod_gallery.currentImage);
         linkNode.setAttribute('href',test);
     });
 };

@@ -94,6 +94,16 @@ class mod_gallery_renderer extends plugin_renderer_base {
         
         $o .= $this->output->box_start('mod-gallery-image-preview');
         
+        if($img->image->data()->ordering != 1)
+            $o .= $this->output->pix_icon('prev', get_string('previousimage','gallery'), 'mod_gallery',array('class'=>'mod-gallery-image-previous'));
+        else
+            $o .= $this->output->pix_icon('prev', get_string('previousimage','gallery'), 'mod_gallery',array('class'=>'mod-gallery-image-previous','style'=>'display:none;'));
+        
+        if($img->image->data()->ordering != count($img->thumbnails))
+            $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('class'=>'mod-gallery-image-next','style'=>'display:none;'));
+        else
+            $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('class'=>'mod-gallery-image-next'));
+        
         $o .= $this->output->box_start();
         $o .= $this->output->box_start('mod-gallery-image-preview-table');
         $o .= $this->output->box_start('mod-gallery-image-preview-table-cell');

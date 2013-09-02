@@ -96,11 +96,11 @@ class mod_gallery_renderer extends plugin_renderer_base {
         if($img->edit) {
             if($img->canedit || ($img->caneditown && $img->image->data()->user == $img->currentuser)) {
                 $urlparams = array('id' => $img->coursemodule->id, 'action' => 'editimage', 'image'=>$img->image->id());
-                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('edit', get_string('editimage','gallery'),'mod_gallery'),array('class'=>'mod-gallery-edit-actions'));
+                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('edit', get_string('editimage','gallery'),'mod_gallery'),null,array('class'=>'mod-gallery-edit-actions'));
                 $urlparams['action'] = 'rotatelefti';
-                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('rotateleft', get_string('rotateleft','gallery'),'mod_gallery'),array('class'=>'mod-gallery-edit-actions'));
+                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('rotateleft', get_string('rotateleft','gallery'),'mod_gallery'),null,array('class'=>'mod-gallery-edit-actions'));
                 $urlparams['action'] = 'rotaterighti';
-                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('rotateright', get_string('rotateright','gallery'),'mod_gallery'),array('class'=>'mod-gallery-edit-actions'));
+                $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('rotateright', get_string('rotateright','gallery'),'mod_gallery'),null,array('class'=>'mod-gallery-edit-actions'));
             }
             if($img->candelete || ($img->candeleteown && $img->image->data()->user == $img->currentuser)) {
                 $urlparams['action'] = 'imagedelete';

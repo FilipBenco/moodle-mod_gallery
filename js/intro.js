@@ -31,7 +31,7 @@ M.mod_gallery.moveIntro = function(direction) {
     var move = new M.mod_gallery.Y.Anim({
             node: '#mod-gallery-intro-thumbnails-container',
             to: {
-                scroll: [154,0]
+                scroll: [M.mod_gallery.currentPosition,0]
             }
         });
     move.run();

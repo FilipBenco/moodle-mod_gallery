@@ -53,6 +53,10 @@ function gallery_update_instance(stdClass $data, mod_gallery_mod_form $form = nu
 
     $data->timemodified = time();
     $data->id = $data->instance;
+    if(!isset($data->showdescription))
+        $data->showdescription = 0;
+    if(!isset($data->showthumbnails))
+        $data->showthumbnails = 0;
 
     $DB->update_record('gallery', $data);
 

@@ -46,13 +46,13 @@ class mod_gallery_renderer extends plugin_renderer_base {
 
             if($widget->canadd) {
                $urlparams['action']= 'addimages';
-                $o  .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('addimages','gallery'));
+               //$o  .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('addimages','gallery'));
             }
             
             if(count($widget->images) > 0){
                 if($widget->canedit) {
                     $urlparams['action'] = 'editimages';
-                    $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('editimages','gallery'));
+                    //$o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('editimages','gallery'));
                 }
                 
                 $options = array();

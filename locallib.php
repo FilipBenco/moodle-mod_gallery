@@ -172,24 +172,6 @@ function gallery_load_image($context,$image_db) {
                                        $image_db->id.'.'.$image_db->type),$context);
 }
 
-function gallery_process_move_image($direction,$id) {
-    global $DB;
-    $i1 = $DB->get_record('gallery_images',array('id'=>$id));
-    $i2 = null;
-    if($direction == 'right') {
-        $i2 = $DB->get_record('gallery_images',array('ordering'=>$i1->ordering+1,'gallery'=>$i1->gallery));
-        $i1->ordering ++;
-        $i2->ordering --;
-    }
-    if($direction == 'left') {
-        $i2 = $DB->get_record('gallery_images',array('ordering'=>$i1->ordering-1,'gallery'=>$i1->gallery));
-        $i1->ordering --;
-        $i2->ordering ++;
-    }
-    $DB->update_record('gallery_images',$i1);
-    $DB->update_record('gallery_images',$i2);
-}
-
 function gallery_process_rotate_image($direction,$img,$context) {
     $angle = 90;
     if($direction == 'right')

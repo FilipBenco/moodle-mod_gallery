@@ -53,9 +53,9 @@ if($action == 'display') {
 } 
 
 if($action == 'move') {
-    if(has_capability('mod/gallery:edit', $context)) {
+    if(has_capability('mod/gallery:edit', $context) || has_capability('mod/gallery:editimages', $context)) {
         $beforeId = required_param('beforeImage', PARAM_INT);
-        
+        $courseId = $DB->get_record('gallery',array('id'=>$img->gallery))->course;
         $ord = $img->ordering;
         $bOrd = 0;
         if($beforeId != 0) {
@@ -70,6 +70,7 @@ if($action == 'move') {
                 );
             $img->ordering = $bOrd+1;
             gallery_imagemanager::update_image($img);
+            get_fast_modinfo($courseId,0,false);
             return;
         }
         if($bOrd > $ord) {
@@ -79,6 +80,7 @@ if($action == 'move') {
                 );
             $img->ordering = $bOrd+1;
             gallery_imagemanager::update_image($img);
+            get_fast_modinfo($courseId,0,false);
             return;
         }
     }

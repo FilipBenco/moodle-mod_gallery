@@ -118,7 +118,7 @@ if($action == 'editimages') {
     if ($mform->is_cancelled()) 
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
     if (($formdata = $mform->get_data()) && confirm_sesskey()) {
-        gallery_process_images_save($formdata, $images);
+        gallery_process_images_save($formdata, $images, $context);
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
     }
 }
@@ -132,7 +132,7 @@ if($action == 'editimage') {
         if ($mform->is_cancelled()) 
             redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
         if (($formdata = $mform->get_data()) && confirm_sesskey()) {
-            gallery_process_images_save($formdata, $images);
+            gallery_process_images_save($formdata, $images, $context);
             redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
         }
     } else

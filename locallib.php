@@ -130,7 +130,7 @@ function gallery_process_image_drats_save($data, $context, $gallery, $files) {
     $fs->delete_area_files($context->id, 'mod_gallery', GALLERY_IMAGE_DRAFTS_FILEAREA, $gallery->id());
 }
 
-function gallery_process_images_save($data, $images) {
+function gallery_process_images_save($data, $images,$context) {
     global $CFG;
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
     require_once($CFG->dirroot.'/mod/gallery/image.class.php');
@@ -143,6 +143,9 @@ function gallery_process_images_save($data, $images) {
                 ($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT && $image->data()->source != $imgData->source)) {
             gallery_imagemanager::update_image($imgData);
         }
+        $attachmentsStr = 'attachments-'.$image->id();
+        file_save_draft_area_files($data->$attachmentsStr, $context->id, 'mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, $image->id(), array('subdirs' => 0)); 
+        
     }
 }
 

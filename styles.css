@@ -149,6 +149,8 @@
 .mod-gallery-extra-nav {
     float:right;
     display: block;
+    position:relative;
+    top:-16px;
 }
 
 .mod-gallery-image-comments {

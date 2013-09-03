@@ -91,11 +91,13 @@ class mod_gallery_renderer extends plugin_renderer_base {
         require_once($CFG->dirroot.'/comment/lib.php');
         $o = '';
         
+        $urlparams = array('id' => $img->coursemodule->id);
+        $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('returntogallery','gallery'),null,array('class'=>'mod-gallery-extra-nav'));
+        
+        
         $o .= $this->output->heading($img->image->data()->name, '3','','mod-gallery-image-name');
         
         $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');
-        $urlparams = array('id' => $img->coursemodule->id);
-        $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('returntogallery','gallery'));
         if($img->edit) {
             if($img->canedit || ($img->caneditown && $img->image->data()->user == $img->currentuser)) {
                 $urlparams = array('id' => $img->coursemodule->id, 'action' => 'editimage', 'image'=>$img->image->id());

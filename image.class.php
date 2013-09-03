@@ -134,7 +134,7 @@ class gallery_image {
         $data->descriptionformat = FORMAT_HTML;
         $data->description = '';
         $data->source = '';
-        $data->sourcetype = false;
+        $data->sourcetype = GALLERY_IMAGE_SOURCE_OWN;
         $data->name = '';
         $data->user = $USER->id;
         return $data;

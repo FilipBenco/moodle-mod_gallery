@@ -226,7 +226,7 @@ function gallery_load_batch_images($gallery, $context) {
     $batchImages = array();
     foreach($images as $image) {
         if(isset($_POST['mod-gallery-batch-'.$image->id()]))
-            $batchImages[$image->id()] = $image->id();
+            $batchImages[$image->id()] = $image;
     }
     return $batchImages;
 }

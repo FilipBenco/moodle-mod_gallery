@@ -216,7 +216,10 @@ function gallery_get_packed_images($gallery,$context) {
     $packer = get_file_packer('application/zip');
     $fs = get_file_storage();
     $files = $fs->get_area_files($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id());
-    return $packer->archive_to_storage($files, $context->id, 'mod_gallery', 'gallery_packed_images', $gallery->id(), '/', $gallery->id().'-'.$gallery->name().'.zip', $USER->id);
+    $preparedFiles = array();
+    foreach($files as $file)
+        $preparedFiles[$file->get_filename ()] = $file;
+    return $packer->archive_to_storage($preparedFiles, $context->id, 'mod_gallery', 'gallery_packed_images', $gallery->id(), '/', $gallery->id().'-'.$gallery->name().'.zip', $USER->id);
 }
 
 class gallery_content_file_info extends file_info_stored {

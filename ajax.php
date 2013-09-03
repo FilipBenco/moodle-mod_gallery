@@ -46,6 +46,22 @@ if($action == 'display') {
     $return->canedit = has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $img->user == $USER->id);
     $return->candelete = has_capability('mod/gallery:deleteimages', $context) || (has_capability('mod/gallery:deleteownimages', $context) && $img->user == $USER->id);
     
+    $image = new gallery_image($img, null, $context, false, true);
+    $a = '';
+    foreach($image->attachments() as $att) {
+        if($att->is_directory())
+                continue;
+        $ico = $OUTPUT->pix_icon(file_file_icon($att),$att->get_filename(),'moodle',array('class'=>'icon'));
+        $a .= $OUTPUT->box_start();
+        $attUrl = moodle_url::make_pluginfile_url($att->get_contextid(), $att->get_component(), 
+                $att->get_filearea(), $att->get_itemid(), 
+                $att->get_filepath(), $att->get_filename());
+        $a .= $OUTPUT->action_link($attUrl, $ico.$att->get_filename());
+        $a .= $OUTPUT->box_end();
+    }
+    
+    $return->attachments = $a;
+    
     echo json_encode($return);
 
     header('Content-Length: ' . ob_get_length() );

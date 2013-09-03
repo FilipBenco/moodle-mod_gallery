@@ -15,7 +15,8 @@ M.mod_gallery.showImage = function(imageId) {
     M.mod_gallery.Y.one('#mod-gallery-image-perview-a-'+imageId).show();
     if(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML') !== '' ||
         M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).get('innerHTML') !== '' ||
-        M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).get('innerHTML') !== '') {
+        M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).get('innerHTML') !== '' ||
+        M.mod_gallery.Y.one('#mod-gallery-image-attachments-' + imageId).get('innerHTML') !== '') {
     
         if(this.perm[imageId][0])
             M.mod_gallery.Y.all('.mod-gallery-edit-actions').show();
@@ -30,6 +31,7 @@ M.mod_gallery.showImage = function(imageId) {
         M.mod_gallery.Y.one('#mod-gallery-image-desc').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-desc-' + imageId).get('innerHTML'));
         M.mod_gallery.Y.one('#mod-gallery-image-name').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).get('innerHTML'));
         M.mod_gallery.Y.one('#mod-gallery-image-source').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).get('innerHTML'));
+        M.mod_gallery.Y.one('#mod-gallery-image-attachments').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-attachments-' + imageId).get('innerHTML'));
     } else 
         M.mod_gallery.send_request(imageId, 'description');
 
@@ -97,6 +99,8 @@ M.mod_gallery.send_request = function(imageId) {
                     M.mod_gallery.Y.one('#mod-gallery-image-source').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-source-' + imageId).get('innerHTML'));
                     M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).setHTML(data.name);
                     M.mod_gallery.Y.one('#mod-gallery-image-name').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-name-' + imageId).get('innerHTML'));
+                    M.mod_gallery.Y.one('#mod-gallery-image-attachments-' + imageId).setHTML(data.attachments);
+                    M.mod_gallery.Y.one('#mod-gallery-image-attachments').setHTML(M.mod_gallery.Y.one('#mod-gallery-image-attachments-' + imageId).get('innerHTML'));
                     if(M.mod_gallery.perm[imageId][0])
                         M.mod_gallery.Y.all('.mod-gallery-edit-actions').show();
                     else

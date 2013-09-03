@@ -149,6 +149,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $o .= $this->output->box('', 'mod-gallery-hidden-description', 'mod-gallery-image-desc-'.$thumb->id());
             $o .= $this->output->box('', 'mod-gallery-hidden-name', 'mod-gallery-image-name-'.$thumb->id());
             $o .= $this->output->box('', 'mod-gallery-hidden-source', 'mod-gallery-image-source-'.$thumb->id());
+            $o .= $this->output->box('', 'mod-gallery-hidden-attachments', 'mod-gallery-image-attachments-'.$thumb->id());
         }
         $o .= $this->output->box_end();
         $o .= $this->output->box('','mod-gallery-clear');
@@ -168,7 +169,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
         
         $o .= $this->output->box(format_text($img->image->data()->description,$img->image->data()->descriptionformat),null,'mod-gallery-image-desc');
 
-        $o .= $this->output->box_start();
+        $o .= $this->output->box_start('','mod-gallery-image-attachments');
         foreach($img->image->attachments() as $att) {
             if($att->is_directory())
                 continue;

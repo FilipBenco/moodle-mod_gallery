@@ -38,7 +38,7 @@ class mod_gallery_image_edit_form extends moodleform {
             $mform->addElement('text','name-'.$uniqueId,  get_string('imagename','gallery'));
             $mform->setType('name-'.$uniqueId, PARAM_TEXT);
             
-            $mform->addElement('editor', 'desc-'.$uniqueId,'<img src="'.$imagePreview.'" style="max-width:150px; max-height:150px;" />',
+            $mform->addElement('editor', 'desc-'.$uniqueId,'<img src="'.$imagePreview.'" style="max-width:136px; max-height:150px;" />',
                     array('rows' => 3), array('collapsed' => true));
             $mform->setType('desc-'.$uniqueId, PARAM_RAW);
             

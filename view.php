@@ -176,6 +176,7 @@ if($action == 'batchdelete') {
     $images = gallery_load_batch_images($gallery, $context);
     foreach($images as $img)
         gallery_process_delete_image($img, $context, $gallery);
+    rebuild_course_cache($gallery->course(),true);
     redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
 }
 if($action == 'batchdownload') {

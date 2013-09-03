@@ -233,7 +233,7 @@
 
 .mod-gallery-intro-thumb-cont-helper {
     position:absolute;
-    overflow:hidden;
+    overflow-x: scroll;
     top:0px;
     left:0px;
     right:0px;

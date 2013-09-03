@@ -95,7 +95,7 @@ function gallery_delete_instance($id) {
  * @return void
  */
 function gallery_extend_settings_navigation(settings_navigation $settings, navigation_node $navref) {
-    global $USER, $PAGE, $OUTPUT;
+    global $USER, $PAGE, $OUTPUT, $CFG;
 
     $params = $PAGE->url->params();
     
@@ -117,8 +117,11 @@ function gallery_extend_settings_navigation(settings_navigation $settings, navig
         $PAGE->set_button($OUTPUT->single_button($url, $string, 'get')); 
     }
     if(!empty($params['id']) && has_capability('mod/gallery:edit', $PAGE->cm->context)) {
-        $url = new moodle_url('/mod/gallery/download.php', array('id'=>$params['id'],'sesskey'=>sesskey()));
-        $navref->add(get_string('downloadphotos','gallery'), $url, navigation_node::TYPE_SETTING);
+        require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
+        if(gallery_imagemanager::count_images($PAGE->cm->instance)) {
+            $url = new moodle_url('/mod/gallery/download.php', array('id'=>$params['id'],'sesskey'=>sesskey()));
+            $navref->add(get_string('downloadphotos','gallery'), $url, navigation_node::TYPE_SETTING);
+        }
     }
 }
 

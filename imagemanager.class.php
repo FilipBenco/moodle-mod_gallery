@@ -33,4 +33,8 @@ class gallery_imagemanager {
         $DB->delete_records('gallery_images',array('id' => $id));
     }
     
+    public static function count_images($galleryId) {
+        global $DB;
+        return $DB->count_records('gallery',array('gallery'=>$galleryId));
+    }
 }

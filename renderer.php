@@ -25,11 +25,6 @@ class mod_gallery_renderer extends plugin_renderer_base {
     public function render_gallery_view_gallery(gallery_view_gallery $widget) {
         $o = '';
         
-        if($widget->edit) {
-            $fUrl = new moodle_url('/mod/gallery/view.php',array('id' => $widget->coursemodule->id));
-            $o .= '<form action="'.$fUrl->out().'" method="post">';
-        }
-        
         if(count($widget->images)) {
             $urlparams = array('id' => $widget->coursemodule->id, 'action' => 'image','image'=>reset($widget->images)->id());
             $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('viewpreview','gallery'),null,array('class'=>'mod-gallery-extra-nav'));
@@ -46,43 +41,47 @@ class mod_gallery_renderer extends plugin_renderer_base {
 
             if($widget->canadd) {
                $urlparams['action']= 'addimages';
-               //$o  .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('addimages','gallery'));
+               $o  .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('addimages','gallery'));
             }
             
             if(count($widget->images) > 0){
                 if($widget->canedit) {
                     $urlparams['action'] = 'editimages';
-                    //$o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('editimages','gallery'));
-                }
-                
-                $options = array();
-                if($widget->canedit) {
-                    $options['batchedit'] = get_string('edit','gallery');
-                    $options['batchrotateleft'] = get_string('rotateleft','gallery');
-                    $options['batchrotateright'] = get_string('rotateright','gallery');
-                }
-                if($widget->candelete)
-                    $options['batchdelete'] = get_string ('delete','gallery');
-                if($widget->candownload)
-                    $options['batchdownload'] = get_string ('download','gallery');
-                
-                if(count($options)) {
-                    $o .= $this->output->box_start();
-                    $o .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-                    $o .= get_string('selectedimageslabel','gallery');
-                    $o .= '<select name="action">';
-                    foreach($options as $key => $value)
-                        $o .= '<option value="'.$key.'">'.$value.'</option>';
-                    $o .= '</select>';
-                    $o .= '<input type="submit" name="batchsubmit" value="'.get_string('batchrun','gallery').'" />';
-                    $o .= $this->output->box_end();                    
+                    $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('editimages','gallery'));
                 }
             }
             
         }
         $o .= $this->output->box_end();
         
-       
+        if($widget->edit) {
+            $fUrl = new moodle_url('/mod/gallery/view.php',array('id' => $widget->coursemodule->id));
+            $o .= '<form action="'.$fUrl->out().'" method="post">';
+            
+            $options = array();
+            if($widget->canedit) {
+                $options['batchedit'] = get_string('edit','gallery');
+                $options['batchrotateleft'] = get_string('rotateleft','gallery');
+                $options['batchrotateright'] = get_string('rotateright','gallery');
+            }
+            if($widget->candelete)
+                $options['batchdelete'] = get_string ('delete','gallery');
+            if($widget->candownload)
+                $options['batchdownload'] = get_string ('download','gallery');
+
+            if(count($options)) {
+                $o .= $this->output->box_start();
+                $o .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                $o .= get_string('selectedimageslabel','gallery');
+                $o .= '<select name="action">';
+                foreach($options as $key => $value)
+                    $o .= '<option value="'.$key.'">'.$value.'</option>';
+                $o .= '</select>';
+                $o .= '<input type="submit" name="batchsubmit" value="'.get_string('batchrun','gallery').'" />';
+                $o .= $this->output->box_end();                    
+            }
+        }
+        
         $o .= $this->output->box_start('generalbox','mod-gallery-thumb-container');
         if($widget->edit)
             $o .= '<div id="mod-gallery-drop-indicator" style="display:none;"></div>';

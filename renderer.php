@@ -25,6 +25,11 @@ class mod_gallery_renderer extends plugin_renderer_base {
     public function render_gallery_view_gallery(gallery_view_gallery $widget) {
         $o = '';
         
+        if($widget->edit) {
+            $fUrl = new moodle_url('/mod/gallery/view.php',array('id' => $widget->coursemodule->id));
+            $o .= '<form action="'.$fUrl->out().'" method="post">';
+        }
+        
         if(count($widget->images)) {
             $urlparams = array('id' => $widget->coursemodule->id, 'action' => 'image','image'=>reset($widget->images)->id());
             $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('viewpreview','gallery'),null,array('class'=>'mod-gallery-extra-nav'));
@@ -34,10 +39,6 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box(format_text($widget->gallery->intro(), $widget->gallery->introformat()));
         $o .= $this->output->box_end();
         
-        if($widget->edit) {
-            $fUrl = new moodle_url('/mod/gallery/view.php',array('id' => $widget->coursemodule->id));
-            $o .= '<form action="'.$fUrl->out().'" method="post">';
-        }
         
         $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');
         if($widget->edit) {

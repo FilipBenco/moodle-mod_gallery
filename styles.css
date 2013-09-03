@@ -146,6 +146,11 @@
     text-align: right;
 }
 
+.mod-gallery-extra-nav {
+    float:right;
+    display: block;
+}
+
 .mod-gallery-image-comments {
     padding: 10px;
 }

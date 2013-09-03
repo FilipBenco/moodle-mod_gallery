@@ -25,15 +25,17 @@ class mod_gallery_renderer extends plugin_renderer_base {
     public function render_gallery_view_gallery(gallery_view_gallery $widget) {
         $o = '';
         
+        if(count($widget->images)) {
+            $urlparams = array('id' => $widget->coursemodule->id, 'action' => 'image','image'=>reset($widget->images)->id());
+            $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('viewpreview','gallery'),null,array('class'=>'mod-gallery-extra-nav'));
+        }
+        
         $o .= $this->output->box_start('generalbox boxaligncenter', 'intro');
         $o .= $this->output->box(format_text($widget->gallery->intro(), $widget->gallery->introformat()));
         $o .= $this->output->box_end();
         
         $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');
-        if(count($widget->images)) {
-            $urlparams = array('id' => $widget->coursemodule->id, 'action' => 'image','image'=>reset($widget->images)->id());
-            $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('viewpreview','gallery'));
-        }
+        
         if($widget->edit) {
             $urlparams = array('id' => $widget->coursemodule->id);
 

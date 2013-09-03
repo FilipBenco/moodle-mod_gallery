@@ -122,7 +122,7 @@
     max-width: 100%;
 }
 
-#mod-gallery-navigation-buttons .singlebutton, #mod-gallery-navigation-buttons .singlebutton form, #mod-gallery-navigation-buttons .singlebutton form div  {
+#mod-gallery-navigation-buttons div, #mod-gallery-navigation-buttons .singlebutton form, #mod-gallery-navigation-buttons .singlebutton form div  {
     display: inline;
 }
 

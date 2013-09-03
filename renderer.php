@@ -64,6 +64,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
                     $options['batchdelete'] = get_string ('delete','gallery');
                 
                 if(count($options)) {
+                    $o .= $this->output->box_start();
                     $o .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
                     $o .= get_string('selectedimageslabel','gallery');
                     $o .= '<select name="action">';
@@ -71,8 +72,8 @@ class mod_gallery_renderer extends plugin_renderer_base {
                         $o .= '<option value="'.$key.'">'.$value.'</option>';
                     $o .= '</select>';
                     $o .= '<input type="submit" name="batchsubmit" value="'.get_string('batchrun','gallery').'" />';
+                    $o .= $this->output->box_end();                    
                 }
-                
             }
             
         }

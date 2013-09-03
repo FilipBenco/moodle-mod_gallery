@@ -70,7 +70,7 @@ if($action == 'move') {
                 );
             $img->ordering = $bOrd+1;
             gallery_imagemanager::update_image($img);
-            get_fast_modinfo($courseId,0,true);
+            rebuild_course_cache($courseId,true);
             return;
         }
         if($bOrd > $ord) {
@@ -80,7 +80,7 @@ if($action == 'move') {
                 );
             $img->ordering = $bOrd+1;
             gallery_imagemanager::update_image($img);
-            get_fast_modinfo($courseId,0,true);
+            rebuild_course_cache($courseId,true);
             return;
         }
     }

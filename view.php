@@ -77,7 +77,6 @@ if($action == 'rotateleftg') {
     $img = gallery_imagemanager::get_image($iid);
     if(has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
         gallery_process_rotate_image('left',$img,$context);
-        rebuild_course_cache($gallery->course(),true);
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
     } else 
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
@@ -87,7 +86,6 @@ if($action == 'rotaterightg') {
     $img = gallery_imagemanager::get_image($iid);
     if(has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
         gallery_process_rotate_image('right',$img,$context);
-        rebuild_course_cache($gallery->course(),true);
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
     } else
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
@@ -97,7 +95,6 @@ if($action == 'rotatelefti') {
     $img = gallery_imagemanager::get_image($iid);
     if(has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
         gallery_process_rotate_image('left',$img,$context);
-        rebuild_course_cache($gallery->course(),true);
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
     } else
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
@@ -107,8 +104,6 @@ if($action == 'rotaterighti') {
     $img = gallery_imagemanager::get_image($iid);
     if(has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
         gallery_process_rotate_image('right',$img,$context);
-        rebuild_course_cache($gallery->course(),true);
-        //get_fast_modinfo($gallery->course(),0,true);
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=image&image='.$iid);
     } else
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');

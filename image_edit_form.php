@@ -14,6 +14,8 @@ class mod_gallery_image_edit_form extends moodleform {
         
         $data = array();
         foreach($this->_customdata['images'] as $image) {
+            if($action == 'batchedit')
+                $mform->addElement ('hidden','mod-gallery-batch-'.$image->id(),'1');
             
             $uniqueId = '';
             $imagePreview = '';

@@ -148,7 +148,6 @@ if($action == 'batchedit') {
     if ($mform->is_cancelled()) 
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
     if (($formdata = $mform->get_data()) && confirm_sesskey()) {
-        $images = gallery_load_images($gallery, $context);
         gallery_process_images_save($formdata, $images, $context, $gallery);
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
     }

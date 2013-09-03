@@ -196,8 +196,8 @@ switch($action) {
         if($USER->editing)
             echo $renderer->render(new gallery_view_gallery($gallery, $images, $cm, 
                     $USER->editing, has_capability('mod/gallery:addimages', $context),
-                    has_capability('mod/gallery:editimages', $context), has_capability('mod/gallery:editownimages', $context),
-                    has_capability('mod/gallery:deleteimages', $context), has_capability('mod/gallery:deleteownimages', $context)));     
+                    has_capability('mod/gallery:editallimages', $context), has_capability('mod/gallery:editownimages', $context),
+                    has_capability('mod/gallery:deleteallimages', $context), has_capability('mod/gallery:deleteownimages', $context)));     
         else
             echo $renderer->render(new gallery_view_gallery($gallery, $images, $cm));
         break;

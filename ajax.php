@@ -70,7 +70,7 @@ if($action == 'display') {
 } 
 
 if($action == 'move') {
-    if(has_capability('mod/gallery:edit', $context) || has_capability('mod/gallery:editimages', $context)) {
+    if(has_capability('mod/gallery:manage', $context) || has_capability('mod/gallery:editallimages', $context)) {
         $beforeId = required_param('beforeImage', PARAM_INT);
         $courseId = $DB->get_record('gallery',array('id'=>$img->gallery))->course;
         $ord = $img->ordering;

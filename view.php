@@ -28,7 +28,7 @@ $renderer = $PAGE->get_renderer('mod_gallery');
 $gallery = new gallery($cm->instance);
 
 //preprocess actions
-
+var_dump($gallery->course());
 $mform = null;
 $images = null;
 $loadImages = true;

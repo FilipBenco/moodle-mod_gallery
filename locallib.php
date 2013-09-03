@@ -12,10 +12,10 @@ define('GALLERY_IMAGE_ATTACHMENTS_FILEAREA','gallery_attachments');
 function gallery_process_editing($edit, $context) {
     global $USER;
 
-    if (has_capability('mod/gallery:edit', $context) || 
-            has_capability('mod/gallery:editimages', $context) ||
+    if (has_capability('mod/gallery:manage', $context) || 
+            has_capability('mod/gallery:editallimages', $context) ||
             has_capability('mod/gallery:editownimages', $context) ||
-            has_capability('mod/gallery:deleteimages', $context) ||
+            has_capability('mod/gallery:deleteallimages', $context) ||
             has_capability('mod/gallery:deleteownimages', $context) ||
             has_capability('mod/gallery:addimages', $context)) {
         if ($edit != -1 and confirm_sesskey()) 
@@ -186,11 +186,10 @@ function gallery_load_image($context,$image_db) {
                                        $image_db->id.'.'.$image_db->type),$context,true,true);
 }
 
-function gallery_process_rotate_image($direction,$img,$context) {
+function gallery_process_rotate_image($direction,$image) {
     $angle = 90;
     if($direction == 'right')
         $angle = 270;
-    $image = gallery_load_image($context, $img);
     $image->rotate($angle);
 }
 
@@ -200,12 +199,10 @@ function gallery_process_delete_image($img, $context, $gallery) {
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
     require_once($CFG->dirroot.'/comment/lib.php');
     $fs = get_file_storage();
-    $file = $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), '/'.$gallery->id().'/', $img->id.'.'.$img->type);
-    $image = new gallery_image($img,$file,$context);
-    $image->delete();
+    $img->delete();
     $fs->delete_area_files($context->id, 'mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, $gallery->id());
-    gallery_imagemanager::delete_image($img->id);
-    comment::delete_comments(array('contextid'=>$context->id,'commentarea'=>'gallery_image_comments','itemid'=>$img->id));
+    gallery_imagemanager::delete_image($img->id());
+    comment::delete_comments(array('contextid'=>$context->id,'commentarea'=>'gallery_image_comments','itemid'=>$img->id()));
 }
 
 function gallery_get_packed_images($gallery,$context) {
@@ -222,6 +219,16 @@ function gallery_get_packed_images($gallery,$context) {
         $preparedFiles[fullname($users[$img->data()->user]).' - img'.$img->stored_file()->get_filename()] = $img->stored_file();
     }
     return $packer->archive_to_storage($preparedFiles, $context->id, 'mod_gallery', 'gallery_packed_images', $gallery->id(), '/', $gallery->id().'-'.$gallery->name().'.zip', $USER->id);
+}
+
+function gallery_load_batch_images($gallery, $context) {
+    $images = gallery_load_images($gallery, $context);
+    $batchImages = array();
+    foreach($images as $image) {
+        if(isset($_POST['mod-gallery-batch-'.$image->id()]))
+            $batchImages[$image->id()] = $image->id();
+    }
+    return $batchImages;
 }
 
 class gallery_content_file_info extends file_info_stored {

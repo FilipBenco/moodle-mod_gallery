@@ -25,7 +25,7 @@ $capabilities = array(
         'clonepermissionsfrom' => 'moodle/course:manageactivities'
     ),
     
-    'mod/gallery:edit' => array(
+    'mod/gallery:manage' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
         'archetypes' => array(
@@ -34,7 +34,7 @@ $capabilities = array(
         )
     ),
     
-    'mod/gallery:editimages' => array(
+    'mod/gallery:editiallmages' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
         'archetypes' => array(
@@ -52,7 +52,7 @@ $capabilities = array(
         )
     ),
     
-    'mod/gallery:deleteimages' => array(
+    'mod/gallery:deleteallimages' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
         'archetypes' => array(

@@ -74,7 +74,7 @@ class mod_gallery_image_edit_form extends moodleform {
         $mform->addElement('hidden','id',$this->_customdata['id']);
         $mform->setType('id',PARAM_INT);
         
-        if($action == 'editimage' || $action == 'editimages') {
+        if($action == 'editimage' || $action == 'editimages' || $action == 'batchedit') {
             $this->add_action_buttons(true, get_string('savechanges','gallery'));
         } else {
             $this->add_action_buttons(true, get_string('saveimages','gallery'));

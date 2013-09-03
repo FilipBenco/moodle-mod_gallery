@@ -10,6 +10,7 @@ class mod_gallery_image_edit_form extends moodleform {
         $mform = $this->_form;
         
         $action = $this->_customdata['action'];
+        $gallery = $this->_customdata['gallery'];
         
         $data = array();
         foreach($this->_customdata['images'] as $image) {
@@ -37,7 +38,8 @@ class mod_gallery_image_edit_form extends moodleform {
                     array('rows' => 3), array('collapsed' => true));
             $mform->setType('desc-'.$uniqueId, PARAM_RAW);
             
-            $mform->addElement('filemanager', 'attachments-'.$uniqueId, get_string('attachments', 'gallery'), null, array('subdirs' => 0));
+            if($gallery->imageattachments())
+                $mform->addElement('filemanager', 'attachments-'.$uniqueId, get_string('attachments', 'gallery'), null, array('subdirs' => 0));
             
             $mform->addElement('checkbox', 'sourcetype-'.$uniqueId, get_string('sourceown','gallery'));
             $mform->setType('sourcetype-'.$uniqueId, PARAM_BOOL);
@@ -56,7 +58,7 @@ class mod_gallery_image_edit_form extends moodleform {
                 $data['source-'.$uniqueId] = '';
                 $data['sourcetype-'.$uniqueId] = true;
             }
-            if($action != 'addimagedesc') {
+            if($action != 'addimagedesc' && $gallery->imageattachments()) {
                 $draftitemid = file_get_submitted_draft_itemid('attachments-'.$uniqueId);
                 file_prepare_draft_area($draftitemid, $this->_customdata['contextid'], 'mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, $image->id(),array('subdirs' => 0));
                 $data['attachments-'.$uniqueId] = $draftitemid;

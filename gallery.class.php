@@ -39,6 +39,10 @@ class gallery {
         return $this->data->showthumbnails;
     }
     
+    public function imageattachments() {
+        return $this->data->imageattachments;
+    }
+    
     public function isValid() {
         return !is_null($this->data);
     }

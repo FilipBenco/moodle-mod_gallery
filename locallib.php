@@ -123,14 +123,16 @@ function gallery_process_image_drats_save($data, $context, $gallery, $files) {
         if (!$fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), $filepath, $filename)) {
             $file = $fs->create_file_from_storedfile($fileinfo, $file->stored_file());
             $image = new gallery_image($image_data, $file, $context);
-            $attachmentsStr = 'attachments-'.$uId;
-            file_save_draft_area_files($data->$attachmentsStr, $context->id, 'mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, $image->id(), array('subdirs' => 0)); 
+            if($gallery->imageattachments()) {
+                $attachmentsStr = 'attachments-'.$uId;
+                file_save_draft_area_files($data->$attachmentsStr, $context->id, 'mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, $image->id(), array('subdirs' => 0)); 
+            }
         }
     }
     $fs->delete_area_files($context->id, 'mod_gallery', GALLERY_IMAGE_DRAFTS_FILEAREA, $gallery->id());
 }
 
-function gallery_process_images_save($data, $images,$context) {
+function gallery_process_images_save($data, $images,$context,$gallery) {
     global $CFG;
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
     require_once($CFG->dirroot.'/mod/gallery/image.class.php');
@@ -143,9 +145,10 @@ function gallery_process_images_save($data, $images,$context) {
                 ($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT && $image->data()->source != $imgData->source)) {
             gallery_imagemanager::update_image($imgData);
         }
-        $attachmentsStr = 'attachments-'.$image->id();
-        file_save_draft_area_files($data->$attachmentsStr, $context->id, 'mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, $image->id(), array('subdirs' => 0)); 
-        
+        if($gallery->imageattachments()) {
+            $attachmentsStr = 'attachments-'.$image->id();
+            file_save_draft_area_files($data->$attachmentsStr, $context->id, 'mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, $image->id(), array('subdirs' => 0)); 
+        }
     }
 }
 
@@ -216,7 +219,7 @@ function gallery_get_packed_images($gallery,$context) {
     foreach($images as $img) {
         if(!isset($users[$img->data()->user]))
             $users[$img->data()->user] = $DB->get_record('user',array('id'=>$img->data()->user));
-        $preparedFiles[fullname($users[$img->data()->user]).' - '.$img->stored_file()->get_filename()] = $img->stored_file();
+        $preparedFiles[fullname($users[$img->data()->user]).' - img'.$img->stored_file()->get_filename()] = $img->stored_file();
     }
     return $packer->archive_to_storage($preparedFiles, $context->id, 'mod_gallery', 'gallery_packed_images', $gallery->id(), '/', $gallery->id().'-'.$gallery->name().'.zip', $USER->id);
 }

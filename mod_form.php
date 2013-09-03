@@ -29,6 +29,9 @@ class mod_gallery_mod_form extends moodleform_mod {
 
         $mform->addElement('checkbox','showthumbnails', get_string('showthumbnails','gallery'));
         $mform->addHelpButton('showthumbnails', 'showthumbnails', 'gallery');
+        
+        $mform->addElement('checkbox','imageattachments', get_string('imageattachments','gallery'));
+        $mform->addHelpButton('imageattachments', 'imageattachments', 'gallery');
        
         $this->standard_coursemodule_elements();
 

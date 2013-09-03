@@ -34,7 +34,7 @@ $capabilities = array(
         )
     ),
     
-    'mod/gallery:editiallmages' => array(
+    'mod/gallery:editallimages' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
         'archetypes' => array(

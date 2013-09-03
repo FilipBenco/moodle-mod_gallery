@@ -12,13 +12,15 @@ $iid = optional_param('image', 0, PARAM_INT);
 
 $cm = get_coursemodule_from_id('gallery', $id, 0, false, MUST_EXIST);
 $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+$context = context_module::instance($cm->id);
+
+$PAGE->set_context($context);
 
 $urlparams = array('id' => $id, 'action' => $action);
 $url = new moodle_url('/mod/gallery/view.php', $urlparams);
 require_login($course, true, $cm);
 $PAGE->set_url($url);
 
-$context = context_module::instance($cm->id);
 
 gallery_process_editing($edit, $context);
 

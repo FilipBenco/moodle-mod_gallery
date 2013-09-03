@@ -5,8 +5,8 @@ M.mod_gallery.init = function(Y, cfg) {
 };
 
 M.mod_gallery.moveIntro = function(direction,gallery) {
-    var scroll = M.mod_gallery.Y.one('#mod-gallery-intro-thumb-cont-helper-'+gallery).get('docScrollX');
-    var scrollS = M.mod_gallery.Y.one('#mod-gallery-intro-thumb-cont-helper-'+gallery).get('docScrollY');
+    var current = M.mod_gallery.Y.one('#mod-gallery-intro-thumb-cont-helper-'+gallery);
+    var scroll = current.getX() - current.one('> .mod-gallery-intro-thumbnails-table').getX();
     if(direction === 'left') 
        scroll -= 154;
     else if(direction ==='right') 

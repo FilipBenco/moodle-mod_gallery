@@ -7,6 +7,7 @@ define('GALLERY_IMAGES_FILEAREA','gallery_images');
 define('GALLERY_IMAGE_THUMBS_FILEAREA','gallery_thumbs');
 define('GALLERY_IMAGE_PREVIEWS_FILEAREA','gallery_previews');
 define('GALLERY_IMAGE_DRAFTS_FILEAREA','gallery_drafts');
+define('GALLERY_IMAGE_ATTACHMENTS_FILEAREA','gallery_attachments');
 
 function gallery_process_editing($edit, $context) {
     global $USER;
@@ -121,7 +122,9 @@ function gallery_process_image_drats_save($data, $context, $gallery, $files) {
         );
         if (!$fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), $filepath, $filename)) {
             $file = $fs->create_file_from_storedfile($fileinfo, $file->stored_file());
-            new gallery_image($image_data, $file, $context);
+            $image = new gallery_image($image_data, $file, $context);
+            $attachmentsStr = 'attachments-'.$uId;
+            file_save_draft_area_files($data->$attachmentsStr, $context->id, 'mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, $image->id(), array('subdirs' => 0)); 
         }
     }
     $fs->delete_area_files($context->id, 'mod_gallery', GALLERY_IMAGE_DRAFTS_FILEAREA, $gallery->id());
@@ -143,7 +146,7 @@ function gallery_process_images_save($data, $images) {
     }
 }
 
-function gallery_load_images($gallery, $context) {
+function gallery_load_images($gallery, $context, $iid = false) {
     global $CFG;
     require_once($CFG->dirroot.'/mod/gallery/image.class.php');
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
@@ -154,8 +157,13 @@ function gallery_load_images($gallery, $context) {
     $fs = get_file_storage();
     $filepath = '/'.$gallery->id().'/';
     foreach($images_db as $idb) {
-        $images[$idb->id] = new gallery_image($idb, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), $filepath,
-                                       $idb->id.'.'.$idb->type),$context);
+        if($iid && $idb->id == $iid) {
+            $images[$idb->id] = new gallery_image($idb, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), $filepath,
+                                       $idb->id.'.'.$idb->type),$context,true,true);
+        } else {
+            $images[$idb->id] = new gallery_image($idb, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), $filepath,
+                                       $idb->id.'.'.$idb->type),$context);   
+        }
     }
     return $images;
 }
@@ -169,7 +177,7 @@ function gallery_load_image($context,$image_db) {
     $filepath = '/'.$image_db->gallery.'/';
     
     return new gallery_image($image_db, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $image_db->gallery, $filepath,
-                                       $image_db->id.'.'.$image_db->type),$context);
+                                       $image_db->id.'.'.$image_db->type),$context,true,true);
 }
 
 function gallery_process_rotate_image($direction,$img,$context) {
@@ -189,6 +197,7 @@ function gallery_process_delete_image($img, $context, $gallery) {
     $file = $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), '/'.$gallery->id().'/', $img->id.'.'.$img->type);
     $image = new gallery_image($img,$file,$context);
     $image->delete();
+    $fs->delete_area_files($context->id, 'mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, $gallery->id());
     gallery_imagemanager::delete_image($img->id);
     comment::delete_comments(array('contextid'=>$context->id,'commentarea'=>'gallery_image_comments','itemid'=>$img->id));
 }

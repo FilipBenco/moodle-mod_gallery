@@ -177,7 +177,7 @@ switch($action) {
         $candelete = has_capability('mod/gallery:deleteimages', $context) || (has_capability('mod/gallery:deleteownimages', $context) && $USER->id == $images[$iid]->data()->user);
         $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id,'currentImage'=>$iid,'canEdit'=>$canedit,'canDelete'=>$candelete)), false, $module);
         echo $renderer->render(new gallery_header($gallery->name(),$context));
-        $images = gallery_load_images($gallery, $context);
+        $images = gallery_load_images($gallery, $context, $iid);
         if($USER->editing)
             echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context, $USER->editing,
                     has_capability('mod/gallery:editimages', $context), has_capability('mod/gallery:editownimages', $context),

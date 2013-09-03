@@ -35,7 +35,9 @@ class gallery_image {
     
     protected $context;
     
-    public function __construct($data, $file, $context, $prepare = true) {
+    protected $attachments;
+    
+    public function __construct($data, $file, $context, $prepare = true, $attachments = false) {
        
         $this->data = $data;
         $this->context = $context;
@@ -56,7 +58,7 @@ class gallery_image {
             if($this->preview == null)
                 $this->preview = $this->create_preview();
             $this->load_preview_info();
-
+            
             $this->image_url = moodle_url::make_pluginfile_url($this->image->get_contextid(), $this->image->get_component(), 
                     $this->image->get_filearea(), $this->image->get_itemid(), 
                     $this->image->get_filepath(), $this->image->get_filename());
@@ -66,6 +68,10 @@ class gallery_image {
             $this->preview_url = moodle_url::make_pluginfile_url($this->preview->get_contextid(), $this->preview->get_component(), 
                     $this->preview->get_filearea(), $this->preview->get_itemid(), 
                     $this->preview->get_filepath(), $this->preview->get_filename());
+        }
+        if($attachments) {
+            $fs = get_file_storage();
+            $this->attachments = $fs->get_area_files($this->context->id, 'mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, $this->data->id, 'filename ASC');
         }
     }
         
@@ -95,6 +101,10 @@ class gallery_image {
     
     public function data() {
         return $this->data;
+    }
+    
+    public function attachments() {
+        return $this->attachments;
     }
     
     public function t_width() {

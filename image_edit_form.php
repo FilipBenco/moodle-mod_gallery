@@ -22,7 +22,6 @@ class mod_gallery_image_edit_form extends moodleform {
                 $imagePreview =  moodle_url::make_pluginfile_url($image->stored_file()->get_contextid(), $image->stored_file()->get_component(), 
                         $image->stored_file()->get_filearea(), $image->stored_file()->get_itemid(), 
                         $image->stored_file()->get_filepath(), $image->stored_file()->get_filename());
-                
             } else {
                 $uniqueId = $image->id();
                 $imagePreview = $image->thumbnail();
@@ -37,6 +36,8 @@ class mod_gallery_image_edit_form extends moodleform {
             $mform->addElement('editor', 'desc-'.$uniqueId,'<img src="'.$imagePreview.'" style="max-width:150px; max-height:150px;" />',
                     array('rows' => 3), array('collapsed' => true));
             $mform->setType('desc-'.$uniqueId, PARAM_RAW);
+            
+            $mform->addElement('filemanager', 'attachments-'.$uniqueId, get_string('attachment', 'gallery'), null, array('subdirs' => 0));
             
             $mform->addElement('checkbox', 'sourcetype-'.$uniqueId, get_string('sourceown','gallery'));
             $mform->setType('sourcetype-'.$uniqueId, PARAM_BOOL);
@@ -54,6 +55,11 @@ class mod_gallery_image_edit_form extends moodleform {
             } elseif($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_OWN) {
                 $data['source-'.$uniqueId] = '';
                 $data['sourcetype-'.$uniqueId] = true;
+            }
+            if($action != 'addimagedesc') {
+                $draftitemid = file_get_submitted_draft_itemid('attachments-'.$uniqueId);
+                file_prepare_draft_area($draftitemid, $this->_customdata['contextid'], 'mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, $image->id(),array('subdirs' => 0));
+                $data['attachments-'.$uniqueId] = $draftitemid;
             }
         }
         

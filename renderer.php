@@ -168,6 +168,18 @@ class mod_gallery_renderer extends plugin_renderer_base {
         
         $o .= $this->output->box(format_text($img->image->data()->description,$img->image->data()->descriptionformat),null,'mod-gallery-image-desc');
 
+        $o .= $this->output->box_start();
+        foreach($img->image->attachments() as $att) {
+            $ico = $this->output->pix_icon(file_file_icon($att),$att->get_filename(),'moodle',array('class'=>'icon'));
+            $o .= $this->output->box_start();
+            $attUrl = moodle_url::make_pluginfile_url($att->get_contextid(), $att->get_component(), 
+                    $att->get_filearea(), $att->get_itemid(), 
+                    $att->get_filepath(), $att->get_filename());
+            $o .= $this->output->action_link($attUrl, $ico.' '.$att->get_filename());
+            $o .= $this->output->box_end();
+        }
+        $o .= $this->output->box_end();
+        
         comment::init();
         $options = new stdClass();
         $options->area    = 'gallery_image_comments';

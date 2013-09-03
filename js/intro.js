@@ -6,11 +6,11 @@ M.mod_gallery.init = function(Y, cfg) {
 
 M.mod_gallery.moveIntro = function(direction,gallery) {
     var scroll = M.mod_gallery.Y.one('#mod-gallery-intro-thumb-cont-helper-'+gallery).get('docScrollX');
-    if(direction === 'left') {
+    var scrolls = M.mod_gallery.Y.one('#mod-gallery-intro-thumb-cont-helper-'+gallery+' > div').getX();
+    if(direction === 'left') 
        scroll -= 154;
-    } else if(direction ==='right') {
+    else if(direction ==='right') 
         scroll += 154;
-    }
     
     var move = new M.mod_gallery.Y.Anim({
             node: '#mod-gallery-intro-thumb-cont-helper-'+gallery,

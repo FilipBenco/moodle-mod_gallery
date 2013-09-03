@@ -34,8 +34,12 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box(format_text($widget->gallery->intro(), $widget->gallery->introformat()));
         $o .= $this->output->box_end();
         
-        $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');
+        if($widget->edit) {
+            $fUrl = new moodle_url('/mod/gallery/view.php',array('id' => $widget->coursemodule->id));
+            $o .= '<form action="'.$fUrl->out().'" method="post">';
+        }
         
+        $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');
         if($widget->edit) {
             $urlparams = array('id' => $widget->coursemodule->id);
 
@@ -44,10 +48,33 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $o  .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('addimages','gallery'));
             }
             
-            if(count($widget->images) > 0 && $widget->canedit) {
-                $urlparams['action'] = 'editimages';
-                $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('editimages','gallery'));
+            if(count($widget->images) > 0){
+                if($widget->canedit) {
+                    $urlparams['action'] = 'editimages';
+                    $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('editimages','gallery'));
+                }
+                
+                $options = array();
+                if($widget->canedit) {
+                    $options['batchedit'] = get_string('edit','gallery');
+                    $options['batchrotateleft'] = get_string('rotateleft','gallery');
+                    $options['batchrotateright'] = get_string('rotateright','gallery');
+                }
+                if($widget->candelete)
+                    $options['batchdelete'] = get_string ('delete','gallery');
+                
+                if(count($options)) {
+                    $o .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                    $o .= get_string('selectedimageslabel','gallery');
+                    $o .= '<select name="action">';
+                    foreach($options as $key => $value)
+                        $o .= '<option value="'.$key.'">'.$value.'</option>';
+                    $o .= '</select>';
+                    $o .= '<input type="submit" name="batchsubmit" value="'.get_string('batchrun','gallery').'" />';
+                }
+                
             }
+            
         }
         $o .= $this->output->box_end();
         
@@ -64,6 +91,8 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $o .= $a = $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $i, null, array('class'=>'mod-gallery-image-thumb-a-edit'));
                 $o .= $this->output->box('','mod-gallery-clear');
                 $o .= $this->output->box_start('mod-gallery-thumb-actions');
+                if($widget->canedit || $widget->candelete)
+                    $o .= '<input type="checkbox" value="" name="batc-'.$image->id().'" />';
                 if($widget->canedit || ($widget->caneditown && $image->data()->user == $widget->currentuser)) {
                     $urlparams['action'] = 'rotateleftg';
                     $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('rotateleft', get_string('rotateleft','gallery'),'mod_gallery'));
@@ -82,6 +111,9 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $i, null, array('class'=>'mod-gallery-image-thumb-a'));
         }
         $o .= $this->output->box_end();
+        
+        if($widget->edit) 
+            $o .= '</form">';
         
         return $o;
     }

@@ -15,6 +15,7 @@ $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST)
 $context = context_module::instance($cm->id);
 
 $PAGE->set_context($context);
+$PAGE->set_cm($cm);
 
 $urlparams = array('id' => $id, 'action' => $action);
 $url = new moodle_url('/mod/gallery/view.php', $urlparams);

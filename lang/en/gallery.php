@@ -2,6 +2,7 @@
 defined('MOODLE_INTERNAL') || die;
 
 $string['addimages'] = 'Add Images';
+$string['attachments'] = 'Attachments';
 $string['author'] = 'Author';
 $string['confirmdelete'] = 'Do you really want to delete selected image?';
 $string['deleteimage'] = 'Delete image';

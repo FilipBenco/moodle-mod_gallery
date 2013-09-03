@@ -37,7 +37,7 @@ class mod_gallery_image_edit_form extends moodleform {
                     array('rows' => 3), array('collapsed' => true));
             $mform->setType('desc-'.$uniqueId, PARAM_RAW);
             
-            $mform->addElement('filemanager', 'attachments-'.$uniqueId, get_string('attachment', 'gallery'), null, array('subdirs' => 0));
+            $mform->addElement('filemanager', 'attachments-'.$uniqueId, get_string('attachments', 'gallery'), null, array('subdirs' => 0));
             
             $mform->addElement('checkbox', 'sourcetype-'.$uniqueId, get_string('sourceown','gallery'));
             $mform->setType('sourcetype-'.$uniqueId, PARAM_BOOL);

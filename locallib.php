@@ -106,7 +106,7 @@ function gallery_process_image_drats_save($data, $context, $gallery, $files) {
 
     $fs = get_file_storage();
     foreach ($files as $file) {
-        $uId = clean_param($file->stored_file()->get_filename(), PARAM_ALPHA);
+        $uId = clean_param($file->stored_file()->get_filename(), PARAM_ALPHANUM);
         $imgData = gallery_image::from_form_data($uId, $data);
         $imgData->gallery = $gallery->id();
         $imgData->type = pathinfo($file->stored_file()->get_filename(), PATHINFO_EXTENSION);

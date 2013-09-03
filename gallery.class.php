@@ -15,6 +15,10 @@ class gallery {
         return $this->data->id;
     }
     
+    public function course() {
+        return $this->data->course;
+    }
+    
     public function name() {
         return $this->data->name;
     }

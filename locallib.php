@@ -215,7 +215,7 @@ function gallery_get_packed_images($gallery,$context) {
     $users = array();
     foreach($images as $img) {
         if(!isset($users[$img->data()->user]))
-            $users[$img->data()->user] = $DB->get_record('users',array('id'=>$img->data()->user));
+            $users[$img->data()->user] = $DB->get_record('user',array('id'=>$img->data()->user));
         $preparedFiles[$users[$img->data()->user].' - '.$img->stored_file()->get_filename()] = $img->stored_file();
     }
     return $packer->archive_to_storage($preparedFiles, $context->id, 'mod_gallery', 'gallery_packed_images', $gallery->id(), '/', $gallery->id().'-'.$gallery->name().'.zip', $USER->id);

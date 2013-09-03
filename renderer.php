@@ -71,7 +71,6 @@ class mod_gallery_renderer extends plugin_renderer_base {
 
             if(count($options)) {
                 $o .= $this->output->box_start();
-                $o .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
                 $o .= get_string('selectedimageslabel','gallery');
                 $o .= '<select name="action">';
                 foreach($options as $key => $value)

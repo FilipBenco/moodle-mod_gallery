@@ -193,7 +193,8 @@ function gallery_pluginfile($course, $cm, $context, $filearea, $args, $forcedown
     if ($filearea !== GALLERY_IMAGES_FILEAREA 
             && $filearea !== GALLERY_IMAGE_THUMBS_FILEAREA
             && $filearea !== GALLERY_IMAGE_DRAFTS_FILEAREA
-            && $filearea !== GALLERY_IMAGE_PREVIEWS_FILEAREA) {
+            && $filearea !== GALLERY_IMAGE_PREVIEWS_FILEAREA
+            && $filearea !== GALLERY_IMAGE_ATTACHMENTS_FILEAREA) {
         return false;
     }
 

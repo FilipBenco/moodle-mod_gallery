@@ -115,11 +115,11 @@ function gallery_process_image_drats_save($data, $context, $gallery, $files) {
             'contextid' => $context->id,
             'component' => 'mod_gallery',
             'filearea' =>  GALLERY_IMAGES_FILEAREA,
-            'itemid' => $image_data->id,
+            'itemid' => $gallery->id(),
             'filepath' => $filepath,
             'filename' =>  $filename
         );
-        if (!$fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $image_data->id, $filepath, $filename)) {
+        if (!$fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), $filepath, $filename)) {
             $file = $fs->create_file_from_storedfile($fileinfo, $file->stored_file());
             new gallery_image($image_data, $file, $context);
         }
@@ -154,7 +154,7 @@ function gallery_load_images($gallery, $context) {
     $fs = get_file_storage();
     $filepath = '/'.$gallery->id().'/';
     foreach($images_db as $idb) {
-        $images[$idb->id] = new gallery_image($idb, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $idb->id, $filepath,
+        $images[$idb->id] = new gallery_image($idb, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), $filepath,
                                        $idb->id.'.'.$idb->type),$context);
     }
     return $images;
@@ -168,7 +168,7 @@ function gallery_load_image($context,$image_db) {
     $fs = get_file_storage();
     $filepath = '/'.$image_db->gallery.'/';
     
-    return new gallery_image($image_db, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $image_db->id, $filepath,
+    return new gallery_image($image_db, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $image_db->gallery, $filepath,
                                        $image_db->id.'.'.$image_db->type),$context);
 }
 
@@ -204,11 +204,19 @@ function gallery_process_delete_image($img, $context, $gallery) {
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
     require_once($CFG->dirroot.'/comment/lib.php');
     $fs = get_file_storage();
-    $file = $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $img->id, '/'.$gallery->id().'/', $img->id.'.'.$img->type);
+    $file = $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), '/'.$gallery->id().'/', $img->id.'.'.$img->type);
     $image = new gallery_image($img,$file,$context);
     $image->delete();
     gallery_imagemanager::delete_image($img->id);
     comment::delete_comments(array('contextid'=>$context->id,'commentarea'=>'gallery_image_comments','itemid'=>$img->id));
+}
+
+function gallery_get_packed_images($gallery,$context) {
+    global $USER;
+    $packer = get_file_packer('application/zip');
+    $fs = get_file_storage();
+    $files = $fs->get_area_files($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id());
+    return $packer->archive_to_storage($files, $context->id, 'mod_gallery', 'gallery_packed_images', $gallery->id(), '/', $gallery->id().'-'.$gallery->name().'.zip', $USER->id);
 }
 
 class gallery_content_file_info extends file_info_stored {

@@ -230,7 +230,7 @@ class gallery_image {
             'contextid' => $this->context->id,
             'component' => 'mod_gallery',
             'filearea' => GALLERY_IMAGE_THUMBS_FILEAREA,
-            'itemid' => $this->data->id,
+            'itemid' => $this->image->get_itemid(),
             'filepath' => $this->image->get_filepath(),
             'filename' => $this->data->id.'.png');
 
@@ -248,7 +248,7 @@ class gallery_image {
             'contextid' => $this->context->id,
             'component' => 'mod_gallery',
             'filearea' => GALLERY_IMAGE_PREVIEWS_FILEAREA,
-            'itemid' => $this->data->id,
+            'itemid' => $this->image->get_itemid(),
             'filepath' => $this->image->get_filepath(),
             'filename' => $this->data->id.'.png');
 

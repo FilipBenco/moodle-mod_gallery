@@ -98,7 +98,7 @@ function gallery_extend_settings_navigation(settings_navigation $settings, navig
     global $USER, $PAGE, $OUTPUT;
 
     $params = $PAGE->url->params();
-
+    
     if (!empty($params['id']) && (has_capability('mod/gallery:edit', $PAGE->cm->context) ||
                 has_capability('mod/gallery:addimages', $PAGE->cm->context) ||
                 has_capability('mod/gallery:editimages', $PAGE->cm->context) ||
@@ -115,6 +115,10 @@ function gallery_extend_settings_navigation(settings_navigation $settings, navig
         $url = new moodle_url('/mod/gallery/view.php', array('id'=>$params['id'], 'edit'=>$edit, 'sesskey'=>sesskey()));
         $navref->add($string, $url, navigation_node::TYPE_SETTING);
         $PAGE->set_button($OUTPUT->single_button($url, $string, 'get')); 
+    }
+    if(!empty($params['id']) && has_capability('mod/gallery:edit', $PAGE->cm->context)) {
+        $url = new moodle_url('/mod/gallery/download.php', array('id'=>$params['id'],'sesskey'=>sesskey()));
+        $navref->add(get_string('downloadphotos','gallery'), $url, navigation_node::TYPE_SETTING);
     }
 }
 

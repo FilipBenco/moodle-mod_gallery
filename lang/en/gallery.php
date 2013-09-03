@@ -6,6 +6,7 @@ $string['author'] = 'Author';
 $string['confirmdelete'] = 'Do you really want to delete selected image?';
 $string['deleteimage'] = 'Delete image';
 $string['description'] = 'Description:';
+$string['downloadphotos'] = 'Download photos';
 $string['drafts'] = 'Drafts';
 $string['editimage'] = 'Edit image';
 $string['editimages'] = 'Edit images';

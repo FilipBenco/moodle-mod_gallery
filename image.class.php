@@ -195,14 +195,14 @@ class gallery_image {
     
     protected function get_thumbnail() {
         $fs = get_file_storage();
-        $thumbnail = $fs->get_file($this->context->id, 'mod_gallery', GALLERY_IMAGE_THUMBS_FILEAREA, $this->data->id, $this->image->get_filepath(),
+        $thumbnail = $fs->get_file($this->context->id, 'mod_gallery', GALLERY_IMAGE_THUMBS_FILEAREA, $this->image->get_itemid(), $this->image->get_filepath(),
                                        $this->data->id.'.png');
         return $thumbnail;
     }
     
     protected function get_preview() {
         $fs = get_file_storage();
-        $preview = $fs->get_file($this->context->id, 'mod_gallery', GALLERY_IMAGE_PREVIEWS_FILEAREA, $this->data->id, $this->image->get_filepath(),
+        $preview = $fs->get_file($this->context->id, 'mod_gallery', GALLERY_IMAGE_PREVIEWS_FILEAREA, $this->image->get_itemid(), $this->image->get_filepath(),
                                        $this->data->id.'.png');
         return $preview;
     }

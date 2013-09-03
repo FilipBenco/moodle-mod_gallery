@@ -185,7 +185,7 @@ if($action == 'batchdownload') {
     $gallery = new gallery($cm->instance);
 
     $images = gallery_load_batch_images($gallery, $context);
-    $packedPhotos = gallery_get_packed_images($images,$gallery);
+    $packedPhotos = gallery_get_packed_images($images,$gallery,$context);
     if($packedPhotos) 
         send_stored_file ($packedPhotos);
     die;
@@ -199,7 +199,7 @@ if($action == 'downloadall') {
         $gallery = new gallery($cm->instance);
 
         $images = gallery_load_images($gallery, $context);
-        $packedPhotos = gallery_get_packed_images($images,$gallery);
+        $packedPhotos = gallery_get_packed_images($images,$gallery,$context);
         if($packedPhotos) 
             send_stored_file ($packedPhotos);
         die;

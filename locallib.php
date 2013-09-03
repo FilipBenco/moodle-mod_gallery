@@ -205,7 +205,7 @@ function gallery_process_delete_image($img, $context, $gallery) {
     comment::delete_comments(array('contextid'=>$context->id,'commentarea'=>'gallery_image_comments','itemid'=>$img->id()));
 }
 
-function gallery_get_packed_images($images, $gallery) {
+function gallery_get_packed_images($images, $gallery, $context) {
     global $USER, $DB;
     $packer = get_file_packer('application/zip');
     $fs = get_file_storage();

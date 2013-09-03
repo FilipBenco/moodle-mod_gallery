@@ -218,7 +218,7 @@ function gallery_get_packed_images($gallery,$context) {
     $fs->delete_area_files($context->id,'mod_gallery','gallery_packed_images');
     $files = $fs->get_area_files($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id());
     $preparedFiles = array();
-    count($files);
+    echo count($files);
     die;
     foreach($files as $file)
         $preparedFiles[$file->get_filename ()] = $file;

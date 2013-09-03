@@ -94,7 +94,6 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $urlparams = array('id' => $img->coursemodule->id);
         $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('returntogallery','gallery'),null,array('class'=>'mod-gallery-extra-nav'));
         
-        
         $o .= $this->output->heading($img->image->data()->name, '3','','mod-gallery-image-name');
         
         $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');

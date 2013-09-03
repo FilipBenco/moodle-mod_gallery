@@ -215,8 +215,11 @@ function gallery_get_packed_images($gallery,$context) {
     global $USER;
     $packer = get_file_packer('application/zip');
     $fs = get_file_storage();
+    $fs->delete_area_files($context->id,'mod_gallery','gallery_packed_images');
     $files = $fs->get_area_files($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id());
     $preparedFiles = array();
+    count($files);
+    die;
     foreach($files as $file)
         $preparedFiles[$file->get_filename ()] = $file;
     return $packer->archive_to_storage($preparedFiles, $context->id, 'mod_gallery', 'gallery_packed_images', $gallery->id(), '/', $gallery->id().'-'.$gallery->name().'.zip', $USER->id);

@@ -62,6 +62,8 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 }
                 if($widget->candelete)
                     $options['batchdelete'] = get_string ('delete','gallery');
+                if($widget->candownload)
+                    $options['batchdownload'] = get_string ('download','gallery');
                 
                 if(count($options)) {
                     $o .= $this->output->box_start();
@@ -93,7 +95,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $o .= $this->output->box('','mod-gallery-clear');
                 $o .= $this->output->box_start('mod-gallery-thumb-actions');
                 if($widget->canedit || $widget->candelete)
-                    $o .= '<input type="checkbox" value="" name="mod-gallery-batch-'.$image->id().'" />';
+                    $o .= '<input type="checkbox" value="1" name="mod-gallery-batch-'.$image->id().'" />';
                 if($widget->canedit || ($widget->caneditown && $image->data()->user == $widget->currentuser)) {
                     $urlparams['action'] = 'rotateleftg';
                     $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('rotateleft', get_string('rotateleft','gallery'),'mod_gallery'));

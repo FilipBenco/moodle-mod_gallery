@@ -27,6 +27,7 @@ if($action == 'display') {
     header('Pragma: no-cache');
     header('Content-Type: text/html; charset=utf-8');
     require_once($CFG->dirroot.'/mod/gallery/image.class.php');
+    require_once($CFG->dirroot.'/mod/gallery/locallib.php');
 
     $return = new stdClass;
 

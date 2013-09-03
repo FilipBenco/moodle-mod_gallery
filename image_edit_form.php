@@ -23,7 +23,7 @@ class mod_gallery_image_edit_form extends moodleform {
             $imagePreview = '';
             
             if($action == 'addimagedesc') {
-                $uniqueId = clean_param($image->stored_file()->get_filename(), PARAM_ALPHANUM);
+                $uniqueId = strtolower(clean_param($image->stored_file()->get_filename(), PARAM_ALPHANUM));
                 $imagePreview =  moodle_url::make_pluginfile_url($image->stored_file()->get_contextid(), $image->stored_file()->get_component(), 
                         $image->stored_file()->get_filearea(), $image->stored_file()->get_itemid(), 
                         $image->stored_file()->get_filepath(), $image->stored_file()->get_filename());

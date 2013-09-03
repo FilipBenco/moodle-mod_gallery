@@ -35,6 +35,6 @@ class gallery_imagemanager {
     
     public static function count_images($galleryId) {
         global $DB;
-        return $DB->count_records('gallery',array('gallery'=>$galleryId));
+        return $DB->count_records('gallery_images',array('gallery'=>$galleryId));
     }
 }

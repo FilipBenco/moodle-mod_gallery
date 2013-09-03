@@ -57,6 +57,8 @@ function gallery_update_instance(stdClass $data, mod_gallery_mod_form $form = nu
         $data->showdescription = 0;
     if(!isset($data->showthumbnails))
         $data->showthumbnails = 0;
+    if(!isset($data->imageattachments))
+        $data->imageattachments = 0;
 
     $DB->update_record('gallery', $data);
 

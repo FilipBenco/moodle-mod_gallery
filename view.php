@@ -176,6 +176,34 @@ if($action == 'batchdelete') {
     $images = gallery_load_batch_images($gallery, $context);
     foreach($images as $img)
         gallery_process_delete_image($img, $context, $gallery);
+    redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
+}
+if($action == 'batchdownload') {
+    if(!has_capability('mod/gallery:manage', $context)) 
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
+    
+    $gallery = new gallery($cm->instance);
+
+    $images = gallery_load_batch_images($gallery, $context);
+    $packedPhotos = gallery_get_packed_images($images,$gallery);
+    if($packedPhotos) 
+        send_stored_file ($packedPhotos);
+    die;
+}
+if($action == 'downloadall') {
+    if(!has_capability('mod/gallery:manage', $context)) 
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
+    if(confirm_sesskey()) {
+        require_once($CFG->dirroot . '/mod/gallery/gallery.class.php');
+        require_once($CFG->dirroot.'/mod/gallery/locallib.php');
+        $gallery = new gallery($cm->instance);
+
+        $images = gallery_load_images($gallery, $context);
+        $packedPhotos = gallery_get_packed_images($images,$gallery);
+        if($packedPhotos) 
+            send_stored_file ($packedPhotos);
+        die;
+    }
 }
 
 
@@ -197,7 +225,7 @@ switch($action) {
             echo $renderer->render(new gallery_view_gallery($gallery, $images, $cm, 
                     $USER->editing, has_capability('mod/gallery:addimages', $context),
                     has_capability('mod/gallery:editallimages', $context), has_capability('mod/gallery:editownimages', $context),
-                    has_capability('mod/gallery:deleteallimages', $context), has_capability('mod/gallery:deleteownimages', $context)));     
+                    has_capability('mod/gallery:deleteallimages', $context), has_capability('mod/gallery:deleteownimages', $context),  has_capability('mod/gallery:manage', $context), $USER->id));     
         else
             echo $renderer->render(new gallery_view_gallery($gallery, $images, $cm));
         break;
@@ -230,6 +258,7 @@ switch($action) {
     case 'addimagedesc':
     case 'editimages':
     case 'editimage':
+    case 'batchedit':
         echo $renderer->render(new gallery_header($gallery->name(),$context));
         require_once($CFG->dirroot.'/mod/gallery/image_edit_form.php');
         echo $renderer->render(new gallery_form('imageedit', $mform));

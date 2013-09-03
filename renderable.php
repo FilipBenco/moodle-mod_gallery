@@ -17,9 +17,11 @@ class gallery_view_gallery implements renderable {
     public $candelete;
     public $candeleteown;
     
+    public $candownload;
+    
     public $currentuser;
     
-    public function __construct(gallery $gallery, array $images, $coursemodule, $edit = 0, $canadd = 0, $canedit = 0, $caneditown = 0, $candelete = 0, $candeleteown = 0, $currentuser = 0) {
+    public function __construct(gallery $gallery, array $images, $coursemodule, $edit = 0, $canadd = 0, $canedit = 0, $caneditown = 0, $candelete = 0, $candeleteown = 0, $candownload = 0,$currentuser = 0) {
         $this->gallery = $gallery;
         $this->edit = $edit;
         $this->coursemodule = $coursemodule;
@@ -30,6 +32,7 @@ class gallery_view_gallery implements renderable {
         $this->candelete = $candelete;
         $this->candeleteown = $candeleteown;
         $this->currentuser = $currentuser;
+        $this->candownload = $candownload;
     }
 }
 

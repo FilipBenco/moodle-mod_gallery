@@ -121,7 +121,7 @@ function gallery_extend_settings_navigation(settings_navigation $settings, navig
     if(!empty($params['id']) && has_capability('mod/gallery:manage', $PAGE->cm->context)) {
         require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
         if(gallery_imagemanager::count_images($PAGE->cm->instance)) {
-            $url = new moodle_url('/mod/gallery/download.php', array('id'=>$params['id'],'sesskey'=>sesskey()));
+            $url = new moodle_url('/mod/gallery/view.php', array('id'=>$params['id'],'action'=>'downloadall','sesskey'=>sesskey()));
             $navref->add(get_string('downloadphotos','gallery'), $url, navigation_node::TYPE_SETTING);
         }
     }

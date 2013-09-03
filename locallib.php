@@ -205,12 +205,12 @@ function gallery_process_delete_image($img, $context, $gallery) {
     comment::delete_comments(array('contextid'=>$context->id,'commentarea'=>'gallery_image_comments','itemid'=>$img->id()));
 }
 
-function gallery_get_packed_images($gallery,$context) {
+function gallery_get_packed_images($images, $gallery) {
     global $USER, $DB;
     $packer = get_file_packer('application/zip');
     $fs = get_file_storage();
     $fs->delete_area_files($context->id,'mod_gallery','gallery_packed_images');
-    $images = gallery_load_images($gallery, $context);
+
     $preparedFiles = array();
     $users = array();
     foreach($images as $img) {

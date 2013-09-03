@@ -9,7 +9,7 @@ $string['confirmdelete'] = 'Do you really want to delete selected image?';
 $string['deleteimage'] = 'Delete image';
 $string['delete'] = 'Delete';
 $string['description'] = 'Description:';
-$string['download'];
+$string['download'] = 'Download';
 $string['downloadphotos'] = 'Download photos';
 $string['drafts'] = 'Drafts';
 $string['edit'] = 'Edit';

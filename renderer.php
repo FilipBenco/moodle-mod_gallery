@@ -69,7 +69,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
                     $o .= '<input type="checkbox" value="1" name="mod-gallery-batch-'.$image->id().'" class="mod-gallery-batch-checkbox"/>';
                 if($widget->canedit || ($widget->caneditown && $image->data()->user == $widget->currentuser)) {
                     $urlparams['action'] = 'editimageg';
-                    $urlparams['image'] = $image->id;
+                    $urlparams['image'] = $image->id();
                     $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('edit', get_string('editimage','gallery'),'mod_gallery'));
                     unset($urlparams['image']);
                     $urlparams['action'] = 'rotateleftg';

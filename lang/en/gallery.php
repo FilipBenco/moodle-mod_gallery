@@ -46,6 +46,7 @@ $string['rotateleft'] = 'Left rotate';
 $string['rotateright'] = 'Right rotate';
 $string['savechanges'] = 'Save changes';
 $string['saveimages'] = 'Save images';
+$string['selectdeselectall'] = 'Select/Deselect all';
 $string['selectedimageslabel'] = 'Selected images:';
 $string['showthumbnails'] = 'Show intro thumbnails';
 $string['showthumbnails_help'] = 'Show intro thumbnails help';

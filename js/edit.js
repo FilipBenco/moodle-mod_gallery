@@ -7,6 +7,8 @@ M.mod_gallery.init = function(Y, cfg) {
     this.currentDrag = 0;
     this.X = 0;
     
+    this.selected = false;
+    
     //Get the list of li's in the lists and make them draggable
     var lis = M.mod_gallery.Y.all('.mod-gallery-drag-thumb');
     lis.each(function(v, k) {
@@ -94,6 +96,17 @@ M.mod_gallery.init = function(Y, cfg) {
             context : this
         });
 
+    });
+    
+    M.mod_gallery.Y.one('#mod-gallery-select-all').on('click',function(e) {
+        e.preventDefault();
+        if(M.mod_gallery.selected) {
+            M.mod_gallery.all('.mod-gallery-batch-checkbox').set('checked',false);
+            M.mod_gallery.selected = false;
+        } else {
+            M.mod_gallery.all('.mod-gallery-batch-checkbox').set('checked',true);
+            M.mod_gallery.selected = true;
+        }
     });
 };
 

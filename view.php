@@ -108,19 +108,21 @@ if($action == 'rotaterighti') {
     } else
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
 }
-if($action == 'editimages') {
-    if(!has_capability('mod/gallery:editallimages', $context))
-        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
-    
+if($action == 'editimageg') {
     require_once($CFG->dirroot.'/mod/gallery/image_edit_form.php');
-    $images = gallery_load_images ($gallery, $context);
-    $mform = new mod_gallery_image_edit_form(null,array('action'=>'editimages','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id));
-    if ($mform->is_cancelled()) 
-        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
-    if (($formdata = $mform->get_data()) && confirm_sesskey()) {
-        gallery_process_images_save($formdata, $images, $context, $gallery);
-        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
-    }
+    require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
+    $img = gallery_imagemanager::get_image($iid);
+    if(has_capability('mod/gallery:editallimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
+        $images = array(gallery_load_image($context, $img));
+        $mform = new mod_gallery_image_edit_form(null,array('action'=>'editimageg','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id, 'image'=>$iid));
+        if ($mform->is_cancelled()) 
+            redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
+        if (($formdata = $mform->get_data()) && confirm_sesskey()) {
+            gallery_process_images_save($formdata, $images, $context, $gallery);
+            redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
+        }
+    } else
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
 }
 if($action == 'editimage') {
     require_once($CFG->dirroot.'/mod/gallery/image_edit_form.php');

@@ -79,7 +79,7 @@ function gallery_delete_instance($id) {
         return false;
     
     $imageIDs = $DB->get_records('gallery_images',array('gallery'=>$gallery->id));
-    $cm = get_coursemodule_from_instance('mod_gallery', $id);
+    $cm = get_coursemodule_from_instance('gallery', $id);
     $context = context_module::instance($cm->id);
     foreach($imageIDs as $image) 
         gallery_process_delete_image ($image, $context, $gallery);

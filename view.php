@@ -259,7 +259,7 @@ switch($action) {
         echo $renderer->render(new gallery_form('imageupload',$mform));
         break;
     case 'addimagedesc':
-    case 'editimages':
+    case 'editimageg':
     case 'editimage':
     case 'batchedit':
         echo $renderer->render(new gallery_header($gallery->name(),$context));

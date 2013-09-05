@@ -181,6 +181,9 @@
     margin: 2px 0 0 5px;
 }
 
+.mod-gallery-thumb-actions input {
+    float: left;
+}
 
 /******************************/
 /********INTRO STYLING*********/

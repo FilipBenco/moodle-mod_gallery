@@ -88,6 +88,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
             } else
                 $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $i, null, array('class'=>'mod-gallery-image-thumb-a'));
         }
+        $o .= $this->output->box('mod-gallery-clear');
         $o .= $this->output->box_end();
         
         if($widget->edit) {

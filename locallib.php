@@ -141,7 +141,8 @@ function gallery_process_images_save($data, $images,$context,$gallery) {
     
     foreach($images as $image) {
         $imgData = $image->from_form($data);
-        if($image->data()->description != $imgData->description ||
+        if($image->data()->name != $imgData->name ||
+                $image->data()->description != $imgData->description ||
                 $image->data()->descriptionformat != $imgData->descriptionformat ||
                 $image->data()->sourcetype != $imgData->sourcetype ||
                 ($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT && $image->data()->source != $imgData->source)) {

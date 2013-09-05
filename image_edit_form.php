@@ -70,7 +70,7 @@ class mod_gallery_image_edit_form extends moodleform {
         }
         
         $mform->addElement('hidden','action',$action);
-        if($action == 'editimage') {
+        if($action == 'editimage' || $action == 'editimageg') {
             $mform->addElement('hidden','image',$this->_customdata['image']);
             $mform->setType('image',PARAM_INT);
         }

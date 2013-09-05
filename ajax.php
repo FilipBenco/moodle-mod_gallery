@@ -44,8 +44,8 @@ if($action == 'display') {
         $return->source = '<strong>'.get_string('source','gallery') . ':</strong> '.$img->source;
     }
 
-    $return->canedit = has_capability('mod/gallery:editimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $img->user == $USER->id);
-    $return->candelete = has_capability('mod/gallery:deleteimages', $context) || (has_capability('mod/gallery:deleteownimages', $context) && $img->user == $USER->id);
+    $return->canedit = has_capability('mod/gallery:manage', $context) || has_capability('mod/gallery:editallimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $img->user == $USER->id);
+    $return->candelete = has_capability('mod/gallery:manage', $context) || has_capability('mod/gallery:deleteallimages', $context) || (has_capability('mod/gallery:deleteownimages', $context) && $img->user == $USER->id);
     
     $image = new gallery_image($img, null, $context, false, true);
     $a = '';

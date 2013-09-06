@@ -43,6 +43,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
                $urlparams['action']= 'addimages';
                $o  .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('addimages','gallery'));
             }
+            $o .= $this->output->box($this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('id'=>'mod-gallery-select-all')));
             
         }
         $o .= $this->output->box_end();
@@ -106,8 +107,6 @@ class mod_gallery_renderer extends plugin_renderer_base {
 
                 if(count($options)) {
                     $o .= $this->output->box_start();
-                    $o .= $this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('id'=>'mod-gallery-select-all'));
-                    $o .= ' ';
                     $o .= get_string('selectedimageslabel','gallery');
                     $o .= '<select name="action">';
                     foreach($options as $key => $value)

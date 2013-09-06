@@ -111,7 +111,7 @@ M.mod_gallery.init = function(Y, cfg) {
     
     M.mod_gallery.Y.one('#mod-gallery-edit-thumb-form').on('submit',function(e) {
         var index = M.mod_gallery.Y.one("#mod-gallery-batch-action-select").get('selectedIndex');
-        if(M.mod_gallery.Y.one('#mod-gallery-batch-action-select').get("options").item(index).getAttribute('value') === 'batchdownload') {
+        if(M.mod_gallery.Y.one('#mod-gallery-batch-action-select').get("options").item(index).getAttribute('value') === 'batchdelete') {
             if(!confirm(M.util.get_string('confirmdelete','gallery')))
                 e.preventDefault();
         }

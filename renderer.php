@@ -56,13 +56,13 @@ class mod_gallery_renderer extends plugin_renderer_base {
             if($widget->candownload)
                 $options['batchdownload'] = get_string ('download','gallery');
             if(count($options))
-                $o .= $this->output->box($this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('id'=>'mod-gallery-select-all')));
+                $o .= $this->output->box($this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('id'=>'mod-gallery-select-all')),'mod-gallery-select-deselect-container');
         }
         
         
         if($widget->edit) {
             $fUrl = new moodle_url('/mod/gallery/view.php',array('id' => $widget->coursemodule->id));
-            $o .= '<form action="'.$fUrl->out().'" method="post">';
+            $o .= '<form action="'.$fUrl->out().'" method="post" id="mod-gallery-edit-thumb-form">';
             
         }
         
@@ -108,7 +108,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 if(count($options)) {
                     $o .= $this->output->box_start();
                     $o .= get_string('selectedimageslabel','gallery');
-                    $o .= '<select name="action">';
+                    $o .= '<select name="action" id="mod-gallery-batch-action-select">';
                     foreach($options as $key => $value)
                         $o .= '<option value="'.$key.'">'.$value.'</option>';
                     $o .= '</select>';

@@ -186,8 +186,8 @@
     margin: 2px 0 0 2px;
 }
 
-#mod-gallery-select-all {
-    margin: 5px 0 0 0px;
+.mod-gallery-select-deselect-container {
+    margin: 4px 0 0 0;
 }
 
 /******************************/

@@ -108,5 +108,12 @@ M.mod_gallery.init = function(Y, cfg) {
             M.mod_gallery.selected = true;
         }
     });
+    
+    M.mod_gallery.Y.one('#mod-gallery-edit-thumb-form').on('submit',function(e) {
+        if(M.mod_gallery.Y.get('#mod-gallery-edit-thumb-form').get("options").item(index).getAttribute('value') == 'batchdownload') {
+            if(!confirm(M.util.get_string('confirmdelete','gallery')))
+                e.preventDefault();
+        }
+    });
 };
 

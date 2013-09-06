@@ -217,7 +217,8 @@ switch($action) {
             $module = array(
         		'name'      => 'mod_gallery',
         		'fullpath'  => '/mod/gallery/js/edit.js',
-        		'requires'  => array('base', 'dom', 'dd-drop', 'dd-proxy', 'io')
+        		'requires'  => array('base', 'dom', 'dd-drop', 'dd-proxy', 'io'),
+                        'strings'   => array(array('confirmdelete', 'gallery'))
             );
             $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id)), false, $module);
         

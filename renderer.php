@@ -35,14 +35,15 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box_end();
         
         
-        $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');
         if($widget->edit) {
+            $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');
             $urlparams = array('id' => $widget->coursemodule->id);
 
             if($widget->canadd) {
                $urlparams['action']= 'addimages';
-               $o  .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('addimages','gallery'));
+               $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('addimages','gallery'));
             }
+            $o .= $this->output->box_end();
             $o .= $this->output->box('','mod-gallery-clear');
             $options = array();
             if($widget->canedit) {
@@ -56,9 +57,8 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $options['batchdownload'] = get_string ('download','gallery');
             if(count($options))
                 $o .= $this->output->box($this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('id'=>'mod-gallery-select-all')));
-            
         }
-        $o .= $this->output->box_end();
+        
         
         if($widget->edit) {
             $fUrl = new moodle_url('/mod/gallery/view.php',array('id' => $widget->coursemodule->id));

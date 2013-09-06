@@ -43,7 +43,19 @@ class mod_gallery_renderer extends plugin_renderer_base {
                $urlparams['action']= 'addimages';
                $o  .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('addimages','gallery'));
             }
-            $o .= $this->output->box($this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('id'=>'mod-gallery-select-all')));
+            $o .= $this->output->box('','mod-gallery-clear');
+            $options = array();
+            if($widget->canedit) {
+                $options['batchedit'] = get_string('edit','gallery');
+                $options['batchrotateleft'] = get_string('rotateleft','gallery');
+                $options['batchrotateright'] = get_string('rotateright','gallery');
+            }
+            if($widget->candelete)
+                $options['batchdelete'] = get_string ('delete','gallery');
+            if($widget->candownload)
+                $options['batchdownload'] = get_string ('download','gallery');
+            if(count($options))
+                $o .= $this->output->box($this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('id'=>'mod-gallery-select-all')));
             
         }
         $o .= $this->output->box_end();
@@ -72,7 +84,6 @@ class mod_gallery_renderer extends plugin_renderer_base {
                     $urlparams['action'] = 'editimageg';
                     $urlparams['image'] = $image->id();
                     $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('edit', get_string('editimage','gallery'),'mod_gallery'));
-                    unset($urlparams['image']);
                     $urlparams['action'] = 'rotateleftg';
                     $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('rotateleft', get_string('rotateleft','gallery'),'mod_gallery'));
                     $urlparams['action'] = 'rotaterightg';
@@ -94,17 +105,6 @@ class mod_gallery_renderer extends plugin_renderer_base {
         
         if($widget->edit) {
             if(count($widget->images)) {
-                $options = array();
-                if($widget->canedit) {
-                    $options['batchedit'] = get_string('edit','gallery');
-                    $options['batchrotateleft'] = get_string('rotateleft','gallery');
-                    $options['batchrotateright'] = get_string('rotateright','gallery');
-                }
-                if($widget->candelete)
-                    $options['batchdelete'] = get_string ('delete','gallery');
-                if($widget->candownload)
-                    $options['batchdownload'] = get_string ('download','gallery');
-
                 if(count($options)) {
                     $o .= $this->output->box_start();
                     $o .= get_string('selectedimageslabel','gallery');

@@ -35,7 +35,7 @@ class mod_gallery_image_edit_form extends moodleform {
             $mform->addElement('header','header-'.$uniqueId,$image->data()->name);
             $mform->setExpanded('header-'.$uniqueId);
             
-            $mform->addElement('text','name-'.$uniqueId,  get_string('imagename','gallery'));
+            $mform->addElement('text','name-'.$uniqueId,  get_string('imagename','gallery'),array('size'=>'40'));
             $mform->setType('name-'.$uniqueId, PARAM_TEXT);
             
             $mform->addElement('editor', 'desc-'.$uniqueId,'<img src="'.$imagePreview.'" style="max-width:136px; max-height:150px;" />',
@@ -48,7 +48,7 @@ class mod_gallery_image_edit_form extends moodleform {
             $mform->addElement('checkbox', 'sourcetype-'.$uniqueId, get_string('sourceown','gallery'));
             $mform->setType('sourcetype-'.$uniqueId, PARAM_BOOL);
             
-            $mform->addElement('text','source-'.$uniqueId,  get_string('source','gallery'), array('size'=>'20'));
+            $mform->addElement('text','source-'.$uniqueId,  get_string('source','gallery'), array('size'=>'70'));
             $mform->setType('source-'.$uniqueId,PARAM_TEXT);
             $mform->disabledIf('source-'.$uniqueId, 'sourcetype-'.$uniqueId, 'checked');
             

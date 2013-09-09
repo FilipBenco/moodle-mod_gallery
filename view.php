@@ -141,45 +141,46 @@ if($action == 'editimage') {
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
 }
 if($action == 'batchedit') {
-    if(!has_capability('mod/gallery:editallimages', $context) && !has_capability('mod/gallery:manage', $context))
+    if(has_capability('mod/gallery:editallimages', $context) || has_capability('mod/gallery:manage', $context)) {    
+        require_once($CFG->dirroot.'/mod/gallery/image_edit_form.php');
+        $images = gallery_load_batch_images($gallery, $context);
+        $mform = new mod_gallery_image_edit_form(null,array('action'=>'batchedit','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id));
+        if ($mform->is_cancelled()) 
+            redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
+        if (($formdata = $mform->get_data()) && confirm_sesskey()) {
+            gallery_process_images_save($formdata, $images, $context, $gallery);
+            redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
+        }
+    } else 
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
-    
-    require_once($CFG->dirroot.'/mod/gallery/image_edit_form.php');
-    $images = gallery_load_batch_images($gallery, $context);
-    $mform = new mod_gallery_image_edit_form(null,array('action'=>'batchedit','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id));
-    if ($mform->is_cancelled()) 
-        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
-    if (($formdata = $mform->get_data()) && confirm_sesskey()) {
-        gallery_process_images_save($formdata, $images, $context, $gallery);
-        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
-    }
 }
 if($action == 'batchrotateleft') {
-    if(!has_capability('mod/gallery:editallimages', $context) && !has_capability('mod/gallery:manage', $context)) 
+    if(has_capability('mod/gallery:editallimages', $context) || has_capability('mod/gallery:manage', $context)) {
+        $images = gallery_load_batch_images($gallery, $context);
+        foreach($images as $img)
+            gallery_process_rotate_image('left',$img,$context);
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
+    } else
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
-    
-    $images = gallery_load_batch_images($gallery, $context);
-    foreach($images as $img)
-        gallery_process_rotate_image('left',$img,$context);
-    redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
 }
 if($action == 'batchrotateright') {
-    if(!has_capability('mod/gallery:editallimages', $context) && !has_capability('mod/gallery:manage', $context)) 
+    if(has_capability('mod/gallery:editallimages', $context) || has_capability('mod/gallery:manage', $context)) {
+        $images = gallery_load_batch_images($gallery, $context);
+        foreach($images as $img)
+            gallery_process_rotate_image('right',$img,$context);
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
+    } else
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
-    
-    $images = gallery_load_batch_images($gallery, $context);
-    foreach($images as $img)
-        gallery_process_rotate_image('right',$img,$context);
-    redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
 }
 if($action == 'batchdelete') {
-    if(!has_capability('mod/gallery:deleteallimages', $context) && !has_capability('mod/gallery:manage', $context)) 
+    if(has_capability('mod/gallery:deleteallimages', $context) || has_capability('mod/gallery:manage', $context)) {
+        $images = gallery_load_batch_images($gallery, $context);
+        foreach($images as $img)
+            gallery_process_delete_image($img, $context, $gallery);
+        rebuild_course_cache($gallery->course(),true);
+        redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
+    } else
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&action=nopermission');
-    $images = gallery_load_batch_images($gallery, $context);
-    foreach($images as $img)
-        gallery_process_delete_image($img, $context, $gallery);
-    rebuild_course_cache($gallery->course(),true);
-    redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
 }
 if($action == 'batchdownload') {
     if(!has_capability('mod/gallery:manage', $context)) 

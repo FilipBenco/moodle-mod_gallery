@@ -48,7 +48,7 @@ class mod_gallery_image_edit_form extends moodleform {
             $mform->addElement('checkbox', 'sourcetype-'.$uniqueId, get_string('sourceown','gallery'));
             $mform->setType('sourcetype-'.$uniqueId, PARAM_BOOL);
             
-            $mform->addElement('text','source-'.$uniqueId,  get_string('source','gallery'), 'size="10"');
+            $mform->addElement('text','source-'.$uniqueId,  get_string('source','gallery'), array('size'=>'20'));
             $mform->setType('source-'.$uniqueId,PARAM_TEXT);
             $mform->disabledIf('source-'.$uniqueId, 'sourcetype-'.$uniqueId, 'checked');
             

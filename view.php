@@ -7,7 +7,7 @@ require_once($CFG->dirroot . '/mod/gallery/locallib.php');
 
 $id = required_param('id', PARAM_INT);
 $edit = optional_param('edit', -1, PARAM_BOOL);
-$action = optional_param('act', 'gallery', PARAM_ALPHA);
+$action = optional_param('gaction', 'gallery', PARAM_ALPHA);
 $iid = optional_param('image', 0, PARAM_INT);
 
 $cm = get_coursemodule_from_id('gallery', $id, 0, false, MUST_EXIST);

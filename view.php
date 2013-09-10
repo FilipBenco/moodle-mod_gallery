@@ -53,7 +53,7 @@ if($action == 'addimagedesc') {
     require_once($CFG->dirroot.'/mod/gallery/image_edit_form.php');
     if($loadImages)
         $images = gallery_get_draft_images ($context, $gallery);
-    $mform = new mod_gallery_image_edit_form(null,array('gaction'=>'addimagedesc','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id));
+    $mform = new mod_gallery_image_edit_form(null,array('action'=>'addimagedesc','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id));
     if ($mform->is_cancelled()) 
         redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
     if (($formdata = $mform->get_data()) && confirm_sesskey()) {
@@ -114,7 +114,7 @@ if($action == 'editimageg') {
     $img = gallery_imagemanager::get_image($iid);
     if(has_capability('mod/gallery:manage', $context) || has_capability('mod/gallery:editallimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
         $images = array(gallery_load_image($context, $img));
-        $mform = new mod_gallery_image_edit_form(null,array('gaction'=>'editimageg','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id, 'image'=>$iid));
+        $mform = new mod_gallery_image_edit_form(null,array('action'=>'editimageg','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id, 'image'=>$iid));
         if ($mform->is_cancelled()) 
             redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
         if (($formdata = $mform->get_data()) && confirm_sesskey()) {
@@ -130,7 +130,7 @@ if($action == 'editimage') {
     $img = gallery_imagemanager::get_image($iid);
     if(has_capability('mod/gallery:manage', $context) || has_capability('mod/gallery:editallimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $img->user)) {
         $images = array(gallery_load_image($context, $img));
-        $mform = new mod_gallery_image_edit_form(null,array('gaction'=>'editimage','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id, 'image'=>$iid));
+        $mform = new mod_gallery_image_edit_form(null,array('action'=>'editimage','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id, 'image'=>$iid));
         if ($mform->is_cancelled()) 
             redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id.'&gaction=image&image='.$iid);
         if (($formdata = $mform->get_data()) && confirm_sesskey()) {
@@ -144,7 +144,7 @@ if($action == 'batchedit') {
     if(has_capability('mod/gallery:editallimages', $context) || has_capability('mod/gallery:manage', $context)) {    
         require_once($CFG->dirroot.'/mod/gallery/image_edit_form.php');
         $images = gallery_load_batch_images($gallery, $context);
-        $mform = new mod_gallery_image_edit_form(null,array('gaction'=>'batchedit','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id));
+        $mform = new mod_gallery_image_edit_form(null,array('action'=>'batchedit','gallery'=>$gallery,'images'=>$images,'id'=>$cm->id,'contextid'=>$context->id));
         if ($mform->is_cancelled()) 
             redirect($CFG->wwwroot.'/mod/gallery/view.php?id='.$cm->id);
         if (($formdata = $mform->get_data()) && confirm_sesskey()) {

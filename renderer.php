@@ -55,7 +55,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $options['batchdelete'] = get_string ('delete','gallery');
             if($widget->candownload)
                 $options['batchdownload'] = get_string ('download','gallery');
-            if(count($options))
+            if(count($options) && count($widget->images))
                 $o .= $this->output->box($this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('id'=>'mod-gallery-select-all')),'mod-gallery-select-deselect-container');
         }
         

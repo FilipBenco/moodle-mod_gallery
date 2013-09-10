@@ -13,8 +13,8 @@ class mod_gallery_image_upload_form extends moodleform {
         $mform->addElement('filemanager','images',  get_string('images','gallery'), null, 
                 array('subdirs'=>0,'accepted_types'=>array('web_image','archive')));
         
-        $mform->addElement('hidden','action','addimages');
-        $mform->setType('action', PARAM_ALPHA);
+        $mform->addElement('hidden','gaction','addimages');
+        $mform->setType('gaction', PARAM_ALPHA);
         $mform->addElement('hidden','id',$this->_customdata['id']);
         $mform->setType('id',PARAM_INT);
         

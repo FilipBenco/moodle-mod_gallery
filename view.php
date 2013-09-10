@@ -244,11 +244,11 @@ switch($action) {
         		'fullpath'  => '/mod/gallery/js/module.js',
         		'requires'  => array('base', 'dom', 'event','io')
         );
+        $images = gallery_load_images($gallery, $context, $iid);
         $canedit = has_capability('mod/gallery:editallimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $images[$iid]->data()->user);
         $candelete = has_capability('mod/gallery:deleteallimages', $context) || (has_capability('mod/gallery:deleteownimages', $context) && $USER->id == $images[$iid]->data()->user);
         $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id,'currentImage'=>$iid,'canEdit'=>$canedit,'canDelete'=>$candelete)), false, $module);
         echo $renderer->render(new gallery_header($gallery->name(),$context));
-        $images = gallery_load_images($gallery, $context, $iid);
         if($USER->editing)
             echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context, $USER->editing,
                     has_capability('mod/gallery:editallimages', $context), has_capability('mod/gallery:editownimages', $context),

@@ -97,7 +97,7 @@ function gallery_delete_instance($id) {
  * @return void
  */
 function gallery_extend_settings_navigation(settings_navigation $settings, navigation_node $navref) {
-    global $USER, $PAGE, $OUTPUT, $CFG;
+    global $USER, $PAGE, $OUTPUT;
 
     $params = $PAGE->url->params();
     
@@ -138,7 +138,7 @@ function gallery_get_coursemodule_info($coursemodule) {
             $context = context_module::instance($coursemodule->id);
             $images = gallery_load_images($gallery, $context);
             
-            $urlParams = array('id'=>$coursemodule->id,'action'=>'image');
+            $urlParams = array('id'=>$coursemodule->id,'gaction'=>'image');
             
             $o = $OUTPUT->box_start('mod-gallery-intro-thumbnails-container');
             $o .= '<div class="mod-gallery-image-previous-intro" onclick="return modGalleryMoveThumb('.$gallery->id().',\'left\')"></div>';

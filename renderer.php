@@ -26,7 +26,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o = '';
         
         if(count($widget->images)) {
-            $urlparams = array('id' => $widget->coursemodule->id, 'action' => 'image','image'=>reset($widget->images)->id());
+            $urlparams = array('id' => $widget->coursemodule->id, 'gaction' => 'image','image'=>reset($widget->images)->id());
             $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('viewpreview','gallery'),null,array('class'=>'mod-gallery-extra-nav'));
         }
         
@@ -40,7 +40,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $urlparams = array('id' => $widget->coursemodule->id);
 
             if($widget->canadd) {
-               $urlparams['action']= 'addimages';
+               $urlparams['gaction']= 'addimages';
                $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('addimages','gallery'));
             }
             $o .= $this->output->box_end();
@@ -71,7 +71,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $o .= '<div id="mod-gallery-drop-indicator" style="display:none;"></div>';
         foreach($widget->images as $image) {
             $i = '<img src="'.$image->thumbnail().'" style="margin-top:'.floor((150-$image->t_height())/2).'px;"/>';         
-            $urlparams = array('id' => $widget->coursemodule->id, 'action' => 'image', 'image' => $image->id());
+            $urlparams = array('id' => $widget->coursemodule->id, 'gaction' => 'image', 'image' => $image->id());
             
             if($widget->edit) {
                 $o .= '<div class="mod-gallery-thumb-edit" data-image-id="'.$image->id().'">';
@@ -81,18 +81,18 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 if($widget->canedit || $widget->candelete)
                     $o .= '<input type="checkbox" value="1" name="mod-gallery-batch-'.$image->id().'" class="mod-gallery-batch-checkbox"/>';
                 if($widget->canedit || ($widget->caneditown && $image->data()->user == $widget->currentuser)) {
-                    $urlparams['action'] = 'editimageg';
+                    $urlparams['gaction'] = 'editimageg';
                     $urlparams['image'] = $image->id();
                     $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('edit', get_string('editimage','gallery'),'mod_gallery'));
-                    $urlparams['action'] = 'rotateleftg';
+                    $urlparams['gaction'] = 'rotateleftg';
                     $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('rotateleft', get_string('rotateleft','gallery'),'mod_gallery'));
-                    $urlparams['action'] = 'rotaterightg';
+                    $urlparams['gaction'] = 'rotaterightg';
                     $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('rotateright', get_string('rotateright','gallery'),'mod_gallery'));
                 }
                 if($widget->canedit)
                     $o .= $this->output->pix_icon('dragdrop', get_string('moveimage','gallery'),'mod_gallery',array('class'=>'mod-gallery-drag-thumb'));
                 if($widget->candelete || ($widget->candeleteown && $image->data()->user == $widget->currentuser)) {
-                    $urlparams['action'] = 'imagedelete';
+                    $urlparams['gaction'] = 'imagedelete';
                     $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('delete', get_string('deleteimage','gallery'),'mod_gallery'), null, array('onclick'=>"return confirm('".get_string('confirmdelete','gallery')."')"));
                 }
                 $o .= $this->output->box_end();
@@ -108,7 +108,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 if(count($options)) {
                     $o .= $this->output->box_start();
                     $o .= get_string('selectedimageslabel','gallery');
-                    $o .= '<select name="action" id="mod-gallery-batch-action-select">';
+                    $o .= '<select name="gaction" id="mod-gallery-batch-action-select">';
                     foreach($options as $key => $value)
                         $o .= '<option value="'.$key.'">'.$value.'</option>';
                     $o .= '</select>';
@@ -134,15 +134,15 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');
         if($img->edit) {
             if($img->canedit || ($img->caneditown && $img->image->data()->user == $img->currentuser)) {
-                $urlparams = array('id' => $img->coursemodule->id, 'action' => 'editimage', 'image'=>$img->image->id());
+                $urlparams = array('id' => $img->coursemodule->id, 'gaction' => 'editimage', 'image'=>$img->image->id());
                 $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('edit', get_string('editimage','gallery'),'mod_gallery'),null,array('class'=>'mod-gallery-edit-actions'));
-                $urlparams['action'] = 'rotatelefti';
+                $urlparams['gaction'] = 'rotatelefti';
                 $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('rotateleft', get_string('rotateleft','gallery'),'mod_gallery'),null,array('class'=>'mod-gallery-edit-actions'));
-                $urlparams['action'] = 'rotaterighti';
+                $urlparams['gaction'] = 'rotaterighti';
                 $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('rotateright', get_string('rotateright','gallery'),'mod_gallery'),null,array('class'=>'mod-gallery-edit-actions'));
             }
             if($img->candelete || ($img->candeleteown && $img->image->data()->user == $img->currentuser)) {
-                $urlparams['action'] = 'imagedelete';
+                $urlparams['gaction'] = 'imagedelete';
                 $o .= $this->output->action_link(new moodle_url('/mod/gallery/view.php', $urlparams), $this->output->pix_icon('delete', get_string('deleteimage','gallery'),'mod_gallery'), null, array('onclick'=>"return confirm('".get_string('confirmdelete','gallery')."')",'class'=>'mod-gallery-delete-actions'));
             }
         }

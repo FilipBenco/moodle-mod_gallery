@@ -74,7 +74,7 @@ class mod_gallery_image_edit_form extends moodleform {
             $mform->addElement('hidden','image',$this->_customdata['image']);
             $mform->setType('image',PARAM_INT);
         }
-        $mform->setType('action', PARAM_ALPHA);
+        $mform->setType('gaction', PARAM_ALPHA);
         $mform->addElement('hidden','id',$this->_customdata['id']);
         $mform->setType('id',PARAM_INT);
         

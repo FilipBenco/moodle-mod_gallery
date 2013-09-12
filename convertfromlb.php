@@ -76,8 +76,8 @@ foreach($lbgalleries as $lbgallery) {
     $galleryId = $fromform->instance;
     $gcm = $DB->get_record('course_modules',array('module'=>$gModule->id,'instance'=>$galleryId,'course'=>$course->id),'*',MUST_EXIST);
     $galleryctx = context_module::instance($gcm->id);
-    echo 'Created new gallery: '.$galleryId.' from '.$lbgallery->id.'<br />';
-    echo 'Found images: '.count($stored_files).'<br /><br />';
+    echo '<br />Created new gallery: '.$galleryId.' from '.$lbgallery->id.'<br />';
+    echo 'Found images: '.count($stored_files).'<br />';
     foreach ($stored_files as $stored_file) {
         if (!$stored_file->is_valid_image()) 
             continue;
@@ -104,6 +104,7 @@ foreach($lbgalleries as $lbgallery) {
             'filename' =>  $filename
         );
         if (!$fs->get_file($galleryctx->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $galleryId, $filepath, $filename)) {
+            echo 'Creating Image: '.$image_data->id.'<br />';
             $file = $fs->create_file_from_storedfile($fileinfo, $stored_file);
             $image = new gallery_image($image_data, $file, $galleryctx);
         }

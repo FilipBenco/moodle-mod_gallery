@@ -81,7 +81,7 @@ foreach($lbgalleries as $lbgallery) {
         
         $imgData = gallery_image::get_initial_data();
         $imgData->gallery = $galleryId;
-        if ($imgData = $DB->get_record('lightboxgallery_image_meta', array('gallery' => $lbgallery->id, 'image' => $stored_file->get_filename(), 'metatype' => 'caption'))) {
+        if ($image_meta = $DB->get_record('lightboxgallery_image_meta', array('gallery' => $lbgallery->id, 'image' => $stored_file->get_filename(), 'metatype' => 'caption'))) {
             $imgData->description = $image_meta->description;
         }
         $imgData->name = $stored_file->get_filename();

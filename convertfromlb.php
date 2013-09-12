@@ -11,6 +11,7 @@ require_once($CFG->dirroot.'/mod/gallery/image.class.php');
 require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
 
 $lbgModule = $DB->get_record('modules',array('name'=>'lightboxgallery'),'*',MUST_EXIST);
+$gModule = $DB->get_record('modules',array('name'=>'gallery'),'*',MUST_EXIST);
 
 $lbgalleries = $DB->get_records('lightboxgallery',array('course'=>877));
 echo 'Found Lightbox galleries: '.count($lbgalleries),'<br /><br />';
@@ -73,6 +74,8 @@ foreach($lbgalleries as $lbgallery) {
     $stored_files = $fs->get_area_files($lbgctx->id, 'mod_lightboxgallery', 'gallery_images');
 
     $galleryId = $fromform->instance;
+    $gcm = $DB->get_record('course_modules',array('module'=>$gModule->id,'instance'=>$galleryId,'course'=>$course->id),'*',MUST_EXIST);
+    $galleryctx = context_module::instance($gcm->id);
     echo 'Created new gallery: '.$galleryId.' from '.$lbgallery->id.'<br />';
     echo 'Found images: '.count($stored_files).'<br /><br />';
     foreach ($stored_files as $stored_file) {
@@ -93,16 +96,16 @@ foreach($lbgalleries as $lbgallery) {
         $filepath = '/'.$galleryId.'/';
         $filename = $image_data->id.'.'.pathinfo($stored_file->get_filename(), PATHINFO_EXTENSION);
         $fileinfo = array(
-            'contextid' => $context->id,
+            'contextid' => $galleryctx->id,
             'component' => 'mod_gallery',
             'filearea' =>  GALLERY_IMAGES_FILEAREA,
             'itemid' => $galleryId,
             'filepath' => $filepath,
             'filename' =>  $filename
         );
-        if (!$fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $galleryId, $filepath, $filename)) {
+        if (!$fs->get_file($galleryctx->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $galleryId, $filepath, $filename)) {
             $file = $fs->create_file_from_storedfile($fileinfo, $stored_file);
-            $image = new gallery_image($image_data, $file, $context);
+            $image = new gallery_image($image_data, $file, $galleryctx);
         }
 
     }

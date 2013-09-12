@@ -87,6 +87,7 @@ foreach($lbgalleries as $lbgallery) {
         $newSectionSequence.=$sm;
         if($sm == $lbgcm->id)
             $newSectionSequence .=','.$gcm->id;
+        $first = false;
     }
     $section->sequence = $newSectionSequence;
     $DB->update_record('course_sections',$section);

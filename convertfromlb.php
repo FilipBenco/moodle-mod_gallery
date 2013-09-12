@@ -19,7 +19,7 @@ foreach($lbgalleries as $lbgallery) {
     $lbgcm = $DB->get_record('course_modules',array('module'=>$lbgModule->id,'instance'=>$lbgallery->id,'course'=>$course->id),'*',MUST_EXIST);
     $section = $DB->get_record('course_sections',array('id'=>$lbgcm->section),'*',MUST_EXIST);
     list($module, $context, $cw) = can_add_moduleinfo($course, 'gallery', $section->section);
-    //$PAGE->set_context($context);
+    $PAGE->set_context($context);
     $cm = null;
 
     $data = new stdClass();

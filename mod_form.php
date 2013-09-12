@@ -37,4 +37,8 @@ class mod_gallery_mod_form extends moodleform_mod {
 
         $this->add_action_buttons();
     }
+    
+    public function getNotSubmittedData() {
+        return (object) $this->_form->exportValues();
+    }
 }

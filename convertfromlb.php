@@ -64,8 +64,7 @@ foreach($lbgalleries as $lbgallery) {
     $mform = new mod_gallery_mod_form($data, $cw->section, $cm, $course);
     $mform->set_data($data);
 
-    
-    $mformdata = (object)$mform->exportValues();
+    $mformdata = $mform->getNotSubmittedData();
     $fromform = gallery_add_moduleinfo($mformdata, $course, $mform);
     
     //convert images

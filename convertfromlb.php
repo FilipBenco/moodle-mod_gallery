@@ -69,7 +69,8 @@ foreach($lbgalleries as $lbgallery) {
     
     //convert images
     $fs = get_file_storage();
-    $stored_files = $fs->get_area_files($context->id, 'mod_lightboxgallery', 'gallery_images');
+    $lbgctx = context_module::instance($lbgcm->id);
+    $stored_files = $fs->get_area_files($lbgctx->id, 'mod_lightboxgallery', 'gallery_images');
 
     $galleryId = $fromform->instance;
     echo 'Created new gallery: '.$galleryId.' from '.$lbgallery->id.'<br />';

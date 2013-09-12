@@ -75,7 +75,7 @@ function gallery_delete_instance($id) {
     global $DB, $CFG;
     require_once($CFG->dirroot.'/mod/gallery/locallib.php');
 
-    if (!($galerry = $DB->get_record('gallery', array('id'=>$id)))) 
+    if (!($gallery = $DB->get_record('gallery', array('id'=>$id)))) 
         return false;
     
     $imageIDs = $DB->get_records('gallery_images',array('gallery'=>$gallery->id));
@@ -84,7 +84,7 @@ function gallery_delete_instance($id) {
     foreach($imageIDs as $image) 
         gallery_process_delete_image ($image, $context, $gallery);
         
-    $DB->delete_records('gallery', array('id'=>$galerry->id));
+    $DB->delete_records('gallery', array('id'=>$gallery->id));
     
     return true;
 }

@@ -75,6 +75,22 @@ foreach($lbgalleries as $lbgallery) {
 
     $galleryId = $fromform->instance;
     $gcm = $DB->get_record('course_modules',array('module'=>$gModule->id,'instance'=>$galleryId,'course'=>$course->id),'*',MUST_EXIST);
+    $gcm->indent = $lbgcm->indent;
+    $DB->update_record('course_modules',$gcm);
+    
+    $sectionModules = explode(',', $section->sequence);
+    $newSectionSequence = '';
+    $first = true;
+    foreach($sectionModules as $sm) {
+        if(!$first)
+            $newSectionSequence .= ',';
+        $newSectionSequence.=$sm;
+        if($sm == $lbgcm->id)
+            $newSectionSequence .=','.$gcm->id;
+    }
+    $section->sequence = $newSectionSequence;
+    $DB->update_record('course_sections',$section);
+    
     $galleryctx = context_module::instance($gcm->id);
     echo '<br />Created new gallery: '.$galleryId.' from '.$lbgallery->id.'<br />';
     echo 'Found images: '.count($stored_files).'<br />';
@@ -90,11 +106,12 @@ foreach($lbgalleries as $lbgallery) {
         $imgData->name = $stored_file->get_filename();
         $imgData->sourcetype = GALLERY_IMAGE_SOURCE_TEXT;
         $imgData->source = 'Converted from LighboxGallery';
+        $imgData->type = strtolower(pathinfo($stored_file->get_filename(), PATHINFO_EXTENSION));
         
         $image_data = gallery_imagemanager::create_image($imgData);
         
         $filepath = '/'.$galleryId.'/';
-        $filename = $image_data->id.'.'.pathinfo($stored_file->get_filename(), PATHINFO_EXTENSION);
+        $filename = $image_data->id.'.'.strtolower(pathinfo($stored_file->get_filename(), PATHINFO_EXTENSION));
         $fileinfo = array(
             'contextid' => $galleryctx->id,
             'component' => 'mod_gallery',

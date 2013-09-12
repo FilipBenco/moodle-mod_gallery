@@ -109,11 +109,11 @@ function gallery_process_image_drats_save($data, $context, $gallery, $files) {
         $uId = clean_param($file->stored_file()->get_filename(), PARAM_ALPHANUM);
         $imgData = gallery_image::from_form_data($uId, $data);
         $imgData->gallery = $gallery->id();
-        $imgData->type = pathinfo($file->stored_file()->get_filename(), PATHINFO_EXTENSION);
+        $imgData->type = strtolower(pathinfo($file->stored_file()->get_filename(), PATHINFO_EXTENSION));
         $image_data = gallery_imagemanager::create_image($imgData);
         
         $filepath = '/'.$gallery->id().'/';
-        $filename = $image_data->id.'.'.pathinfo($file->stored_file()->get_filename(), PATHINFO_EXTENSION);
+        $filename = $image_data->id.'.'.  strtolower(pathinfo($file->stored_file()->get_filename(), PATHINFO_EXTENSION));
         $fileinfo = array(
             'contextid' => $context->id,
             'component' => 'mod_gallery',

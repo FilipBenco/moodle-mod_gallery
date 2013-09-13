@@ -29,6 +29,7 @@
  * Structure step to restore one lightboxgallery activity
  */
 require_once($CFG->dirroot.'/mod/gallery/locallib.php');
+require_once($CFG->dirroot.'/mod/gallery/image.class.php');
 
 class restore_gallery_activity_structure_step extends restore_activity_structure_step {
 

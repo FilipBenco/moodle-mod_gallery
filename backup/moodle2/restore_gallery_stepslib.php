@@ -95,7 +95,7 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
                 'filearea' =>  GALLERY_IMAGES_FILEAREA,
                 'itemid' => $file->get_itemid(),
                 'filepath' => '/',
-                'filename' =>  $this->get_mapping('image_id', pathinfo($file->get_filename(),PATHINFO_FILENAME)).'.'.pathinfo($file()->get_filename(), PATHINFO_EXTENSION)
+                'filename' =>  $this->get_mapping('image_id', pathinfo($file->get_filename(), PATHINFO_FILENAME)).'.'.pathinfo($file->get_filename(), PATHINFO_EXTENSION)
             );
             $nFile = $fs->create_file_from_storedfile($fileinfo, $file);
             $file->delete();

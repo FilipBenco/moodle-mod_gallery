@@ -33,6 +33,8 @@ require_once($CFG->dirroot.'/mod/gallery/image.class.php');
 
 class restore_gallery_activity_structure_step extends restore_activity_structure_step {
 
+    protected $imageMapping = array();
+    
     protected function define_structure() {
 
         $paths = array();
@@ -58,6 +60,7 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
         $data->timecreated = $this->apply_date_offset($data->timecreated);
         // Insert the lightboxgallery record.
         $newitemid = $DB->insert_record('gallery', $data);
+        $this->set_mapping('gallery_itemid', $oldid, $newitemid, true);
         // Immediately after inserting "activity" record, call this.
         $this->apply_activity_instance($newitemid);
     }
@@ -75,11 +78,28 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
         if($data->sourcetype == GALLERY_IMAGE_SOURCE_OWN)
             $data->sourceuser = $this->get_mappingid ('user', $data->sourceuser);
         $newitemid = $DB->insert_record('gallery_images', $data);
-        $this->set_mapping('image_itemid', $oldid, $newitemid, true);
+        $this->set_mapping('image_id', $oldid, $newitemid);
     }
 
     protected function after_execute() {
         $this->add_related_files('mod_gallery', 'intro', null);
-        $this->add_related_files('mod_gallery', GALLERY_IMAGES_FILEAREA, 'image_itemid');
+        $this->add_related_files('mod_gallery', GALLERY_IMAGES_FILEAREA, 'gallery_itemid');
+        
+        $fs = get_file_storage();
+        $files = $fs->get_area_files($this->task->get_old_contextid(), 'mod_gallery', GALLERY_IMAGES_FILEAREA);
+        echo $this->task->get_old_contextid().'--';
+        foreach($files as $file) {
+            $fileinfo = array(
+                'contextid' => $this->task->get_old_contextid(),
+                'component' => 'mod_gallery',
+                'filearea' =>  GALLERY_IMAGES_FILEAREA,
+                'itemid' => $file->get_itemid(),
+                'filepath' => '/',
+                'filename' =>  $this->get_mapping('image_id', pathinfo($file->get_filename(),PATHINFO_FILENAME)).'.'.pathinfo($file()->get_filename(), PATHINFO_EXTENSION)
+            );
+            $nFile = $fs->create_file_from_storedfile($fileinfo, $file);
+            $file->delete();
+        }
+        
     }
 }

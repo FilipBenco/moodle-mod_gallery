@@ -6,6 +6,7 @@ require_once($CFG->libdir.'/filelib.php');
 require_once($CFG->libdir.'/gradelib.php');
 require_once($CFG->dirroot.'/course/modlib.php');
 require_once($CFG->dirroot.'/mod/gallery/lib.php');
+require_once($CFG->dirroot.'/mod/gallery/locallib.php');
 require_once($CFG->dirroot.'/mod/gallery/mod_form.php');
 require_once($CFG->dirroot.'/mod/gallery/image.class.php');
 require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');

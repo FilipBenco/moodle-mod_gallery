@@ -112,7 +112,7 @@ foreach($lbgalleries as $lbgallery) {
         
         $image_data = gallery_imagemanager::create_image($imgData);
         
-        $filepath = '/'.$galleryId.'/';
+        $filepath = '/';
         $filename = $image_data->id.'.'.strtolower(pathinfo($stored_file->get_filename(), PATHINFO_EXTENSION));
         $fileinfo = array(
             'contextid' => $galleryctx->id,

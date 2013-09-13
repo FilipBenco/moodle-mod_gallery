@@ -90,12 +90,14 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
         $cms = array();
         $ctxs = array();
         foreach($files as $file) {
+            if(!$file->is_valid_image())
+                continue;
             if(!isset($cms[$file->get_itemid()]))
                 $cms[$file->get_itemid()] = get_coursemodule_from_instance('gallery', $file->get_itemid());
             if(!isset($ctxs[$file->get_itemid()]))
                 $ctxs[$file->get_itemid()] = context_module::instance($cms[$file->get_itemid()]->id);
             $fileinfo = array(
-                'contextid' => $ctxs[$file->get_itemid()],
+                'contextid' => $ctxs[$file->get_itemid()]->id,
                 'component' => 'mod_gallery',
                 'filearea' =>  GALLERY_IMAGES_FILEAREA,
                 'itemid' => $file->get_itemid(),

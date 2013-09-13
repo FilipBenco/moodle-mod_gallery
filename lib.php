@@ -76,9 +76,12 @@ function gallery_update_instance(stdClass $data, mod_gallery_mod_form $form = nu
 function gallery_delete_instance($id) {
     global $DB, $CFG;
     require_once($CFG->dirroot.'/mod/gallery/locallib.php');
+    require_once($CFG->dirroot.'/mod/gallery/gallery.class.php');
 
-    if (!($gallery = $DB->get_record('gallery', array('id'=>$id)))) 
+    if (!$DB->get_count_records('gallery', array('id'=>$id))) 
         return false;
+    
+    $gallery = new gallery($id);
    
     $cm = get_coursemodule_from_instance('gallery', $id);
     $context = context_module::instance($cm->id);

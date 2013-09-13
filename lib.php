@@ -79,11 +79,11 @@ function gallery_delete_instance($id) {
 
     if (!($gallery = $DB->get_record('gallery', array('id'=>$id)))) 
         return false;
-    
-    $imageIDs = $DB->get_records('gallery_images',array('gallery'=>$gallery->id));
+   
     $cm = get_coursemodule_from_instance('gallery', $id);
     $context = context_module::instance($cm->id);
-    foreach($imageIDs as $image) 
+    $images = gallery_load_images($gallery, $context);
+    foreach($images as $image) 
         gallery_process_delete_image ($image, $context, $gallery);
         
     $DB->delete_records('gallery', array('id'=>$gallery->id));

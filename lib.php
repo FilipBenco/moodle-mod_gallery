@@ -78,7 +78,7 @@ function gallery_delete_instance($id) {
     require_once($CFG->dirroot.'/mod/gallery/locallib.php');
     require_once($CFG->dirroot.'/mod/gallery/gallery.class.php');
 
-    if (!$DB->get_count_records('gallery', array('id'=>$id))) 
+    if (!$DB->record_exists('gallery', array('id'=>$id))) 
         return false;
     
     $gallery = new gallery($id);

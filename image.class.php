@@ -133,7 +133,8 @@ class gallery_image {
         $data->id = 0;
         $data->descriptionformat = FORMAT_HTML;
         $data->description = '';
-        $data->source = '';
+        $data->sourcetext = '';
+        $data->sourceuser = 0;
         $data->sourcetype = GALLERY_IMAGE_SOURCE_TEXT;
         $data->name = '';
         $data->user = $USER->id;
@@ -162,11 +163,13 @@ class gallery_image {
         $sourceTypeName = 'sourcetype-'.$uId;
         if(isset($data->$sourceTypeName)) {
             $image->sourcetype = GALLERY_IMAGE_SOURCE_OWN;
-            $image->source = $USER->id;
+            $image->sourceuser = $USER->id;
+            $image->sourcetext = '';
         } else {
             $image->sourcetype = GALLERY_IMAGE_SOURCE_TEXT;
             $sourceName = 'source-'.$uId;
-            $image->source = $data->$sourceName;
+            $image->sourcetext = $data->$sourceName;
+            $image->sourceuser = 0;
         }
         
         return $image;

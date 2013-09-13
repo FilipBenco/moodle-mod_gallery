@@ -112,14 +112,13 @@ function gallery_process_image_drats_save($data, $context, $gallery, $files) {
         $imgData->type = strtolower(pathinfo($file->stored_file()->get_filename(), PATHINFO_EXTENSION));
         $image_data = gallery_imagemanager::create_image($imgData);
         
-        $filepath = '/'.$gallery->id().'/';
         $filename = $image_data->id.'.'.  strtolower(pathinfo($file->stored_file()->get_filename(), PATHINFO_EXTENSION));
         $fileinfo = array(
             'contextid' => $context->id,
             'component' => 'mod_gallery',
             'filearea' =>  GALLERY_IMAGES_FILEAREA,
             'itemid' => $gallery->id(),
-            'filepath' => $filepath,
+            'filepath' => '/',
             'filename' =>  $filename
         );
         if (!$fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), $filepath, $filename)) {
@@ -145,7 +144,7 @@ function gallery_process_images_save($data, $images,$context,$gallery) {
                 $image->data()->description != $imgData->description ||
                 $image->data()->descriptionformat != $imgData->descriptionformat ||
                 $image->data()->sourcetype != $imgData->sourcetype ||
-                ($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT && $image->data()->source != $imgData->source)) {
+                ($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT && $image->data()->sourcetext != $imgData->sourcetext)) {
             gallery_imagemanager::update_image($imgData);
         }
         if($gallery->imageattachments()) {
@@ -164,13 +163,12 @@ function gallery_load_images($gallery, $context, $iid = false) {
     
     $images = array();
     $fs = get_file_storage();
-    $filepath = '/'.$gallery->id().'/';
     foreach($images_db as $idb) {
         if($iid && $idb->id == $iid) {
-            $images[$idb->id] = new gallery_image($idb, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), $filepath,
+            $images[$idb->id] = new gallery_image($idb, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), '/',
                                        $idb->id.'.'.$idb->type),$context,true,true);
         } else {
-            $images[$idb->id] = new gallery_image($idb, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), $filepath,
+            $images[$idb->id] = new gallery_image($idb, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), '/',
                                        $idb->id.'.'.$idb->type),$context);   
         }
     }
@@ -183,9 +181,8 @@ function gallery_load_image($context,$image_db) {
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
     
     $fs = get_file_storage();
-    $filepath = '/'.$image_db->gallery.'/';
     
-    return new gallery_image($image_db, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $image_db->gallery, $filepath,
+    return new gallery_image($image_db, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $image_db->gallery, '/',
                                        $image_db->id.'.'.$image_db->type),$context,true,true);
 }
 

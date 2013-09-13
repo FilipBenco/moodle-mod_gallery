@@ -35,13 +35,13 @@ if($action == 'display') {
     $return->name = $img->name;
 
     if($img->sourcetype == GALLERY_IMAGE_SOURCE_OWN) {
-        $user = $DB->get_record('user',array('id'=>$img->source));
+        $user = $DB->get_record('user',array('id'=>$img->sourceuser));
         $urlparams = array('id'=>$user->id);
         $return->source = '<strong>'.get_string('author','gallery') . ':</strong> ';
         $return->source .= $OUTPUT->action_link(new moodle_url('/user/profile.php',$urlparams), fullname($user));
     }
     if($img->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
-        $return->source = '<strong>'.get_string('source','gallery') . ':</strong> '.$img->source;
+        $return->source = '<strong>'.get_string('source','gallery') . ':</strong> '.$img->sourcetext;
     }
 
     $return->canedit = has_capability('mod/gallery:manage', $context) || has_capability('mod/gallery:editallimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $img->user == $USER->id);

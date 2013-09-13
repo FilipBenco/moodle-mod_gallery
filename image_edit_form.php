@@ -56,7 +56,7 @@ class mod_gallery_image_edit_form extends moodleform {
             $data['desc-'.$uniqueId]['text'] = $image->data()->description;
             $data['desc-'.$uniqueId]['format'] = $image->data()->descriptionformat;
             if($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
-                $data['source-'.$uniqueId] = $image->data()->source;
+                $data['source-'.$uniqueId] = $image->data()->sourcetext;
                 $data['sourcetype-'.$uniqueId] = false;
             } elseif($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_OWN) {
                 $data['source-'.$uniqueId] = '';

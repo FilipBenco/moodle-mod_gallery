@@ -201,7 +201,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
         }
         if($img->image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
             $o .= '<strong>'.get_string('source','gallery') . ':</strong> ';
-            $o .= $img->image->data()->source;
+            $o .= $img->image->data()->sourcetext;
         }
         $o .= $this->output->box_end();
         

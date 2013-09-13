@@ -59,7 +59,7 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
         $data->timemodified = $this->apply_date_offset($data->timemodified);
         $data->timecreated = $this->apply_date_offset($data->timecreated);
         $newitemid = $DB->insert_record('gallery', $data);
-        $this->set_mapping('gallery_itemid', $oldid, $newitemid, true);
+        $this->set_mapping('gallery_id', $oldid, $newitemid, true);
         $this->apply_activity_instance($newitemid);
     }
 
@@ -88,17 +88,18 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
         $cms = array();
         $ctxs = array();
         foreach($files as $file) {
+            $gId = $this->get_mapping('gallery_id', $file->get_itemid());
             if(!$file->is_valid_image())
                 continue;
-            if(!isset($cms[$file->get_itemid()]))
-                $cms[$file->get_itemid()] = get_coursemodule_from_instance('gallery', $file->get_itemid());
-            if(!isset($ctxs[$file->get_itemid()]))
-                $ctxs[$file->get_itemid()] = context_module::instance($cms[$file->get_itemid()]->id);
+            if(!isset($cms[$gId]))
+                $cms[$gId] = get_coursemodule_from_instance('gallery', $gId);
+            if(!isset($ctxs[$gId]))
+                $ctxs[$gId] = context_module::instance($cms[$gId]->id);
             $fileinfo = array(
-                'contextid' => $ctxs[$file->get_itemid()]->id,
+                'contextid' => $ctxs[$gId]->id,
                 'component' => 'mod_gallery',
                 'filearea' =>  GALLERY_IMAGES_FILEAREA,
-                'itemid' => $file->get_itemid(),
+                'itemid' => $gId,
                 'filepath' => '/',
                 'filename' =>  $this->get_mapping('image_id', pathinfo($file->get_filename(), PATHINFO_FILENAME)).'.'.pathinfo($file->get_filename(), PATHINFO_EXTENSION)
             );

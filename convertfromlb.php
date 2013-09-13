@@ -49,7 +49,7 @@ foreach($lbgalleries as $lbgallery) {
     $data->intro = $lbgallery->intro;
     $data->introformat = $lbgallery->introformat;
     $data->name = $lbgallery->name;
-    $data->showdescription = 1;
+    $data->showdescription = $lbgcm->showdescription;
     $data->showthumbnails = 0;
     $data->imageattachments = 0;
     

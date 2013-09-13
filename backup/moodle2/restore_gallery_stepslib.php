@@ -58,10 +58,8 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
         $data->course = $this->get_courseid();
         $data->timemodified = $this->apply_date_offset($data->timemodified);
         $data->timecreated = $this->apply_date_offset($data->timecreated);
-        // Insert the lightboxgallery record.
         $newitemid = $DB->insert_record('gallery', $data);
         $this->set_mapping('gallery_itemid', $oldid, $newitemid, true);
-        // Immediately after inserting "activity" record, call this.
         $this->apply_activity_instance($newitemid);
     }
 
@@ -83,7 +81,7 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
 
     protected function after_execute() {
         $this->add_related_files('mod_gallery', 'intro', null);
-        $this->add_related_files('mod_gallery', GALLERY_IMAGES_FILEAREA, 'gallery_itemid');
+        $this->add_related_files('mod_gallery', GALLERY_IMAGES_FILEAREA,null);
         
         $fs = get_file_storage();
         $files = $fs->get_area_files($this->task->get_old_contextid(), 'mod_gallery', GALLERY_IMAGES_FILEAREA);

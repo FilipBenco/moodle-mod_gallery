@@ -28,12 +28,11 @@
 /**
  * Define the complete lightboxgallery structure for backup, with file and id annotations
  */
+require_once($CFG->dirroot.'/mod/gallery/locallib.php');
+
 class backup_gallery_activity_structure_step extends backup_activity_structure_step {
 
     protected function define_structure() {
-        global $CFG;
-        require_once($CFG->dirroot.'/mod/gallery/locallib.php');
-
         // Define each element separated.
         $gallery = new backup_nested_element('gallery', array('id'), array(
             'course', 'name', 'intro', 'introformat', 'showdescription', 
@@ -57,7 +56,8 @@ class backup_gallery_activity_structure_step extends backup_activity_structure_s
 
         // Define file annotations.
         $gallery->annotate_files('mod_gallery', 'intro', null);
-        $gallery->annotate_files('mod_gallery', GALLERY_IMAGES_FILEAREA, 'id');
+        $gallery->annotate_files('mod_gallery', GALLERY_IMAGES_FILEAREA, null);
+        
         $image->annotate_ids('user', 'user');
         $image->annotate_ids('user', 'sourceuser');
         

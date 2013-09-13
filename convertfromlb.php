@@ -107,7 +107,7 @@ foreach($lbgalleries as $lbgallery) {
         }
         $imgData->name = $stored_file->get_filename();
         $imgData->sourcetype = GALLERY_IMAGE_SOURCE_TEXT;
-        $imgData->source = 'Converted from LighboxGallery';
+        $imgData->sourcetext = 'Converted from LighboxGallery';
         $imgData->type = strtolower(pathinfo($stored_file->get_filename(), PATHINFO_EXTENSION));
         
         $image_data = gallery_imagemanager::create_image($imgData);

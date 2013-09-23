@@ -82,34 +82,32 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
     protected function after_execute() {
         $this->add_related_files('mod_gallery', 'intro', null);
         $this->add_related_files('mod_gallery', GALLERY_IMAGES_FILEAREA, 'gallery_id');
-        
+
         $fs = get_file_storage();
-        $files = $fs->get_area_files($this->task->get_old_contextid(), 'mod_gallery', GALLERY_IMAGES_FILEAREA);
+        $files = $fs->get_area_files($this->task->get_contextid(), 'mod_gallery', GALLERY_IMAGES_FILEAREA);
         $cms = array();
         $ctxs = array();
- 
+
         foreach($files as $file) {
             if(!$file->is_valid_image())
                 continue;
             
-            $gId = $this->get_mapping('gallery_id', $file->get_itemid());
-            if(!isset($cms[$gId->newitemid]))
-                $cms[$gId->newitemid] = get_coursemodule_from_instance('gallery', $gId->newitemid);
-            if(!isset($ctxs[$gId->newitemid]))
-                $ctxs[$gId->newitemid] = context_module::instance($cms[$gId->newitemid]->id);
-                
+            $gId = $file->get_itemid();
+            if(!isset($cms[$gId]))
+                $cms[$gId] = get_coursemodule_from_instance('gallery', $gId);
+            if(!isset($ctxs[$gId]))
+                $ctxs[$gId] = context_module::instance($cms[$gId]->id);
             $iId = $this->get_mapping('image_id', pathinfo($file->get_filename(), PATHINFO_FILENAME))->newitemid;
             $fileinfo = array(
-                'contextid' => $ctxs[$gId->newitemid]->id,
+                'contextid' => $ctxs[$gId]->id,
                 'component' => 'mod_gallery',
                 'filearea' =>  GALLERY_IMAGES_FILEAREA,
-                'itemid' => $gId->newitemid,
+                'itemid' => $gId,
                 'filepath' => '/',
                 'filename' =>  $iId.'.'.pathinfo($file->get_filename(), PATHINFO_EXTENSION)
             );
             $nFile = $fs->create_file_from_storedfile($fileinfo, $file);
             $file->delete();
         }
-        
     }
 }

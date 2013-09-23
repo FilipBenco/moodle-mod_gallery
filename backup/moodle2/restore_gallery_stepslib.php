@@ -89,24 +89,23 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
         $ctxs = array();
  
         foreach($files as $file) {
-            var_dump($file);
-            echo "<br/><br/>";
             if(!$file->is_valid_image())
                 continue;
             
             $gId = $this->get_mapping('gallery_id', $file->get_itemid());
-            
-            if(!isset($cms[$gId]))
-                $cms[$gId] = get_coursemodule_from_instance('gallery', $gId);
-            if(!isset($ctxs[$gId]))
-                $ctxs[$gId] = context_module::instance($cms[$gId]->id);
+            if(!isset($cms[$gId->newitemid]))
+                $cms[$gId->newitemid] = get_coursemodule_from_instance('gallery', $gId->newitemid);
+            if(!isset($ctxs[$gId->newitemid]))
+                $ctxs[$gId->newitemid] = context_module::instance($cms[$gId->newitemid]->id);
+                
+            $iId = $this->get_mapping('image_id', pathinfo($file->get_filename(), PATHINFO_FILENAME));
             $fileinfo = array(
-                'contextid' => $ctxs[$gId]->id,
+                'contextid' => $ctxs[$gId->newitemid]->id,
                 'component' => 'mod_gallery',
                 'filearea' =>  GALLERY_IMAGES_FILEAREA,
-                'itemid' => $gId,
+                'itemid' => $gId->newitemid,
                 'filepath' => '/',
-                'filename' =>  $this->get_mapping('image_id', pathinfo($file->get_filename(), PATHINFO_FILENAME)).'.'.pathinfo($file->get_filename(), PATHINFO_EXTENSION)
+                'filename' =>  $iId->newitemid.'.'.pathinfo($file->get_filename(), PATHINFO_EXTENSION)
             );
             $nFile = $fs->create_file_from_storedfile($fileinfo, $file);
             $file->delete();

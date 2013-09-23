@@ -81,7 +81,7 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
 
     protected function after_execute() {
         $this->add_related_files('mod_gallery', 'intro', null);
-        $this->add_related_files('mod_gallery', GALLERY_IMAGES_FILEAREA, null);
+        $this->add_related_files('mod_gallery', GALLERY_IMAGES_FILEAREA, 'gallery_id');
         
         $fs = get_file_storage();
         $files = $fs->get_area_files($this->task->get_old_contextid(), 'mod_gallery', GALLERY_IMAGES_FILEAREA);
@@ -98,14 +98,14 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
             if(!isset($ctxs[$gId->newitemid]))
                 $ctxs[$gId->newitemid] = context_module::instance($cms[$gId->newitemid]->id);
                 
-            $iId = $this->get_mapping('image_id', pathinfo($file->get_filename(), PATHINFO_FILENAME));
+            $iId = $this->get_mapping('image_id', pathinfo($file->get_filename(), PATHINFO_FILENAME))->newitemid;
             $fileinfo = array(
                 'contextid' => $ctxs[$gId->newitemid]->id,
                 'component' => 'mod_gallery',
                 'filearea' =>  GALLERY_IMAGES_FILEAREA,
                 'itemid' => $gId->newitemid,
                 'filepath' => '/',
-                'filename' =>  $iId->newitemid.'.'.pathinfo($file->get_filename(), PATHINFO_EXTENSION)
+                'filename' =>  $iId.'.'.pathinfo($file->get_filename(), PATHINFO_EXTENSION)
             );
             $nFile = $fs->create_file_from_storedfile($fileinfo, $file);
             $file->delete();

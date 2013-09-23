@@ -121,7 +121,7 @@ function gallery_process_image_drats_save($data, $context, $gallery, $files) {
             'filepath' => '/',
             'filename' =>  $filename
         );
-        if (!$fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), $filepath, $filename)) {
+        if (!$fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), '/', $filename)) {
             $file = $fs->create_file_from_storedfile($fileinfo, $file->stored_file());
             $image = new gallery_image($image_data, $file, $context);
             if($gallery->imageattachments()) {

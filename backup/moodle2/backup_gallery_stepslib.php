@@ -56,7 +56,7 @@ class backup_gallery_activity_structure_step extends backup_activity_structure_s
 
         // Define file annotations.
         $gallery->annotate_files('mod_gallery', 'intro', null);
-        $gallery->annotate_files('mod_gallery', GALLERY_IMAGES_FILEAREA, null);
+        $gallery->annotate_files('mod_gallery', GALLERY_IMAGES_FILEAREA, 'id');
         
         $image->annotate_ids('user', 'user');
         $image->annotate_ids('user', 'sourceuser');

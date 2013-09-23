@@ -81,16 +81,21 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
 
     protected function after_execute() {
         $this->add_related_files('mod_gallery', 'intro', null);
-        $this->add_related_files('mod_gallery', GALLERY_IMAGES_FILEAREA,null);
+        $this->add_related_files('mod_gallery', GALLERY_IMAGES_FILEAREA, null);
         
         $fs = get_file_storage();
         $files = $fs->get_area_files($this->task->get_old_contextid(), 'mod_gallery', GALLERY_IMAGES_FILEAREA);
         $cms = array();
         $ctxs = array();
+        var_dump($files); die;
         foreach($files as $file) {
-            $gId = $this->get_mapping('gallery_id', $file->get_itemid());
+        
             if(!$file->is_valid_image())
                 continue;
+            
+            $gId = $this->get_mapping('gallery_id', $file->get_itemid());
+            echo $file->get_itemid().'--'.$gId; die;
+            
             if(!isset($cms[$gId]))
                 $cms[$gId] = get_coursemodule_from_instance('gallery', $gId);
             if(!isset($ctxs[$gId]))

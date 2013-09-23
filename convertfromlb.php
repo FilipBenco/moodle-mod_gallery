@@ -14,7 +14,7 @@ require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
 $lbgModule = $DB->get_record('modules',array('name'=>'lightboxgallery'),'*',MUST_EXIST);
 $gModule = $DB->get_record('modules',array('name'=>'gallery'),'*',MUST_EXIST);
 
-$lbgalleries = $DB->get_records('lightboxgallery',array('course'=>1106));
+$lbgalleries = $DB->get_records('lightboxgallery',array('course'=>877));
 echo 'Found Lightbox galleries: '.count($lbgalleries),'<br /><br />';
 foreach($lbgalleries as $lbgallery) {
     $course = $DB->get_record('course', array('id'=>$lbgallery->course), '*', MUST_EXIST);

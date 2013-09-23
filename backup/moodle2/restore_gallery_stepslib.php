@@ -87,14 +87,14 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
         $files = $fs->get_area_files($this->task->get_old_contextid(), 'mod_gallery', GALLERY_IMAGES_FILEAREA);
         $cms = array();
         $ctxs = array();
-        var_dump($files); die;
+ 
         foreach($files as $file) {
-        
+            var_dump($file);
+            echo "<br/><br/>";
             if(!$file->is_valid_image())
                 continue;
             
             $gId = $this->get_mapping('gallery_id', $file->get_itemid());
-            echo $file->get_itemid().'--'.$gId; die;
             
             if(!isset($cms[$gId]))
                 $cms[$gId] = get_coursemodule_from_instance('gallery', $gId);

@@ -105,15 +105,15 @@ foreach($lbgalleries as $lbgallery) {
         if ($image_meta = $DB->get_record('lightboxgallery_image_meta', array('gallery' => $lbgallery->id, 'image' => $stored_file->get_filename(), 'metatype' => 'caption'))) {
             $imgData->description = $image_meta->description;
         }
+        $ext = substr(strtolower(pathinfo($stored_file->get_filename(), PATHINFO_EXTENSION)),-3);
         $imgData->name = $stored_file->get_filename();
         $imgData->sourcetype = GALLERY_IMAGE_SOURCE_TEXT;
         $imgData->sourcetext = 'Converted from LighboxGallery';
-        $imgData->type = strtolower(pathinfo($stored_file->get_filename(), PATHINFO_EXTENSION));
+        $imgData->type = $ext;
         
         $image_data = gallery_imagemanager::create_image($imgData);
         
         $filepath = '/';
-        $ext = substr(strtolower(pathinfo($stored_file->get_filename(), PATHINFO_EXTENSION)),-3);
         $filename = $image_data->id.'.'.$ext;
         $fileinfo = array(
             'contextid' => $galleryctx->id,

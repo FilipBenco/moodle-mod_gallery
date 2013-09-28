@@ -14,7 +14,7 @@ require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
 $lbgModule = $DB->get_record('modules',array('name'=>'lightboxgallery'),'*',MUST_EXIST);
 $gModule = $DB->get_record('modules',array('name'=>'gallery'),'*',MUST_EXIST);
 
-$lbgalleries = $DB->get_records('lightboxgallery',array('course'=>877));
+$lbgalleries = $DB->get_records('lightboxgallery');
 echo 'Found Lightbox galleries: '.count($lbgalleries),'<br /><br />';
 foreach($lbgalleries as $lbgallery) {
     $course = $DB->get_record('course', array('id'=>$lbgallery->course), '*', MUST_EXIST);
@@ -95,7 +95,7 @@ foreach($lbgalleries as $lbgallery) {
     
     $galleryctx = context_module::instance($gcm->id);
     echo '<br />Created new gallery: '.$galleryId.' from '.$lbgallery->id.'<br />';
-    echo 'Found images: '.count($stored_files).'<br />';
+    echo 'Found images: '.(count($stored_files)-1).'<br />';
     foreach ($stored_files as $stored_file) {
         if (!$stored_file->is_valid_image()) 
             continue;
@@ -162,7 +162,10 @@ function gallery_add_moduleinfo($moduleinfo, $course, $mform = null) {
         $newcm->completion                = $moduleinfo->completion;
         $newcm->completiongradeitemnumber = $moduleinfo->completiongradeitemnumber;
         $newcm->completionview            = $moduleinfo->completionview;
-        $newcm->completionexpected        = $moduleinfo->completionexpected;
+        if(isset($moduleinfo->completionexpected))
+            $newcm->completionexpected    = $moduleinfo->completionexpected;
+        else
+            $newcm->completionexpected = 0;
     }
     if(!empty($CFG->enableavailability)) {
         $newcm->availablefrom             = $moduleinfo->availablefrom;
@@ -229,6 +232,10 @@ function gallery_add_moduleinfo($moduleinfo, $course, $mform = null) {
 
     // Set up conditions.
     if ($CFG->enableavailability) {
+        if(!isset($moduleinfo->conditiongradegroup))
+            $moduleinfo->conditiongradegroup = array();
+        if(!isset($moduleinfo->conditionfieldgroup))
+            $moduleinfo->conditionfieldgroup = array();
         condition_info::update_cm_from_form((object)array('id'=>$moduleinfo->coursemodule), $moduleinfo, false);
     }
 

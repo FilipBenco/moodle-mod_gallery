@@ -27,10 +27,13 @@ class mod_gallery_mod_form extends moodleform_mod {
 
         $this->add_intro_editor(true, get_string('description', 'gallery'));
 
-        $mform->addElement('checkbox','showthumbnails', get_string('showthumbnails','gallery'));
+        $mform->addElement('advcheckbox','showthumbnails', get_string('showthumbnails','gallery'));
         $mform->addHelpButton('showthumbnails', 'showthumbnails', 'gallery');
         
-        $mform->addElement('checkbox','imageattachments', get_string('imageattachments','gallery'));
+        $mform->addElement('advcheckbox','showoriginalimage', get_string('showoriginalimage','gallery'));
+        $mform->addHelpButton('showoriginalimage', 'showoriginalimage', 'gallery');
+        
+        $mform->addElement('advcheckbox','imageattachments', get_string('imageattachments','gallery'));
         $mform->addHelpButton('imageattachments', 'imageattachments', 'gallery');
        
         $this->standard_coursemodule_elements();

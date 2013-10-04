@@ -58,6 +58,8 @@ class gallery_image_preview implements renderable {
     public $coursemodule;
     public $user;
     
+    public $showoriginalimage;
+    
     public $canedit;
     public $caneditown;
     
@@ -66,7 +68,7 @@ class gallery_image_preview implements renderable {
     
     public $currentuser;
     
-    public function __construct($image, $thumbnails, $coursemodule, $context, $edit = 0, $canedit = 0, $caneditown = 0, $candelete = 0, $candeleteown = 0, $currentuser = 0) {
+    public function __construct($image, $thumbnails, $coursemodule, $context, $showoriginalimage, $edit = 0, $canedit = 0, $caneditown = 0, $candelete = 0, $candeleteown = 0, $currentuser = 0) {
         global $DB;
         $this->image = $image;
         $this->thumbnails = $thumbnails;
@@ -78,6 +80,7 @@ class gallery_image_preview implements renderable {
         $this->candelete = $candelete;
         $this->candeleteown = $candeleteown;
         $this->currentuser = $currentuser;
+        $this->showoriginalimage = $showoriginalimage;
         if($image->data()->sourcetype == GALLERY_IMAGE_SOURCE_OWN)
             $this->user = $DB->get_record('user',array('id'=>$image->data()->sourceuser));
     }

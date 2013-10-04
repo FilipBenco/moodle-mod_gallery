@@ -39,6 +39,10 @@ class gallery {
         return $this->data->showthumbnails;
     }
     
+    public function showoriginalimage() {
+        return $this->data->showoriginalimage;
+    }
+    
     public function imageattachments() {
         return $this->data->imageattachments;
     }

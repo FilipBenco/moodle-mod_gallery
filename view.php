@@ -242,19 +242,24 @@ switch($action) {
         $module = array(
         		'name'      => 'mod_gallery',
         		'fullpath'  => '/mod/gallery/js/module.js',
-        		'requires'  => array('base', 'dom', 'event','io')
+        		'requires'  => array('base', 'dom', 'event','io'),
+                        'strings'   => array(
+                            array('image','gallery'),
+                            array('of','gallery'),
+                            array('downloadoriginalimage','gallery')
+                        )
         );
         $images = gallery_load_images($gallery, $context, $iid);
         $canedit = has_capability('mod/gallery:editallimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $images[$iid]->data()->user);
         $candelete = has_capability('mod/gallery:deleteallimages', $context) || (has_capability('mod/gallery:deleteownimages', $context) && $USER->id == $images[$iid]->data()->user);
-        $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id,'currentImage'=>$iid,'canEdit'=>$canedit,'canDelete'=>$candelete)), false, $module);
+        $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id,'currentImage'=>$iid,'showoriginal'=>$gallery->showoriginalimage(),'canEdit'=>$canedit,'canDelete'=>$candelete)), false, $module);
         echo $renderer->render(new gallery_header($gallery->name(),$context));
         if($USER->editing)
-            echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context, $USER->editing,
+            echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context, $gallery->showoriginalimage(),$USER->editing,
                     has_capability('mod/gallery:editallimages', $context), has_capability('mod/gallery:editownimages', $context),
                     has_capability('mod/gallery:deleteallimages', $context), has_capability('mod/gallery:deleteownimages', $context)));
         else
-            echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context));
+            echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context, $gallery->showoriginalimage()));
         break;
     case 'addimages':
         echo $renderer->render(new gallery_header($gallery->name(),$context));

@@ -57,10 +57,6 @@ function gallery_update_instance(stdClass $data, mod_gallery_mod_form $form = nu
     $data->id = $data->instance;
     if(!isset($data->showdescription))
         $data->showdescription = 0;
-    if(!isset($data->showthumbnails))
-        $data->showthumbnails = 0;
-    if(!isset($data->imageattachments))
-        $data->imageattachments = 0;
 
     $DB->update_record('gallery', $data);
 
@@ -228,7 +224,7 @@ function gallery_pluginfile($course, $cm, $context, $filearea, $args, $forcedown
     }
     
     // We can now send the file back to the browser - in this case with a cache lifetime of 1 day and no filtering.
-    send_stored_file($file, 0, 0, true);
+    send_stored_file($file, 0, 0);
 }
 
 /**

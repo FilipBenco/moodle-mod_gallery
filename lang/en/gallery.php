@@ -35,6 +35,7 @@ $string['deleteimage'] = 'Delete image';
 $string['description'] = 'Description:';
 $string['download'] = 'Download';
 $string['downloadphotos'] = 'Download all images';
+$string['downloadoriginalimage'] = 'Download original image';
 $string['edit'] = 'Edit';
 $string['editimage'] = 'Edit image';
 $string['editimages'] = 'Edit images';
@@ -47,6 +48,7 @@ $string['gallery:editownimages'] = 'Edit your own images';
 $string['gallery:manage'] = 'Manage gallery';
 $string['gallery:view'] = 'View gallery content';
 $string['galleryname'] = 'Name:';
+$string['image'] = 'Image';
 $string['imageattachments'] = 'Allow image attachments';
 $string['imageattachments_help'] = 'If enabled, each image in your gallery can have files attach to it, which will only show with the particular image within the gallery preview mode. In this way, you can enhance the content of your gallery by texts, sounds, videos, and other files relevant for each image.';
 $string['imagename'] = 'Image name';
@@ -67,12 +69,12 @@ A gallery may be used
 <li>To display a collection of pictures relevant for a given topic</li>
 <li>To collect students\' own photos</li>
 </ul>';
-
 $string['modulenameplural'] = 'Galleries';
 $string['moveimage'] = 'Move image';
 $string['next'] = 'Next';
 $string['nextimage'] = 'Next Image';
 $string['nopermission'] = 'Sorry, but you do not have permissions to perform this action.';
+$string['of'] = 'of';
 $string['pluginadministration'] = 'Gallery administration';
 $string['pluginname'] = 'Gallery';
 $string['previews'] = 'Previews';
@@ -85,7 +87,8 @@ $string['savechanges'] = 'Save changes';
 $string['saveimages'] = 'Save images';
 $string['selectdeselectall'] = 'Select all / Deselect all';
 $string['selectedimageslabel'] = '<strong>With selected:</strong>';
-$string['showthumbnails'] = 'Display image thumbnails on course page';
+$string['showoriginalimage'] = 'Show link to original image';
+$string['showoriginalimage_help'] = 'Show link to original image HELP';
 $string['showthumbnails'] = 'Display image thumbnails on course page';
 $string['showthumbnails_help'] = 'If enabled, interactive thumbnails of all gallery images will be displayed directly on the course page.';
 $string['source'] = 'Source';

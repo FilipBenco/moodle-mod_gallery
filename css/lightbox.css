@@ -161,6 +161,13 @@ body:after {
   padding: 0 4px;
   color: #bbbbbb;
 }
+.lb-download {
+    margin-top: -2px;
+}
+.lb-download a {
+    line-height: 1em;
+}
+
 /* line 106, ../sass/lightbox.sass */
 .lb-data .lb-details {
   width: 85%;

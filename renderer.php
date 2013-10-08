@@ -181,6 +181,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
         if($img->showoriginalimage)
             $o .= $this->output->box($this->output->action_link($img->image->image(), get_string('downloadoriginalimage','gallery'),null,array('target'=>'_blank')),'','mod-gallery-image-preview-download');
         
+        $o .= $this->output->box('','mod-gallery-clear');
         $o .= $this->output->box_end();
         
         $o .= $this->output->box_start('mod-gallery-images-side');

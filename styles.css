@@ -60,10 +60,9 @@
 .mod-gallery-image-preview {
     position: absolute;
     left:0px;
-    right:171px;
+    right:186px;
     top:0px;
     float:left;
-    height: 400px;
     text-align: center;
     display: inline-block;
     vertical-align: middle;
@@ -260,5 +259,7 @@
 }
 
 #mod-gallery-image-preview-download {
+    margin-right: 185px;
+    padding: 2px 10px 10px 10px;
     text-align: center;
 }

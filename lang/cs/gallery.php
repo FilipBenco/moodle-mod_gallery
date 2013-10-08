@@ -34,6 +34,7 @@ $string['delete'] = 'Odstranit';
 $string['deleteimage'] = 'Odstranit obrázek';
 $string['description'] = 'Popis:';
 $string['download'] = 'Stáhnout';
+$string['downloadoriginalimage'] = 'Zobrazit původní obrázek';
 $string['downloadphotos'] = 'Stáhnout všechny obrázky';
 $string['edit'] = 'Upravit';
 $string['editimage'] = 'Upravit obrázek';
@@ -55,11 +56,11 @@ $string['missingsourceerror'] = 'Musíte upřesnit zdroj obrázku.';
 $string['modulename'] = 'Galerie';
 $string['modulename_help'] = 'Studijní materiál typu Galerie umožňuje organizaci, správu a prohlížení různě velkých kolekcí obrázků.
 
-Jako učitel můžete jednotlivé galerie v kurzu přidávat, upravovat nebo mazat. Souhrn všech obrázků v galerii je zobrazen pomocí automaticky generovaných náhledů - miniatur. Kliknutím na náhled zobrazíte vybraný obrázek v prezentačním režimu, celou galerií můžete poté procházet pomocí šipek nebo pomocí interaktivního pásu miniatur. Kliknutím na vybaný obrázek při prezentaci dojde k jeho zobrazení v režimu celé obrazovky.
+Jako učitel můžete jednotlivé galerie v kurzu přidávat, upravovat nebo mazat. Souhrn všech obrázků v galerii je zobrazen pomocí automaticky generovaných náhledů - miniatur. Kliknutím na náhled zobrazíte vybraný obrázek v prezentačním režimu, celou galerií můžete poté procházet pomocí šipek nebo pomocí interaktivního pásu miniatur. Kliknutím na vybraný obrázek při prezentaci dojde k jeho zobrazení v režimu celé obrazovky.
 
 U každého obrázku v galerii je možné přidávat komentáře, kde uživatelé mohou vyjádřit svoji zpětnou vazbu nebo odpovědět na zadanou otázku. K obrázkům můžete rovněž přidávat přílohy ve formě textových nebo multimediálních souborů.
 
-Galerie umožňuje povolit studentům přidávat vlastní obrázky bez toho, aby měli dostupné nastavení a správu celé galerie. To je vhodné v případech, kdy chcete v rámci kurzu tvořit sdílený studijním materiál s přispěním studentů, v případě pořádání různých fotografických soutěží apod.
+Galerie umožňuje povolit studentům přidávat vlastní obrázky bez toho, aniž by museli mít dostupné nastavení a správu celé galerie. To je vhodné v případech, kdy chcete v rámci kurzu tvořit sdílený studijním materiál s přispěním studentů, v případě pořádání různých fotografických soutěží apod.
 
 Galerii lze např. použít k zobrazení
 <ul>
@@ -86,6 +87,8 @@ $string['savechanges'] = 'Uložit změny';
 $string['saveimages'] = 'Uložit obrázky';
 $string['selectdeselectall'] = 'Vybrat vše / Zrušit výběr';
 $string['selectedimageslabel'] = '<strong>S označenými:&nbsp;</strong>';
+$string['showoriginalimage'] = 'Zobrazit odkazy na původní obrázky';
+$string['showoriginalimage_help'] = 'Pokud povolíte odkazy na původní obrázky, bude se v prezentačním módu galerie u každého obrázku zobrazovat odkaz, který v novém okně otevře původní soubor obrázku v originální velikosti a rozlišení.';
 $string['showthumbnails'] = 'Zobrazit náhledy na titulní straně kurzu';
 $string['showthumbnails_help'] = 'Zda se na titulní straně má zobrazit interaktivní pás s náhledy všech obrázků galerie.';
 $string['source'] = 'Zdroj';

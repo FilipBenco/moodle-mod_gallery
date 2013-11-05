@@ -55,8 +55,17 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $options['batchdelete'] = get_string ('delete','gallery');
             if($widget->candownload)
                 $options['batchdownload'] = get_string ('download','gallery');
-            if(count($options) && count($widget->images))
-                $o .= $this->output->box($this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('id'=>'mod-gallery-select-all')),'mod-gallery-select-deselect-container');
+            if(count($options) && count($widget->images)) {
+                $o .= $this->output->box_start('mod-gallery-select-deselect-container');
+                $o .= $this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('id'=>'mod-gallery-select-all'));
+                $o .= get_string('selectedimageslabel','gallery');
+                $o .= '<select name="gaction" id="mod-gallery-batch-action-select">';
+                foreach($options as $key => $value)
+                    $o .= '<option value="'.$key.'">'.$value.'</option>';
+                $o .= '</select>';
+                $o .= '<input type="submit" name="batchsubmit" value="'.get_string('batchrun','gallery').'" />';
+                $o .= $this->output->box_end();      
+            }
         }
         
         
@@ -104,17 +113,16 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box_end();
         
         if($widget->edit) {
-            if(count($widget->images)) {
-                if(count($options)) {
-                    $o .= $this->output->box_start();
-                    $o .= get_string('selectedimageslabel','gallery');
-                    $o .= '<select name="gaction" id="mod-gallery-batch-action-select">';
-                    foreach($options as $key => $value)
-                        $o .= '<option value="'.$key.'">'.$value.'</option>';
-                    $o .= '</select>';
-                    $o .= '<input type="submit" name="batchsubmit" value="'.get_string('batchrun','gallery').'" />';
-                    $o .= $this->output->box_end();                    
-                }
+            if(count($widget->images) && count($options)) {
+                $o .= $this->output->box_start('mod-gallery-select-deselect-container');
+                $o .= $this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('id'=>'mod-gallery-select-all'));
+                $o .= get_string('selectedimageslabel','gallery');
+                $o .= '<select name="gaction" id="mod-gallery-batch-action-select">';
+                foreach($options as $key => $value)
+                    $o .= '<option value="'.$key.'">'.$value.'</option>';
+                $o .= '</select>';
+                $o .= '<input type="submit" name="batchsubmit" value="'.get_string('batchrun','gallery').'" />';
+                $o .= $this->output->box_end();                    
             }
             $o .= '</form">';
         }

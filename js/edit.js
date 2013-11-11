@@ -98,7 +98,7 @@ M.mod_gallery.init = function(Y, cfg) {
 
     });
     
-    M.mod_gallery.Y.one('#mod-gallery-select-all').on('click',function(e) {
+    M.mod_gallery.Y.all('.mod-gallery-select-all').on('click',function(e) {
         e.preventDefault();
         if(M.mod_gallery.selected) {
             M.mod_gallery.Y.all('.mod-gallery-batch-checkbox').set('checked',false);

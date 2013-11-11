@@ -57,7 +57,8 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $options['batchdownload'] = get_string ('download','gallery');
             if(count($options) && count($widget->images)) {
                 $o .= $this->output->box_start('mod-gallery-select-deselect-container');
-                $o .= $this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('id'=>'mod-gallery-select-all'));
+                $o .= $this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('class'=>'mod-gallery-select-all'));
+                $o .= ' ';
                 $o .= get_string('selectedimageslabel','gallery');
                 $o .= '<select name="gaction" id="mod-gallery-batch-action-select">';
                 foreach($options as $key => $value)
@@ -115,7 +116,8 @@ class mod_gallery_renderer extends plugin_renderer_base {
         if($widget->edit) {
             if(count($widget->images) && count($options)) {
                 $o .= $this->output->box_start('mod-gallery-select-deselect-container');
-                $o .= $this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('id'=>'mod-gallery-select-all'));
+                $o .= $this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('class'=>'mod-gallery-select-all'));
+                $o .= ' ';
                 $o .= get_string('selectedimageslabel','gallery');
                 $o .= '<select name="gaction" id="mod-gallery-batch-action-select">';
                 foreach($options as $key => $value)

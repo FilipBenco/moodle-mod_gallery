@@ -141,6 +141,19 @@ class mod_gallery_renderer extends plugin_renderer_base {
         
         $o .= $this->output->heading($img->image->data()->name, '3','','mod-gallery-image-name');
         
+        $o .= $this->output->box_start('','mod-gallery-image-source');
+        $o .= $this->output->action_link('#', $this->output->pix_icon('author', get_string('author','gallery'),'mod_gallery'),'mod-gallery-source-ico');
+        if($img->image->data()->sourcetype == GALLERY_IMAGE_SOURCE_OWN) {
+            $o .= '<span style="display:none;"> ';
+            $urlparams = array('id'=>$img->user->id);
+            $o .= $this->output->action_link(new moodle_url('/user/profile.php',$urlparams), fullname($img->user));
+            $o .= '</span>';            
+        }
+        if($img->image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
+            $o .= '<span style="display:none;"> '.$img->image->data()->sourcetext.'</span>';
+        }
+        $o .= $this->output->box_end();
+        
         $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');
         if($img->edit) {
             if($img->canedit || ($img->caneditown && $img->image->data()->user == $img->currentuser)) {
@@ -205,18 +218,6 @@ class mod_gallery_renderer extends plugin_renderer_base {
         
         if($img->showoriginalimage)
             $o .= $this->output->box($this->output->action_link($img->image->image(), get_string('downloadoriginalimage','gallery'),null,array('target'=>'_blank')),'','mod-gallery-image-preview-download');
-        
-        $o .= $this->output->box_start('','mod-gallery-image-source');
-        if($img->image->data()->sourcetype == GALLERY_IMAGE_SOURCE_OWN) {
-            $urlparams = array('id'=>$img->user->id);
-            $o .= '<strong>'.get_string('author','gallery') . ':</strong> ';
-            $o .= $this->output->action_link(new moodle_url('/user/profile.php',$urlparams), fullname($img->user));
-        }
-        if($img->image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
-            $o .= '<strong>'.get_string('source','gallery') . ':</strong> ';
-            $o .= $img->image->data()->sourcetext;
-        }
-        $o .= $this->output->box_end();
         
         $o .= $this->output->box(format_text($img->image->data()->description,$img->image->data()->descriptionformat),null,'mod-gallery-image-desc');
 

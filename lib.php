@@ -60,6 +60,7 @@ function gallery_update_instance(stdClass $data, mod_gallery_mod_form $form = nu
 
     $old_data = $DB->get_record('gallery',array('id'=>$data->id));
     if($old_data->previewheight != $data->previewheight) {
+        require_once($CFG->dirroot.'/mod/gallery/locallib.php');
         $cm = get_coursemodule_from_instance('gallery', $data->id);
         $context = context_module::instance($cm->id);
         $fs = get_file_storage();

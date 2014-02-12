@@ -178,14 +178,14 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box_start('mod-gallery-image-preview');
 
         if($img->image->data()->ordering != 1)
-            $o .= $this->output->pix_icon('prev', get_string('previousimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-previous','onclick'=>'return showImagePrev()'));
+            $o .= $this->output->pix_icon('prev', get_string('previousimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-previous', 'style'=>'top:'.($img->previewheight/2-23).'px','onclick'=>'return showImagePrev()'));
         else
-            $o .= $this->output->pix_icon('prev', get_string('previousimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-previous','onclick'=>'return showImagePrev()','style'=>'display:none;'));
+            $o .= $this->output->pix_icon('prev', get_string('previousimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-previous', 'style'=>'top:'.($img->previewheight/2-23).'px;display:none;','onclick'=>'return showImagePrev()'));
         
         if($img->image->data()->ordering == count($img->thumbnails))
-            $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-next','onclick'=>'return showImageNext()','style'=>'display:none;'));
+            $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-next', 'style'=>'top:'.($img->previewheight/2-23).'px;display:none;','onclick'=>'return showImageNext()'));
         else
-            $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-next','onclick'=>'return showImageNext()'));
+            $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-next', 'style'=>'top:'.($img->previewheight/2-23).'px','onclick'=>'return showImageNext()'));
         
         $o .= $this->output->box_start();
         $o .= '<div style="height:'.$img->previewheight.'px;">';

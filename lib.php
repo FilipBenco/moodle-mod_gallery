@@ -64,7 +64,7 @@ function gallery_update_instance(stdClass $data, mod_gallery_mod_form $form = nu
         $cm = get_coursemodule_from_instance('gallery', $data->id);
         $context = context_module::instance($cm->id);
         $fs = get_file_storage();
-        $fs->delete_area_files($context->id, 'mod_gallery', GALLERY_IMAGE_PREVIEWS_FILEAREA, $data->id);
+        $fs->delete_area_files($context->id, 'mod_gallery', GALLERY_IMAGE_PREVIEWS_FILEAREA);
     }
     $DB->update_record('gallery', $data);
 

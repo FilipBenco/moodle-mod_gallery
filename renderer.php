@@ -188,12 +188,12 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-next', 'style'=>'top:'.($img->previewheight/2-23).'px','onclick'=>'return showImageNext()'));
         
         $o .= $this->output->box_start();
-        $o .= '<div style="height:'.$img->previewheight.'px;">';
+        $o .= '<div style="height:'.$img->previewheight.'px;"><span class="mod-gallery-vertical-helper"></span>';
         foreach($img->thumbnails as $thumb) {
             if($thumb->id() == $img->image->id()) 
-                $o .= '<a href="'.$thumb->image().'" data-lightbox="gallery" title="'.$thumb->data()->name.'" id="mod-gallery-image-perview-a-'.$thumb->id().'" >';
+                $o .= '<a href="'.$thumb->image().'" data-lightbox="gallery" title="'.$thumb->data()->name.'" style="vertical-align: middle;"id="mod-gallery-image-perview-a-'.$thumb->id().'" >';
             else 
-                $o .= '<a href="'.$thumb->image().'" data-lightbox="gallery" title="'.$thumb->data()->name.'" style="display:none;" id="mod-gallery-image-perview-a-'.$thumb->id().'" >';
+                $o .= '<a href="'.$thumb->image().'" data-lightbox="gallery" title="'.$thumb->data()->name.'" style="display:none;vertical-align: middle;" id="mod-gallery-image-perview-a-'.$thumb->id().'" >';
                 
             $o .= '<img src="'.$thumb->preview().'" class="mod-gallery-image-preview-img"/>';  
             $o .= '</a>';

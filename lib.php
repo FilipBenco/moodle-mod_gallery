@@ -51,7 +51,7 @@ function gallery_add_instance(stdClass $data, mod_gallery_mod_form $form = null)
  * @return bool true
  */
 function gallery_update_instance(stdClass $data, mod_gallery_mod_form $form = null) {
-    global $DB;
+    global $DB, $CFG;
 
     $data->timemodified = time();
     $data->id = $data->instance;

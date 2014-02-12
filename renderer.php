@@ -206,10 +206,10 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box_start('mod-gallery-images-side');
                 
         foreach($img->thumbnails as $thumb) {
-            $thumb = '<img src="'.$thumb->thumbnail().'" />';
+            $t = '<img src="'.$thumb->thumbnail().'" />';
             if($img->showthumbstitles)
-                $thumb .= '<div class="mod-gallery-thumb-title">'.$thumb->data()->name.'</div>';
-            $o .= $this->output->action_link('#', $thumb,null,array('onclick'=>'return showImage('.$thumb->id().')','data-id'=>$thumb->id(),'data-preview'=>$thumb->preview(),'id'=>'mod-gallery-thumb-'.$thumb->id()));
+                $t .= '<div class="mod-gallery-thumb-title">'.$thumb->data()->name.'</div>';
+            $o .= $this->output->action_link('#', $t,null,array('onclick'=>'return showImage('.$thumb->id().')','data-id'=>$thumb->id(),'data-preview'=>$thumb->preview(),'id'=>'mod-gallery-thumb-'.$thumb->id()));
             $o .= $this->output->box('', 'mod-gallery-hidden-description', 'mod-gallery-image-desc-'.$thumb->id());
             $o .= $this->output->box('', 'mod-gallery-hidden-name', 'mod-gallery-image-name-'.$thumb->id());
             $o .= $this->output->box('', 'mod-gallery-hidden-source', 'mod-gallery-image-source-'.$thumb->id());

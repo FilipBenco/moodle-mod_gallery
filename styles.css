@@ -111,6 +111,7 @@
     text-align: center;
     padding: 2px;
     border: 1px solid #CCC;
+    position: relative;
 }
 
 .mod-gallery-images-side a:hover {
@@ -186,6 +187,15 @@
 
 .mod-gallery-select-deselect-container {
     margin: 4px 0 0 0;
+}
+
+.mod-gallery-thumb-title {
+    position: absolute;
+    bottom: 0px;
+    right:0px;
+    left:0px;
+    color: white;
+    background-color: rgba (0, 0, 0, 0.4);
 }
 
 /******************************/

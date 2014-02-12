@@ -166,10 +166,10 @@ function gallery_load_images($gallery, $context, $iid = false) {
     foreach($images_db as $idb) {
         if($iid && $idb->id == $iid) {
             $images[$idb->id] = new gallery_image($idb, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), '/',
-                                       $idb->id.'.'.$idb->type),$context,true,true);
+                                       $idb->id.'.'.$idb->type),$context,true,true,$gallery->previewheight());
         } else {
             $images[$idb->id] = new gallery_image($idb, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), '/',
-                                       $idb->id.'.'.$idb->type),$context);   
+                                       $idb->id.'.'.$idb->type),$context,true,false,$gallery->previewheight());   
         }
     }
     return $images;

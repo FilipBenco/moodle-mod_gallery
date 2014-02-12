@@ -259,7 +259,7 @@ switch($action) {
                     has_capability('mod/gallery:editallimages', $context), has_capability('mod/gallery:editownimages', $context),
                     has_capability('mod/gallery:deleteallimages', $context), has_capability('mod/gallery:deleteownimages', $context)));
         else
-            echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context, $gallery->showoriginalimage()));
+            echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context, $gallery->showoriginalimage(), $gallery->showthumbstitles()));
         break;
     case 'addimages':
         echo $renderer->render(new gallery_header($gallery->name(),$context));

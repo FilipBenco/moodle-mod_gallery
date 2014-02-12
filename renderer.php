@@ -151,7 +151,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
         if($img->image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
             $o .= '<span style="display:none;"> '.$img->image->data()->sourcetext.'</span>';
         }
-        $o .= $this->output->pix_icon('author', get_string('author','gallery'), 'mod_gallery',array('onclick'=>'return toogleSource()'));
+        $o .= ' '.$this->output->pix_icon('author', get_string('author','gallery'), 'mod_gallery',array('onclick'=>'return toogleSource()'));
         $o .= $this->output->box_end();
         
         $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');

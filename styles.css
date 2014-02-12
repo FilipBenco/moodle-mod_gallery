@@ -15,6 +15,7 @@
    margin: 3px;
    border: 1px solid #CCC;
    display: block;
+   position:relative;
 }
 
 .mod-gallery-image-thumb-a-edit {
@@ -26,6 +27,7 @@
     margin: 0;
     border: 1px solid #CCC;
     display: block;
+    position:relative;
 }
 
 .mod-gallery-hidden-comments, .mod-gallery-hidden-description, .mod-gallery-hidden-name, .mod-gallery-hidden-source, .mod-gallery-hidden-attachments{

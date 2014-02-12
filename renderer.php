@@ -82,7 +82,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
         foreach($widget->images as $image) {
             $i = '<img src="'.$image->thumbnail().'" style="margin-top:'.floor((150-$image->t_height())/2).'px;"/>'; 
             if($widget->gallery->showthumbstitles())
-                $i .= '<div class="mod-gallery-thumb-title">'.$thumb->data()->name.'</div>';
+                $i .= '<div class="mod-gallery-thumb-title">'.$image->data()->name.'</div>';
             $urlparams = array('id' => $widget->coursemodule->id, 'gaction' => 'image', 'image' => $image->id());
             
             if($widget->edit) {

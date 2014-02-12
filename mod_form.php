@@ -27,6 +27,9 @@ class mod_gallery_mod_form extends moodleform_mod {
 
         $this->add_intro_editor(true, get_string('description', 'gallery'));
 
+        $mform->addElement('select', 'previewheight', get_string('previewheight', 'gallery'), array(400=>'400px',800=>'800px',1200=>'1200px'));
+        $mform->addHelpButton('previewheight', 'previewheight', 'gallery');
+        
         $mform->addElement('advcheckbox','showthumbstitles', get_string('showthumbstitles','gallery'));
         $mform->addHelpButton('showthumbstitles', 'showthumbstitles', 'gallery');
         

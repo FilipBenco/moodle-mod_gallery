@@ -35,6 +35,10 @@ class gallery {
         return $this->data->showdescription;
     }
     
+    public function previewheight() {
+        return $this->data->previewheight;
+    }
+    
     public function showthumbnails() {
         return $this->data->showthumbnails;
     }

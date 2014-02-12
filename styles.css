@@ -89,7 +89,6 @@
 .mod-gallery-image-preview-table {
     width: 100%;
     display: table;
-    height: 400px;
 }
 
 .mod-gallery-image-preview-table-cell {
@@ -101,7 +100,6 @@
     float:right;
     width: 175px;
     border-left: 1px solid #CCC;
-    height: 400px;
     padding: 4px 5px;
     overflow-x: hidden;
     overflow-y: scroll;

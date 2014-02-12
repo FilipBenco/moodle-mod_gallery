@@ -5,8 +5,7 @@ defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 define('THUMBNAIL_WIDTH',150);
 define('THUMBNAIL_HEIGHT',150);
 
-define('PREVIEW_WIDTH',1024);
-define('PREVIEW_HEIGHT',400);
+define('PREVIEW_WIDTH',1200);
 
 define('GALLERY_IMAGE_SOURCE_OWN',1);
 define('GALLERY_IMAGE_SOURCE_TEXT',2);
@@ -37,11 +36,14 @@ class gallery_image {
     
     protected $attachments;
     
-    public function __construct($data, $file, $context, $prepare = true, $attachments = false) {
+    protected $max_height;
+    
+    public function __construct($data, $file, $context, $prepare = true, $attachments = false, $max_height = 400) {
        
         $this->data = $data;
         $this->context = $context;
         $this->image = $file;
+        $this->max_height = $max_height;
         
         if($prepare) {
             $image_info = $this->image->get_imageinfo();
@@ -266,7 +268,7 @@ class gallery_image {
             'filename' => $this->data->id.'.png');
 
         ob_start();
-        imagepng($this->get_image_resized(PREVIEW_WIDTH, PREVIEW_HEIGHT));
+        imagepng($this->get_image_resized(PREVIEW_WIDTH, $this->max_height));
         $preview = ob_get_clean();
 
         $this->delete_preview();

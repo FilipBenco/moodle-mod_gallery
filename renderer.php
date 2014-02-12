@@ -188,7 +188,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-next','onclick'=>'return showImageNext()'));
         
         $o .= $this->output->box_start();
-        $o .= $this->output->box_start('mod-gallery-image-preview-table');
+        $o .= '<div class="mod-gallery-image-preview-table" style="height:'.$img->previewheight.'px;">';
         $o .= $this->output->box_start('mod-gallery-image-preview-table-cell');
         foreach($img->thumbnails as $thumb) {
             if($thumb->id() == $img->image->id()) 
@@ -200,12 +200,12 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $o .= '</a>';
         }
         $o .= $this->output->box_end();
-        $o .= $this->output->box_end();
+        $o .= '</div>';
         $o .= $this->output->box_end();
               
         $o .= $this->output->box_end();
         
-        $o .= $this->output->box_start('mod-gallery-images-side');
+        $o .= '<div class="mod-gallery-images-side" style="height:'.$img->previewheight.'px">';
                 
         foreach($img->thumbnails as $thumb) {
             $t = '<img src="'.$thumb->thumbnail().'" />';
@@ -217,7 +217,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $o .= $this->output->box('', 'mod-gallery-hidden-source', 'mod-gallery-image-source-'.$thumb->id());
             $o .= $this->output->box('', 'mod-gallery-hidden-attachments', 'mod-gallery-image-attachments-'.$thumb->id());
         }
-        $o .= $this->output->box_end();
+        $o .= '</div>';
         $o .= $this->output->box('','mod-gallery-clear');
         $o .= $this->output->box_end();
         

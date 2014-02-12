@@ -58,6 +58,13 @@ function gallery_update_instance(stdClass $data, mod_gallery_mod_form $form = nu
     if(!isset($data->showdescription))
         $data->showdescription = 0;
 
+    $old_data = $DB->get_record('gallery',array('id'=>$data->id));
+    if($old_data->previewheight != $data->previewheight) {
+        $cm = get_coursemodule_from_instance('gallery', $data->id);
+        $context = context_module::instance($cm->id);
+        $fs = get_file_storage();
+        $fs->delete_area_files($context->id, 'mod_gallery', GALLERY_IMAGE_PREVIEWS_FILEAREA, $data->id);
+    }
     $DB->update_record('gallery', $data);
 
     return true;

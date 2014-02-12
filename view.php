@@ -255,11 +255,11 @@ switch($action) {
         $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id,'currentImage'=>$iid,'showOriginal'=>(bool)$gallery->showoriginalimage(),'canEdit'=>$canedit,'canDelete'=>$candelete)), false, $module);
         echo $renderer->render(new gallery_header($gallery->name(),$context));
         if($USER->editing)
-            echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context, $gallery->showoriginalimage(), $gallery->showthumbstitles(),$USER->editing,
+            echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context, $gallery->showoriginalimage(), $gallery->showthumbstitles(), $gallery->previewheight(),$USER->editing,
                     has_capability('mod/gallery:editallimages', $context), has_capability('mod/gallery:editownimages', $context),
                     has_capability('mod/gallery:deleteallimages', $context), has_capability('mod/gallery:deleteownimages', $context)));
         else
-            echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context, $gallery->showoriginalimage(), $gallery->showthumbstitles()));
+            echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context, $gallery->showoriginalimage(), $gallery->showthumbstitles(), $gallery->previewheight()));
         break;
     case 'addimages':
         echo $renderer->render(new gallery_header($gallery->name(),$context));

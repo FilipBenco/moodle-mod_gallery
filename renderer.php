@@ -188,8 +188,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-next','onclick'=>'return showImageNext()'));
         
         $o .= $this->output->box_start();
-        $o .= '<div class="mod-gallery-image-preview-table" style="height:'.$img->previewheight.'px;">';
-        $o .= $this->output->box_start('mod-gallery-image-preview-table-cell');
+        $o .= ' style="height:'.$img->previewheight.'px;">';
         foreach($img->thumbnails as $thumb) {
             if($thumb->id() == $img->image->id()) 
                 $o .= '<a href="'.$thumb->image().'" data-lightbox="gallery" title="'.$thumb->data()->name.'" id="mod-gallery-image-perview-a-'.$thumb->id().'" >';
@@ -199,8 +198,6 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $o .= '<img src="'.$thumb->preview().'" class="mod-gallery-image-preview-img"/>';  
             $o .= '</a>';
         }
-        $o .= $this->output->box_end();
-        $o .= '</div>';
         $o .= $this->output->box_end();
               
         $o .= $this->output->box_end();

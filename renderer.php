@@ -188,7 +188,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $o .= $this->output->pix_icon('next', get_string('nextimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-next','onclick'=>'return showImageNext()'));
         
         $o .= $this->output->box_start();
-        $o .= ' style="height:'.$img->previewheight.'px;">';
+        $o .= '<div style="height:'.$img->previewheight.'px;">';
         foreach($img->thumbnails as $thumb) {
             if($thumb->id() == $img->image->id()) 
                 $o .= '<a href="'.$thumb->image().'" data-lightbox="gallery" title="'.$thumb->data()->name.'" id="mod-gallery-image-perview-a-'.$thumb->id().'" >';

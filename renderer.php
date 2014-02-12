@@ -198,6 +198,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $o .= '<img src="'.$thumb->preview().'" class="mod-gallery-image-preview-img"/>';  
             $o .= '</a>';
         }
+        $o .= '</div>';
         $o .= $this->output->box_end();
               
         $o .= $this->output->box_end();

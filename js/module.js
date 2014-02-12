@@ -9,8 +9,12 @@ M.mod_gallery.init = function(Y, cfg) {
     this.perm[cfg.currentImage] = new Array();
     this.perm[cfg.currentImage][0] = cfg.canEdit;
     this.perm[cfg.currentImage][1] = cfg.canDelete;
-    this.Y.one('#mod-gallery-image-source span').toggleView();
 };
+
+function toogleSource() {
+    this.Y.one('#mod-gallery-image-source span').toggleView();
+    return false;
+}
 
 M.mod_gallery.showImage = function(imageId) {
     M.mod_gallery.Y.one('#mod-gallery-image-perview-a-'+M.mod_gallery.currentImage).hide();

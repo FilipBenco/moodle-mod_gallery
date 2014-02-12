@@ -142,7 +142,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->heading($img->image->data()->name, '3','','mod-gallery-image-name');
         
         $o .= $this->output->box_start('','mod-gallery-image-source');
-        $o .= $this->output->action_link('#', $this->output->pix_icon('author', get_string('author','gallery'),'mod_gallery'),'mod-gallery-source-ico');
+        $o .= $this->output->pix_icon('author', get_string('author','gallery'), 'mod_gallery',array('onclick'=>'return toogleSource()'));
         if($img->image->data()->sourcetype == GALLERY_IMAGE_SOURCE_OWN) {
             $o .= '<span style="display:none;"> ';
             $urlparams = array('id'=>$img->user->id);

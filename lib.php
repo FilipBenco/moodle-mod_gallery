@@ -61,10 +61,12 @@ function gallery_update_instance(stdClass $data, mod_gallery_mod_form $form = nu
     $old_data = $DB->get_record('gallery',array('id'=>$data->id));
     if($old_data->previewheight != $data->previewheight) {
         require_once($CFG->dirroot.'/mod/gallery/locallib.php');
+        $images = $DB->get_records('gallery_images',array('gallery'=>$data->id));
         $cm = get_coursemodule_from_instance('gallery', $data->id);
         $context = context_module::instance($cm->id);
         $fs = get_file_storage();
-        $fs->delete_area_files($context->id, 'mod_gallery', GALLERY_IMAGE_PREVIEWS_FILEAREA);
+        foreach($images as $im)
+            $fs->delete_area_files($context->id, 'mod_gallery', GALLERY_IMAGE_PREVIEWS_FILEAREA, $im->data()->id);
     }
     $DB->update_record('gallery', $data);
 

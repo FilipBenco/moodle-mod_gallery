@@ -36,6 +36,7 @@ $string['description'] = 'Description:';
 $string['download'] = 'Download';
 $string['downloadphotos'] = 'Download all images';
 $string['downloadoriginalimage'] = 'Display original image';
+$string['drafts'] = 'Drafts filearea';
 $string['edit'] = 'Edit';
 $string['editimage'] = 'Edit image';
 $string['editimages'] = 'Edit images';

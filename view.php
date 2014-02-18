@@ -252,7 +252,7 @@ switch($action) {
         $images = gallery_load_images($gallery, $context, $iid);
         $canedit = has_capability('mod/gallery:editallimages', $context) || (has_capability('mod/gallery:editownimages', $context) && $USER->id == $images[$iid]->data()->user);
         $candelete = has_capability('mod/gallery:deleteallimages', $context) || (has_capability('mod/gallery:deleteownimages', $context) && $USER->id == $images[$iid]->data()->user);
-        $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id,'currentImage'=>$iid,'showOriginal'=>(bool)$gallery->showoriginalimage(),'canEdit'=>$canedit,'canDelete'=>$candelete)), false, $module);
+        $PAGE->requires->js_init_call('M.mod_gallery.init', array(array('context'=>$context->id,'currentImage'=>$iid,'showOriginal'=>(bool)$gallery->showoriginalimage(),'maxHeight'=>$gallery->previewheight(),'canEdit'=>$canedit,'canDelete'=>$candelete)), false, $module);
         echo $renderer->render(new gallery_header($gallery->name(),$context));
         if($USER->editing)
             echo $renderer->render(new gallery_image_preview($images[$iid], $images, $cm, $context, $gallery->showoriginalimage(), $gallery->showthumbstitles(), $gallery->previewheight(),$USER->editing,

@@ -5,10 +5,12 @@ M.mod_gallery.init = function(Y, cfg) {
     this.context = cfg.context;
     this.currentImage = cfg.currentImage;
     this.showOriginal = cfg.showOriginal;
+	this.maxHeight = cfg.maxHeight;
     this.perm = new Array();
     this.perm[cfg.currentImage] = new Array();
     this.perm[cfg.currentImage][0] = cfg.canEdit;
     this.perm[cfg.currentImage][1] = cfg.canDelete;
+	this.Y.on('windowresize',this.refreshImageMargin(this.currentImage));
 };
 
 function toogleSource() {
@@ -16,9 +18,15 @@ function toogleSource() {
     return false;
 }
 
+M.mod_gallery.refreshImageMargin = function(imageId) {
+	var space = M.mod_gallery.maxHeight - M.mod_gallery.Y.one('#mod-gallery-image-perview-a-'+imageId+' img').get('height');
+	M.mod_gallery.Y.one('#mod-gallery-image-perview-a-'+imageId).set('marginTop',round(space/2));
+}
+
 M.mod_gallery.showImage = function(imageId) {
     M.mod_gallery.Y.one('#mod-gallery-image-perview-a-'+M.mod_gallery.currentImage).hide();
     M.mod_gallery.Y.one('#mod-gallery-image-source span').hide();
+	M.mod_gallery.refreshImageMargin(imageId);
     M.mod_gallery.Y.one('#mod-gallery-image-perview-a-'+imageId).show();
    if(M.mod_gallery.showOriginal)
        M.mod_gallery.Y.one('#mod-gallery-image-preview-download > a').setAttribute('href',M.mod_gallery.Y.one('#mod-gallery-image-perview-a-'+imageId).getAttribute('href'));

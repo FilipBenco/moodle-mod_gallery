@@ -22,6 +22,8 @@ function gallery_supports($feature) {
             return true;
         case FEATURE_BACKUP_MOODLE2:          
             return true;
+        case FEATURE_GROUPMEMBERSONLY:        
+            return true;
         default: 
             return null;
     }

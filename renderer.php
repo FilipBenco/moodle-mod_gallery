@@ -191,9 +191,9 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= '<div style="height:'.$img->previewheight.'px;position:relative;">';
         foreach($img->thumbnails as $thumb) {
             if($thumb->id() == $img->image->id()) 
-                $o .= '<a href="'.$thumb->image().'" data-lightbox="gallery" title="'.$thumb->data()->name.'" class="mod-gallery-img-preview-a" style="height:'.$img->image->p_height().'px;" id="mod-gallery-image-perview-a-'.$thumb->id().'" >';
+                $o .= '<a href="'.$thumb->image().'" data-lightbox="gallery" title="'.$thumb->data()->name.'" class="mod-gallery-img-preview-a" id="mod-gallery-image-perview-a-'.$thumb->id().'" >';
             else 
-                $o .= '<a href="'.$thumb->image().'" data-lightbox="gallery" title="'.$thumb->data()->name.'" class="mod-gallery-img-preview-a" style="display:none;height:'.$img->image->p_height().'px;" id="mod-gallery-image-perview-a-'.$thumb->id().'" >';
+                $o .= '<a href="'.$thumb->image().'" data-lightbox="gallery" title="'.$thumb->data()->name.'" class="mod-gallery-img-preview-a" style="display:none;" id="mod-gallery-image-perview-a-'.$thumb->id().'" >';
                 
             $o .= '<img src="'.$thumb->preview().'" class="mod-gallery-image-preview-img"/>';  
             $o .= '</a>';

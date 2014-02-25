@@ -123,7 +123,7 @@ function gallery_process_image_drats_save($data, $context, $gallery, $files) {
         );
         if (!$fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $gallery->id(), '/', $filename)) {
             $file = $fs->create_file_from_storedfile($fileinfo, $file->stored_file());
-            $image = new gallery_image($image_data, $file, $context);
+            $image = new gallery_image($image_data, $file, $context, true, false, $gallery->previewheight());
             if($gallery->imageattachments()) {
                 $attachmentsStr = 'attachments-'.$uId;
                 file_save_draft_area_files($data->$attachmentsStr, $context->id, 'mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, $image->id(), array('subdirs' => 0)); 
@@ -175,7 +175,7 @@ function gallery_load_images($gallery, $context, $iid = false) {
     return $images;
 }
 
-function gallery_load_image($context,$image_db) {
+function gallery_load_image($context,$image_db, $previewheight) {
     global $CFG;
     require_once($CFG->dirroot.'/mod/gallery/image.class.php');
     require_once($CFG->dirroot.'/mod/gallery/imagemanager.class.php');
@@ -183,7 +183,7 @@ function gallery_load_image($context,$image_db) {
     $fs = get_file_storage();
     
     return new gallery_image($image_db, $fs->get_file($context->id, 'mod_gallery', GALLERY_IMAGES_FILEAREA, $image_db->gallery, '/',
-                                       $image_db->id.'.'.$image_db->type),$context,true,true);
+                                       $image_db->id.'.'.$image_db->type),$context,true,true,$previewheight);
 }
 
 function gallery_process_rotate_image($direction,$image) {

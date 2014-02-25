@@ -211,7 +211,7 @@ if($action == 'downloadall') {
 }
 
 if($USER->editing) 
-    $PAGE->cacheable = false;
+    $PAGE->set_cacheable(false);
 
 switch($action) {
     case 'gallery':

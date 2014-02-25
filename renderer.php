@@ -144,16 +144,17 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->heading($img->image->data()->name, '3','','mod-gallery-image-name');
         
         $o .= $this->output->box_start('','mod-gallery-image-source');
-        $o .= $this->output->pix_icon('author', get_string('source','gallery'), 'mod_gallery',array('onclick'=>'return toogleSource()')).' ';
+        $o .= $this->output->pix_icon('author', get_string('source','gallery'), 'mod_gallery',array('onclick'=>'return toogleSource()','style'=>'cursor:pointer;')).' ';
+        $o .= '<span style="display:none;"> ';
+        $o .= '<strong>'.get_string('source','gallery').'</strong>';
+        
         if($img->image->data()->sourcetype == GALLERY_IMAGE_SOURCE_OWN) {
-            $o .= '<span style="display:none;"> ';
             $urlparams = array('id'=>$img->user->id);
             $o .= $this->output->action_link(new moodle_url('/user/profile.php',$urlparams), fullname($img->user));
-            $o .= '</span>';            
-        }
-        if($img->image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
-            $o .= '<span style="display:none;"> '.$img->image->data()->sourcetext.'</span>';
-        }
+        } elseif($img->image->data()->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) 
+            $o .= $img->image->data()->sourcetext;
+        
+        $o .= '</span>'; 
         $o .= $this->output->box_end();
         
         $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');

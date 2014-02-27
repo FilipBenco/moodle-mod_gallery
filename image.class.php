@@ -196,9 +196,13 @@ class gallery_image {
         $image_info = $this->image->get_imageinfo();
         $this->height = $image_info['height'];
         $this->width = $image_info['width'];
+        $this->preview->delete();
+        unset($this->preview);
         $this->preview = $this->create_preview();
-        $this->thumbnail = $this->create_thumbnail();
         $this->load_preview_info();
+        $this->thumbnail->delete();
+        unset($this->thumbnail);
+        $this->thumbnail = $this->create_thumbnail();
         $this->load_thumbnail_info();
     }
     

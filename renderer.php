@@ -37,6 +37,10 @@ class mod_gallery_renderer extends plugin_renderer_base {
         
         if($widget->edit) {
             $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');
+            
+            $fUrl = new moodle_url('/mod/gallery/view.php',array('id' => $widget->coursemodule->id));
+            $o .= '<form action="'.$fUrl->out().'" method="post" id="mod-gallery-edit-thumb-form">';
+            
             $urlparams = array('id' => $widget->coursemodule->id);
 
             if($widget->canadd) {
@@ -67,13 +71,6 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $o .= '<input type="submit" name="batchsubmit" value="'.get_string('batchrun','gallery').'" />';
                 $o .= $this->output->box_end();      
             }
-        }
-        
-        
-        if($widget->edit) {
-            $fUrl = new moodle_url('/mod/gallery/view.php',array('id' => $widget->coursemodule->id));
-            $o .= '<form action="'.$fUrl->out().'" method="post" id="mod-gallery-edit-thumb-form">';
-            
         }
         
         $o .= $this->output->box_start('generalbox','mod-gallery-thumb-container');

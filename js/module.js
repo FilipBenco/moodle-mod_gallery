@@ -11,6 +11,7 @@ M.mod_gallery.init = function(Y, cfg) {
     this.perm[cfg.currentImage][0] = cfg.canEdit;
     this.perm[cfg.currentImage][1] = cfg.canDelete;
 	this.Y.on('windowresize',this.refreshImageMargin(this.currentImage));
+    this.refreshImageMargin(this.currentImage)
 };
 
 function toogleSource() {

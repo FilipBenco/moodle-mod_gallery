@@ -36,7 +36,8 @@ class backup_gallery_activity_structure_step extends backup_activity_structure_s
         // Define each element separated.
         $gallery = new backup_nested_element('gallery', array('id'), array(
             'course', 'name', 'intro', 'introformat', 'showdescription', 'previewheight',
-            'showthumbnails', 'showthumbstitles', 'showoriginalimage', 'imageattachments', 'timemodified', 'timecreated'
+            'showthumbnails', 'showthumbstitles', 'showoriginalimage', 'imageattachments', 
+            'completionaddimages', 'completionaddcomments', 'timemodified', 'timecreated'
         ));
 
         $images = new backup_nested_element('images');

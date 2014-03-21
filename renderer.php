@@ -39,7 +39,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
             $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');
             
             $fUrl = new moodle_url('/mod/gallery/view.php',array('id' => $widget->coursemodule->id));
-            $o .= '<form action="'.$fUrl->out().'" method="post" id="mod-gallery-edit-thumb-form">';
+            $o .= '<form action="'.$fUrl->out().'" method="post" class="mod-gallery-edit-thumb-form">';
             
             $urlparams = array('id' => $widget->coursemodule->id);
 
@@ -143,7 +143,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box_start('','mod-gallery-image-source');
         $o .= $this->output->pix_icon('author', get_string('source','gallery'), 'mod_gallery',array('onclick'=>'return toogleSource()','style'=>'cursor:pointer;')).' ';
         $o .= '<span style="display:none;"> ';
-        $o .= '<strong>'.get_string('source','gallery').'</strong>';
+        $o .= '<strong>'.get_string('source','gallery').': </strong>';
         
         if($img->image->data()->sourcetype == GALLERY_IMAGE_SOURCE_OWN) {
             $urlparams = array('id'=>$img->user->id);
@@ -174,7 +174,7 @@ class mod_gallery_renderer extends plugin_renderer_base {
         $o .= $this->output->box_start('mod-gallery-images-div');
         
         $o .= $this->output->box_start('mod-gallery-image-preview');
-
+        
         if($img->image->data()->ordering != 1)
             $o .= $this->output->pix_icon('prev', get_string('previousimage','gallery'), 'mod_gallery',array('id'=>'mod-gallery-image-previous', 'style'=>'top:'.($img->previewheight/2-23).'px','onclick'=>'return showImagePrev()'));
         else

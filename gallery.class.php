@@ -55,6 +55,14 @@ class gallery {
         return $this->data->imageattachments;
     }
     
+    public function completionaddimages() {
+        return $this->data->completionaddimages;
+    }
+    
+    public function completionaddcomments() {
+        return $this->data->completionaddcomments;
+    }
+    
     public function isValid() {
         return !is_null($this->data);
     }

@@ -24,6 +24,10 @@ function gallery_supports($feature) {
             return true;
         case FEATURE_GROUPMEMBERSONLY:        
             return true;
+        case FEATURE_COMPLETION_TRACKS_VIEWS: 
+            return true;
+        case FEATURE_COMPLETION_HAS_RULES: 
+            return true;
         default: 
             return null;
     }
@@ -347,3 +351,37 @@ function gallery_comment_permissions(stdClass $options) {
 
     return array('post' => true, 'view' => true);
 }
+
+/**
+ * Obtains the automatic completion state for this gallery based on any conditions
+ * in gallery settings.
+ *
+ * @param object $course Course
+ * @param object $cm Course-module
+ * @param int $userid User ID
+ * @param bool $type Type of comparison (or/and; can be used as return value if no conditions)
+ * @return bool True if completed, false if not, $type if conditions not set.
+ */
+function gallery_get_completion_state($course,$cm,$userid,$type) {
+    global $CFG, $DB;
+    
+    require_once($CFG->dirroot.'/mod/gallery/gallery.class.php');
+    require_once($CFG->dirroot.'/mod/gallery/locallib.php');
+
+    // Get forum details
+    $gallery = new gallery($cm->instance);
+    $ctx = context_module::instance($cm->id);
+    
+    $completedImages = gallery_get_completion_status_addimages($gallery, $userid);
+    $completedComments = gallery_get_completion_status_addcomments($gallery, $ctx, $userid);
+
+    if(($gallery->completionaddimages() > 0) && ($gallery->completionaddcomments() > 0))
+        return $completedImages && $completedComments;
+    elseif(($gallery->completionaddimages() > 0) && ($gallery->completionaddcomments() == 0))
+        return $completedImages;
+    elseif(($gallery->completionaddimages() == 0) && ($gallery->completionaddcomments() > 0))
+        return $completedComments; 
+    else
+        return $type;
+}
+

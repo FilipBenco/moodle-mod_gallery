@@ -9,6 +9,54 @@ define('GALLERY_IMAGE_PREVIEWS_FILEAREA','gallery_previews');
 define('GALLERY_IMAGE_DRAFTS_FILEAREA','gallery_drafts');
 define('GALLERY_IMAGE_ATTACHMENTS_FILEAREA','gallery_attachments');
 
+function gallery_get_completion_status_addimages(gallery $gallery, $userid = 0) {
+    global $USER, $DB;
+    
+    if($userid == 0)
+        $userid = $USER->id;
+    
+    // If completion option is enabled, evaluate it and return true/false 
+    if($gallery->completionaddimages() > 0) 
+        if($DB->count_records('gallery_images', array('gallery'=>$gallery->id(),'user'=>$userid)) >= $gallery->completionaddimages()) 
+            return true;
+    
+    return false;
+}
+
+function gallery_get_completion_status_addcomments(gallery $gallery, $context, $userid = 0) {
+    global $USER, $DB;
+    
+    if($userid == 0)
+        $userid = $USER->id;
+       
+    if($gallery->completionaddcomments() > 0) 
+        if($DB->count_records('comments', array('userid'=>$userid,'contextid'=>$context->id)) >= $gallery->completionaddcomments())
+            return true;
+        
+    return false;
+}
+
+function gallery_process_completion(gallery $gallery, $context, $course, $cm, $userid = 0) {
+    $completedImages = gallery_get_completion_status_addimages($gallery, $userid);
+    $completedComments = gallery_get_completion_status_addcomments($gallery, $context, $userid);
+
+    $completion=new completion_info($course);
+    if($completion->is_enabled($cm)) {
+        if(($gallery->completionaddimages() > 0) && ($gallery->completionaddcomments() > 0) && $completedImages && $completedComments)
+            $completion->update_state($cm,COMPLETION_COMPLETE);
+        else 
+            $completion->update_state($cm,COMPLETION_INCOMPLETE);
+        if(($gallery->completionaddimages() > 0) && ($gallery->completionaddcomments() == 0) && $completedImages)
+            $completion->update_state($cm,COMPLETION_COMPLETE);
+        else
+            $completion->update_state($cm,COMPLETION_INCOMPLETE);
+        if(($gallery->completionaddimages() == 0) && ($gallery->completionaddcomments() > 0) && $completedComments)
+            $completion->update_state($cm,COMPLETION_COMPLETE);
+        else
+            $completion->update_state($cm,COMPLETION_INCOMPLETE);
+    }
+}
+
 function gallery_process_editing($edit, $context) {
     global $USER;
 

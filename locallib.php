@@ -37,6 +37,10 @@ function gallery_get_completion_status_addcomments(gallery $gallery, $context, $
 }
 
 function gallery_process_completion(gallery $gallery, $context, $course, $cm, $userid = 0) {
+    global $CFG;
+    
+    require_once($CFG->dirroot."/lib/completionlib.php");
+    
     $completedImages = gallery_get_completion_status_addimages($gallery, $userid);
     $completedComments = gallery_get_completion_status_addcomments($gallery, $context, $userid);
 

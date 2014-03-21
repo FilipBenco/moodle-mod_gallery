@@ -55,7 +55,7 @@ class mod_gallery_mod_form extends moodleform_mod {
         $add_images_group[] =& $mform->createElement('text', 'completionaddimages', ' ', array('size'=>3));
         $mform->setType('completionaddimages',PARAM_INT);
         $mform->addGroup($add_images_group, 'completionaddimagesgroup', get_string('completionaddimagesgroup','gallery'), array(' '), false);
-        $mform->setHelpButton('completionaddimagesgroup', 'completionaddimageshelp', 'gallery');
+        $mform->addHelpButton('completionaddimagesgroup', 'completionaddimages', 'gallery');
         $mform->disabledIf('completionimages','completionimagesenabled','notchecked');
         
         $add_comments_group=array();
@@ -63,7 +63,7 @@ class mod_gallery_mod_form extends moodleform_mod {
         $add_comments_group[] =& $mform->createElement('text', 'completionaddcomments', ' ', array('size'=>3));
         $mform->setType('completionaddcomments',PARAM_INT);
         $mform->addGroup($add_comments_group, 'completionaddcommentsgroup', get_string('completionaddcommentsgroup','gallery'), array(' '), false);
-        $mform->setHelpButton('completionaddcommentsgroup', 'completionaddcommentshelp', 'gallery');
+        $mform->addHelpButton('completionaddcommentsgroup', 'completionaddcomments', 'gallery');
         $mform->disabledIf('completioncomments','completioncommentsenabled','notchecked');
 
         return array('completionaddimagesgroup', 'completionaddcommentsgroup');

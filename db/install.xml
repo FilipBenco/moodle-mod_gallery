@@ -17,7 +17,7 @@
         <FIELD NAME="showthumbstitles" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
         <FIELD NAME="showoriginalimage" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
         <FIELD NAME="imageattachments" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
-        <FIELD NAME="completionaddimages" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" /> 
+        <FIELD NAME="completionaddimages" TYPE="int" LENGTH="6" NOTNULL="true" DEFAULT="0" SEQUENCE="false" /> 
         <FIELD NAME="completionaddcomments" TYPE="int" LENGTH="6" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />
         <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" />

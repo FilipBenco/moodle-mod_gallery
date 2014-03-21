@@ -27,8 +27,6 @@ $url = new moodle_url('/mod/gallery/view.php', $urlparams);
 require_login($course, true, $cm);
 $PAGE->set_url($url);
 
-gallery_process_completion($course, $cm, $gallery);
-
 gallery_process_editing($edit, $context);
 
 require_capability('mod/gallery:view', $context);

@@ -103,13 +103,13 @@ class mod_gallery_mod_form extends moodleform_mod {
         $default_values['completionimagesenabled']=
             !empty($default_values['completionaddimages']) ? 1 : 0;
         if(empty($default_values['completionaddimages'])) {
-            $default_values['completionaddimages']=1;
+            $default_values['completionaddimages']=0;
         }
         
         $default_values['completioncommentsnabled']=
             !empty($default_values['completionaddcomments']) ? 1 : 0;
         if(empty($default_values['completionaddcomments'])) {
-            $default_values['completionaddcomments']=1;
+            $default_values['completionaddcomments']=0;
         }
     }
 }

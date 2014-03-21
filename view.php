@@ -15,6 +15,7 @@ $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST)
 $context = context_module::instance($cm->id);
 $gallery = new gallery($cm->instance);
 
+require_once($CFG->dirroot."/lib/completionlib.php");
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
 

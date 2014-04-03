@@ -64,11 +64,11 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $o .= $this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('class'=>'mod-gallery-select-all'));
                 $o .= ' ';
                 $o .= get_string('selectedimageslabel','gallery');
-                $o .= '<select name="gaction" id="mod-gallery-batch-action-select">';
+                $o .= '<select name="gaction1" id="mod-gallery-batch-action-select-1">';
                 foreach($options as $key => $value)
                     $o .= '<option value="'.$key.'">'.$value.'</option>';
                 $o .= '</select>';
-                $o .= '<input type="submit" name="batchsubmit" value="'.get_string('batchrun','gallery').'" />';
+                $o .= '<input type="submit" name="batchsubmit1" value="'.get_string('batchrun','gallery').'" />';
                 $o .= $this->output->box_end();      
             }
         }
@@ -118,11 +118,11 @@ class mod_gallery_renderer extends plugin_renderer_base {
                 $o .= $this->output->action_link('#',get_string('selectdeselectall','gallery'),null,array('class'=>'mod-gallery-select-all'));
                 $o .= ' ';
                 $o .= get_string('selectedimageslabel','gallery');
-                $o .= '<select name="gaction" id="mod-gallery-batch-action-select">';
+                $o .= '<select name="gaction2" id="mod-gallery-batch-action-select-2">';
                 foreach($options as $key => $value)
                     $o .= '<option value="'.$key.'">'.$value.'</option>';
                 $o .= '</select>';
-                $o .= '<input type="submit" name="batchsubmit" value="'.get_string('batchrun','gallery').'" />';
+                $o .= '<input type="submit" name="batchsubmit2" value="'.get_string('batchrun','gallery').'" />';
                 $o .= $this->output->box_end();                    
             }
             $o .= '</form">';

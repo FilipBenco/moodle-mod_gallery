@@ -7,7 +7,11 @@ require_once($CFG->dirroot . '/mod/gallery/locallib.php');
 
 $id = required_param('id', PARAM_INT);
 $edit = optional_param('edit', -1, PARAM_BOOL);
-$action = optional_param('gaction', 'gallery', PARAM_ALPHA);
+$action = null;
+if (isset($_POST['batchsubmit1'])) 
+    $action = optional_param('gaction1', 'gallery', PARAM_ALPHA);
+if (isset($_POST['batchsubmit2'])) 
+    $action = optional_param('gaction2', 'gallery', PARAM_ALPHA);
 $iid = optional_param('image', 0, PARAM_INT);
 
 $cm = get_coursemodule_from_id('gallery', $id, 0, false, MUST_EXIST);

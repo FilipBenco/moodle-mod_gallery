@@ -36,8 +36,6 @@ class mod_gallery_renderer extends plugin_renderer_base {
         
         
         if($widget->edit) {
-            $fUrl = new moodle_url('/mod/gallery/view.php',array('id' => $widget->coursemodule->id));
-            $o .= '<form action="'.$fUrl->out().'" method="post" class="mod-gallery-edit-thumb-form">';
             
             $o .= $this->output->box_start('generalbox', 'mod-gallery-navigation-buttons');
 
@@ -48,7 +46,12 @@ class mod_gallery_renderer extends plugin_renderer_base {
                $o .= $this->output->single_button(new moodle_url('/mod/gallery/view.php', $urlparams), get_string('addimages','gallery'));
             }
             $o .= $this->output->box_end();
+            
             $o .= $this->output->box('','mod-gallery-clear');
+            
+            $fUrl = new moodle_url('/mod/gallery/view.php',array('id' => $widget->coursemodule->id));
+            $o .= '<form action="'.$fUrl->out().'" method="post" class="mod-gallery-edit-thumb-form">';
+            
             $options = array();
             if($widget->canedit) {
                 $options['batchedit'] = get_string('edit','gallery');

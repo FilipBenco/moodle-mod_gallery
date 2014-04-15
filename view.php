@@ -8,6 +8,7 @@ require_once($CFG->dirroot . '/mod/gallery/locallib.php');
 $id = required_param('id', PARAM_INT);
 $edit = optional_param('edit', -1, PARAM_BOOL);
 $action = null;
+$action = optional_param('gaction', 'gallery', PARAM_ALPHA);
 if (isset($_POST['batchsubmit1'])) 
     $action = optional_param('gaction1', 'gallery', PARAM_ALPHA);
 if (isset($_POST['batchsubmit2'])) 

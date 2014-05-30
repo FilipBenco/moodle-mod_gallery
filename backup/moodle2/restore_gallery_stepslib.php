@@ -110,18 +110,12 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
 
         $fs = get_file_storage();
         $files = $fs->get_area_files($this->task->get_contextid(), 'mod_gallery', GALLERY_IMAGES_FILEAREA);
-        $cms = array();
-        $ctxs = array();
 
         foreach($files as $file) {
             if(!$file->is_valid_image())
                 continue;
             
             $gId = $file->get_itemid();
-            //if(!isset($cms[$gId]))
-            //    $cms[$gId] = get_coursemodule_from_instance('gallery', $gId);
-            if(!isset($ctxs[$gId]))
-                $ctxs[$gId] = context_module::instance($cms[$gId]->id);
             $iId = $this->get_mapping('image_id', pathinfo($file->get_filename(), PATHINFO_FILENAME))->newitemid;
             $fileinfo = array(
                 'contextid' => $file->get_contextid(),

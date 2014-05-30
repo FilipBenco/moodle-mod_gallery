@@ -70,7 +70,7 @@ class mod_gallery_mod_form extends moodleform_mod {
     }
     
     function completion_rule_enabled($data) {
-        return ((!empty($data['completionimagesenabled']) && $data['completionaddimages']!=0) &&
+        return ((!empty($data['completionimagesenabled']) && $data['completionaddimages']!=0) ||
                 (!empty($data['completioncommentsenabled']) && $data['completionaddcomments']!=0)
                 );
     }

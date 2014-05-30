@@ -83,7 +83,7 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
         $data->timemodified = $this->apply_date_offset($data->timemodified);
         $data->timecreated = $this->apply_date_offset($data->timecreated);
         if($data->sourcetype == GALLERY_IMAGE_SOURCE_OWN) {
-            if(!$userinfo && !$this->sameCourse) 
+            if((!$userinfo && !$this->sameCourse) || !$this->get_mappingid('user', $data->sourceuser)) 
                 $data->sourcetype == GALLERY_IMAGE_SOURCE_TEXT;
             elseif($userinfo) 
                 $data->sourceuser = $this->get_mappingid ('user', $data->sourceuser);

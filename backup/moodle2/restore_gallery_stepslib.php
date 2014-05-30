@@ -33,7 +33,7 @@ require_once($CFG->dirroot.'/mod/gallery/image.class.php');
 
 class restore_gallery_activity_structure_step extends restore_activity_structure_step {
 
-    protected $imageMapping = array();
+    protected $sameCourse = false;
     
     protected function define_structure() {
 
@@ -44,6 +44,9 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
 
         $image = new restore_path_element('gallery_image', '/activity/gallery/images/image');
         $paths[] = $image;
+        
+        $sourceusers = new restore_path_element('gallery_image_sourceuser', '/activity/gallery/images/image/sourceusers/sourceuser');
+        $paths[] = $sourceusers;
 
 
         // Return the paths wrapped into standard activity structure.
@@ -52,9 +55,9 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
 
     protected function process_gallery($data) {
         global $DB;
-
+       
         if($data->course == $this->get_courseid())
-            $this->isDuplicating = true;
+            $this->sameCourse = true;
         
         $data = (object)$data;
         $oldid = $data->id;
@@ -67,19 +70,37 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
     }
 
     protected function process_gallery_image($data) {
-        global $DB;
+        global $DB, $USER;
 
         $data = (object)$data;
         $oldid = $data->id;
         
+        $userinfo = $this->get_setting_value('userinfo');
+        
+        
         $data->gallery = $this->get_new_parentid('gallery');
-        $data->user = $this->get_mappingid('user', $data->user);
+        $data->user = ($userinfo)?$this->get_mappingid('user', $data->user):$USER->id;
         $data->timemodified = $this->apply_date_offset($data->timemodified);
         $data->timecreated = $this->apply_date_offset($data->timecreated);
-        if($data->sourcetype == GALLERY_IMAGE_SOURCE_OWN)
-            $data->sourceuser = $this->get_mappingid ('user', $data->sourceuser);
+        if($data->sourcetype == GALLERY_IMAGE_SOURCE_OWN) {
+            if(!$userinfo && !$this->sameCourse) 
+                $data->sourcetype == GALLERY_IMAGE_SOURCE_TEXT;
+            elseif($userinfo) 
+                $data->sourceuser = $this->get_mappingid ('user', $data->sourceuser);
+        }
         $newitemid = $DB->insert_record('gallery_images', $data);
         $this->set_mapping('image_id', $oldid, $newitemid);
+    }
+    
+    protected function process_gallery_image_sourceuser($data) {
+        global $DB;
+
+        $data = (object)$data;
+        
+        $image = $DB->get_record($this->get_new_parentid('image'));
+        if($image->sourcetype == GALLERY_IMAGE_SOURCE_TEXT)
+            $image->sourcetext = $data->firstname . " " . $data->lastname;
+        $DB->update_record('gallery_images',$image);
     }
 
     protected function after_execute() {

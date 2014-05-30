@@ -82,6 +82,7 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
     protected function after_execute() {
         $this->add_related_files('mod_gallery', 'intro', null);
         $this->add_related_files('mod_gallery', GALLERY_IMAGES_FILEAREA, 'gallery_id');
+        $this->add_related_files('modl_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, 'image_id');
 
         $fs = get_file_storage();
         $files = $fs->get_area_files($this->task->get_contextid(), 'mod_gallery', GALLERY_IMAGES_FILEAREA);
@@ -106,7 +107,7 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
                 'filepath' => '/',
                 'filename' =>  $iId.'.'.pathinfo($file->get_filename(), PATHINFO_EXTENSION)
             );
-            $nFile = $fs->create_file_from_storedfile($fileinfo, $file);
+            $fs->create_file_from_storedfile($fileinfo, $file);
             $file->delete();
         }
     }

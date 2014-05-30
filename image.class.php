@@ -46,6 +46,9 @@ class gallery_image {
         $this->max_height = $max_height;
         
         if($prepare) {
+            if($file === false) 
+                throw new coding_exception("File not found in filesystem, but has entry in database");
+            
             $image_info = $this->image->get_imageinfo();
 
             $this->height = $image_info['height'];

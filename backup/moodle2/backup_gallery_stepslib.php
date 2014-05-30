@@ -62,7 +62,8 @@ class backup_gallery_activity_structure_step extends backup_activity_structure_s
         $image->annotate_ids('user', 'user');
         $image->annotate_ids('user', 'sourceuser');
         
-        // Return the root element (lightboxgallery), wrapped into standard activity structure.
+        $image->annotate_files('mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, 'id');
+        
         return $this->prepare_activity_structure($gallery);
     }
 }

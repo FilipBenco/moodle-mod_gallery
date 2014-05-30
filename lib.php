@@ -148,6 +148,7 @@ function gallery_get_coursemodule_info($coursemodule) {
         if($gallery->showdescription()) {
             $info->content = format_module_intro('gallery', $gallery->data(), $coursemodule->id, false);
         }
+        
         if($gallery->showthumbnails()) {
             require_once($CFG->dirroot.'/mod/gallery/locallib.php');
             $context = context_module::instance($coursemodule->id);

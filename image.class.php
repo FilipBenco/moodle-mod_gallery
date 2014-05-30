@@ -305,6 +305,7 @@ class gallery_image {
     }
     
     protected function get_image_resized($width, $height) {
+        $this->check_memory_limit();
         $image = imagecreatefromstring($this->image->get_content());
         
         $ratiow = $width / $this->width;
@@ -325,9 +326,25 @@ class gallery_image {
     }
     
     protected function get_image_rotated($angle) {
+        $this->check_memory_limit();
         $image = imagecreatefromstring($this->image->get_content());
         $rotated = imagerotate($image, $angle, 0);
-
         return $rotated;
+    }
+    
+    protected function check_memory_limit() {
+        $memSize = $this->return_bytes(ini_get('memory_limit'));
+        if ($memSize < 256*1048576) 
+            ini_set('memory_limit', '256M');
+        
+    }
+    
+    private function return_bytes ($size_str) {
+        switch (substr ($size_str, -1)) {
+            case 'M': case 'm': return (int)$size_str * 1048576;
+            case 'K': case 'k': return (int)$size_str * 1024;
+            case 'G': case 'g': return (int)$size_str * 1073741824;
+            default: return $size_str;
+        }
     }
 }

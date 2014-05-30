@@ -95,7 +95,7 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
     protected function process_gallery_image_sourceuser($data) {
         global $DB;
 
-        $image = $DB->get_record('gallery_image',array('id' => $this->get_new_parentid('image')));
+        $image = $DB->get_record('gallery_images',array('id' => $this->get_new_parentid('image')));
         if($image->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
             $data = (object)$data;
             $image->sourcetext = $data->firstname . " " . $data->lastname;

@@ -95,12 +95,12 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
     protected function process_gallery_image_sourceuser($data) {
         global $DB;
 
-        $data = (object)$data;
-        
-        $image = $DB->get_record($this->get_new_parentid('image'));
-        if($image->sourcetype == GALLERY_IMAGE_SOURCE_TEXT)
+        $image = $DB->get_record('gallery_image',$this->get_new_parentid('image'));
+        if($image->sourcetype == GALLERY_IMAGE_SOURCE_TEXT) {
+            $data = (object)$data;
             $image->sourcetext = $data->firstname . " " . $data->lastname;
-        $DB->update_record('gallery_images',$image);
+            $DB->update_record('gallery_images',$image);
+        }
     }
 
     protected function after_execute() {

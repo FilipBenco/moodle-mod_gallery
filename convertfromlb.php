@@ -128,7 +128,7 @@ foreach($lbgalleries as $lbgallery) {
             $file = $fs->create_file_from_storedfile($fileinfo, $stored_file);
             $image = new gallery_image($image_data, $file, $galleryctx);
         }
-
+        
     }
     
 }

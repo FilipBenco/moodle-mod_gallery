@@ -53,6 +53,9 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
     protected function process_gallery($data) {
         global $DB;
 
+        if($data->course == $this->get_courseid())
+            $this->isDuplicating = true;
+        
         $data = (object)$data;
         $oldid = $data->id;
         $data->course = $this->get_courseid();
@@ -68,7 +71,7 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
 
         $data = (object)$data;
         $oldid = $data->id;
-
+        
         $data->gallery = $this->get_new_parentid('gallery');
         $data->user = $this->get_mappingid('user', $data->user);
         $data->timemodified = $this->apply_date_offset($data->timemodified);
@@ -82,7 +85,7 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
     protected function after_execute() {
         $this->add_related_files('mod_gallery', 'intro', null);
         $this->add_related_files('mod_gallery', GALLERY_IMAGES_FILEAREA, 'gallery_id');
-        $this->add_related_files('modl_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, 'image_id');
+        $this->add_related_files('mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, 'image_id');
 
         $fs = get_file_storage();
         $files = $fs->get_area_files($this->task->get_contextid(), 'mod_gallery', GALLERY_IMAGES_FILEAREA);
@@ -94,13 +97,13 @@ class restore_gallery_activity_structure_step extends restore_activity_structure
                 continue;
             
             $gId = $file->get_itemid();
-            if(!isset($cms[$gId]))
-                $cms[$gId] = get_coursemodule_from_instance('gallery', $gId);
+            //if(!isset($cms[$gId]))
+            //    $cms[$gId] = get_coursemodule_from_instance('gallery', $gId);
             if(!isset($ctxs[$gId]))
                 $ctxs[$gId] = context_module::instance($cms[$gId]->id);
             $iId = $this->get_mapping('image_id', pathinfo($file->get_filename(), PATHINFO_FILENAME))->newitemid;
             $fileinfo = array(
-                'contextid' => $ctxs[$gId]->id,
+                'contextid' => $file->get_contextid(),
                 'component' => 'mod_gallery',
                 'filearea' =>  GALLERY_IMAGES_FILEAREA,
                 'itemid' => $gId,

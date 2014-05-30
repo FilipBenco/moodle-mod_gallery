@@ -46,23 +46,28 @@ class backup_gallery_activity_structure_step extends backup_activity_structure_s
             'sourcetext','sourceuser','sourcetype','ordering',
             'type','timemodified','timecreated'
         ));
+        
+        $sourceusers = new backup_nested_element('sourceusers');
+        $sourceuser = new backup_nested_element('sourceuser',array('id'), array('firstname','lastname'));
 
         // Build the tree.
         $gallery->add_child($images);
         $images->add_child($image);
+        $image->add_child($sourceusers);
+        $sourceusers->add_child($sourceuser);
 
         // Define sources.
         $gallery->set_source_table('gallery', array('id' => backup::VAR_ACTIVITYID));
         $image->set_source_table('gallery_images', array('gallery' => backup::VAR_PARENTID));
+        $sourceuser->set_source_table('user', array('id' => '/gallery/images/image/sourceuser'));
 
         // Define file annotations.
         $gallery->annotate_files('mod_gallery', 'intro', null);
         $gallery->annotate_files('mod_gallery', GALLERY_IMAGES_FILEAREA, 'id');
+        $image->annotate_files('mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, 'id');
         
         $image->annotate_ids('user', 'user');
         $image->annotate_ids('user', 'sourceuser');
-        
-        $image->annotate_files('mod_gallery', GALLERY_IMAGE_ATTACHMENTS_FILEAREA, 'id');
         
         return $this->prepare_activity_structure($gallery);
     }
